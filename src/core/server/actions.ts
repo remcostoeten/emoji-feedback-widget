@@ -1,8 +1,8 @@
-'use server'
+"use server";
 
-import fs from 'fs/promises';
-import path from 'path';
-import { ENABLE_LOCAL_STORAGE } from '../config';
+import fs from "fs/promises";
+import path from "path";
+import { ENABLE_LOCAL_STORAGE } from "../config";
 
 export async function submitFeedbackAction(formData: FormData) {
   if (!ENABLE_LOCAL_STORAGE) {
@@ -10,22 +10,22 @@ export async function submitFeedbackAction(formData: FormData) {
     return { success: true, message: "Feedback received (not saved)" };
   }
 
-  const opinion = formData.get('opinion');
-  const feedback = formData.get('feedback');
+  const opinion = formData.get("opinion");
+  const feedback = formData.get("feedback");
 
   const newFeedback = {
     id: Date.now(),
     opinion,
     feedback,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   };
 
   try {
-    const filePath = path.join(process.cwd(), 'feedback.json');
+    const filePath = path.join(process.cwd(), "feedback.json");
     let feedbackData = [];
 
     try {
-      const fileContent = await fs.readFile(filePath, 'utf-8');
+      const fileContent = await fs.readFile(filePath, "utf-8");
       feedbackData = JSON.parse(fileContent);
     } catch (error) {
       // File doesn't exist or is empty, start with an empty array

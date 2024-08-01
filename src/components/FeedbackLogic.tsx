@@ -102,7 +102,9 @@ export const Feedback: React.FC = () => {
         layout
         initial={{ borderRadius: "2rem" }}
         animate={{ borderRadius: selectedOpinion ? "0.5rem" : "2rem" }}
-        className="relative min-w-[400px] h-auto w-fit border py-2 bg-section-light hover:bg-[#171716] shadow-sm border-border transition-all bezier-ones duration-500"
+        className="relative min-w-[400px] h-auto w-fit border py-2 bg-section-light hover:bg-[#171716] shadow-sm border-border transition-all bezier-one
+        
+       duration-500"
       >
         {!isTextareaVisible ? (
           <div className="flex items-center justify-center gap-3 pl-4 pr-2 w-[400px]">
