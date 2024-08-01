@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "feedback-component",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,9 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.5"
+    "babel-plugin-react-compiler": "^0.0.0-experimental-334f00b-20240725",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.3.21",
+    "lucide-react": "^0.419.0",
+    "next": "^15.0.0-rc.0",
+    "react": "^19.0.0-rc-a7d1240c-20240731",
+    "react-dom": "^19.0.0-rc-a7d1240c-20240731",
+    "sonner": "^1.5.0",
+    "tailwind-merge": "^2.4.0"
   },
   "devDependencies": {
     "typescript": "^5",
