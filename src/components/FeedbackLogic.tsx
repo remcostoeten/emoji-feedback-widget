@@ -1,14 +1,13 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/core/utils/helpers";
-import { TriangleLoader } from "./Loader";
 import { BorderBeam } from "./misc/BorderEffects";
 import { opinionEmojis } from "@/core/config";
-import { FeedbackData } from "@/core/utils/types";
 import { toast } from "sonner";
 import CoolButton from "./CoolButton";
+import { submitFeedbackAction } from "@/core/server/actions";
 
 const EmojiButton = React.memo(({ item, selectedOpinion, onSelect }) => (
   <button
@@ -33,52 +32,61 @@ export const Feedback: React.FC = () => {
   const [isSubmitted, setSubmissionState] = useState(false);
   const [isTextareaFocused, setIsTextareaFocused] = useState(false);
   const [isTextareaVisible, setIsTextareaVisible] = useState(false);
-  const { submitFeedback, isLoading, isSent } = useSubmitFeedback();
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [feedbackText, setFeedbackText] = useState("");
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  useEffect(() => {
-    if (isSent) {
-      setSubmissionState(true);
-      const timeout = setTimeout(() => {
-        setSelectedOpinion(null);
-        setSubmissionState(false);
-        setIsTextareaVisible(false);
-        if (textareaRef.current) {
-          textareaRef.current.value = "";
-        }
-      }, 2200);
-      return () => clearTimeout(timeout);
-    }
-  }, [isSent]);
-
-  const handleEmojiSelect = useCallback((opinion: string) => {
+  const handleEmojiSelect = (opinion: string) => {
     setSelectedOpinion(opinion);
     setIsTextareaVisible(true);
     toast.success("Emoji feedback received. Add more details if you wish.", {
       duration: 3000,
     });
-  }, []);
+  };
 
-  const handleSubmit = useCallback(() => {
-    if (selectedOpinion && textareaRef.current?.value.trim()) {
-      submitFeedback({
-        opinion: selectedOpinion,
-        feedback: textareaRef.current?.value || "",
-      });
-    } else {
+  const handleSubmit = async (formData: FormData) => {
+    const feedback = formData.get("feedback") as string;
+    if (!feedback.trim()) {
       toast.error("Please provide additional feedback before submitting.", {
         duration: 3000,
       });
+      return;
     }
-  }, [selectedOpinion, submitFeedback]);
 
-  const handleClose = useCallback(() => {
+    const result = await submitFeedbackAction(formData);
+    if (result.success) {
+      setSubmissionState(true);
+      toast.success(result.message);
+      setTimeout(() => {
+        setSelectedOpinion(null);
+        setSubmissionState(false);
+        setIsTextareaVisible(false);
+        setFeedbackText("");
+        setIsButtonEnabled(false);
+        if (formRef.current) {
+          formRef.current.reset();
+        }
+      }, 2200);
+    } else {
+      toast.error(result.message);
+    }
+  };
+
+  const handleClose = () => {
     setSelectedOpinion(null);
     setIsTextareaVisible(false);
-    if (textareaRef.current) {
-      textareaRef.current.value = "";
+    setFeedbackText("");
+    setIsButtonEnabled(false);
+    if (formRef.current) {
+      formRef.current.reset();
     }
-  }, []);
+  };
+
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const text = e.target.value;
+    setFeedbackText(text);
+    setIsButtonEnabled(text.trim().length > 0);
+  };
 
   const handleTextareaFocus = () => {
     setIsTextareaFocused(true);
@@ -122,7 +130,7 @@ export const Feedback: React.FC = () => {
               <>
                 <button
                   onClick={handleClose}
-                  className="unset absolute -right-4 -top-4 z-50 shadow-white/10 shadow-xl"
+                  className="unset absolute -right-4 -top-4 z-50  hover:stroke-white hover:scale-105 transition-all shadow-lg shadow-slate-200/[5%]"
                 >
                   <svg
                     className="withIcon_icon__MHUeb"
@@ -151,20 +159,33 @@ export const Feedback: React.FC = () => {
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  className=" overflow-hidden mx-auto flex items-center flex-col"
+                  className="overflow-hidden mx-auto flex items-center flex-col"
                 >
-                  <textarea
-                    ref={textareaRef}
-                    placeholder="Any additional thoughts?"
-                    className="min-h-32 w-[80%] rounded-md bg-body focus:bg-section focus:border-none focus:outline-none transition-all duration-700 border border-border p-2 mt-2"
-                    aria-label="Additional feedback"
-                    onFocus={handleTextareaFocus}
-                    onBlur={handleTextareaBlur}
-                  />
-                  {isTextareaFocused && (
-                    <BorderBeam size={250} duration={12} delay={9} />
-                  )}
-                  <CoolButton onClick={handleSubmit} hasCoolMode={true} />
+                  <form ref={formRef} action={handleSubmit}>
+                    <input
+                      type="hidden"
+                      name="opinion"
+                      value={selectedOpinion}
+                    />
+                    <textarea
+                      name="feedback"
+                      value={feedbackText}
+                      onChange={handleTextareaChange}
+                      placeholder="Any additional thoughts?"
+                      className="min-h-32 w-[80%] rounded-md bg-body focus:bg-section focus:border-none focus:outline-none transition-all duration-700 border border-border p-2 mt-2"
+                      aria-label="Additional feedback"
+                      onFocus={handleTextareaFocus}
+                      onBlur={handleTextareaBlur}
+                    />
+                    {isTextareaFocused && (
+                      <BorderBeam size={250} duration={12} delay={9} />
+                    )}
+                    <CoolButton
+                      hasCoolMode={true}
+                      isNotEmpty={isButtonEnabled}
+                      onClick={() => formRef.current?.requestSubmit()}
+                    />
+                  </form>
                 </motion.div>
               </>
             )}
@@ -188,31 +209,6 @@ export const Feedback: React.FC = () => {
       </motion.div>
     </section>
   );
-};
-
-const useSubmitFeedback = () => {
-  const [isLoading, setLoadingState] = useState(false);
-  const [isSent, setRequestState] = useState(false);
-
-  const submitFeedback = useCallback(async (data: FeedbackData) => {
-    setLoadingState(true);
-    setRequestState(false);
-    try {
-      // Simulating API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      console.log("Submitted feedback:", data); // Log the feedback data
-      setRequestState(true);
-    } catch (error) {
-      console.error("Error submitting feedback:", error);
-      toast.error("Failed to submit feedback. Please try again.", {
-        duration: 5000,
-      });
-    } finally {
-      setLoadingState(false);
-    }
-  }, []);
-
-  return { submitFeedback, isLoading, isSent };
 };
 
 export default Feedback;
