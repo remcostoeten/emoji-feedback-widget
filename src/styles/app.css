@@ -1,9 +1,9 @@
+@import '../styles/animations.css';
+@import '../styles/misc.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import "./_misc.css";
-@import "./_animations.css";
 
 body,
 html {

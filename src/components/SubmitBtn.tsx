@@ -7,6 +7,7 @@ interface AnimatedSubscribeButtonProps {
   buttonColor: string;
   buttonTextColor?: string;
   subscribeStatus: boolean;
+  disabled: boolean;
   initialText: React.ReactElement | string;
   changeText: React.ReactElement | string;
 }
@@ -18,16 +19,24 @@ export const AnimatedSubscribeButton: React.FC<
   subscribeStatus,
   buttonTextColor,
   changeText,
+  disabled,
   initialText,
 }) => {
   const [isSubscribed, setIsSubscribed] = useState<boolean>(subscribeStatus);
+
+  const handleClick = () => {
+    if (!disabled) {
+      setIsSubscribed(!isSubscribed);
+    }
+  };
 
   return (
     <AnimatePresence mode="wait">
       {isSubscribed ? (
         <motion.button
+          disabled={disabled}
           className="relative flex w-[200px] items-center justify-center overflow-hidden rounded-md bg-white p-[10px] outline outline-1 outline-black"
-          onClick={() => setIsSubscribed(false)}
+          onClick={handleClick}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -46,7 +55,7 @@ export const AnimatedSubscribeButton: React.FC<
         <motion.button
           className="relative flex w-[200px] cursor-pointer items-center justify-center rounded-md border-none p-[10px]"
           style={{ backgroundColor: buttonColor, color: buttonTextColor }}
-          onClick={() => setIsSubscribed(true)}
+          onClick={handleClick}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

@@ -14,4 +14,14 @@ export type CoolButtonProps = {
   isLoading?: boolean;
   feedbackText?: string;
   isNotEmpty?: boolean;
+  disabled?: boolean;
+};
+
+export type EmojiButtonProps = {
+  item: {
+    text: string;
+    emoji: string;
+  };
+  selectedOpinion: string | null;
+  onSelect: (opinion: string) => void;
 };

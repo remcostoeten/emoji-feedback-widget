@@ -8,7 +8,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <>
       {children}
       <SpeedInsights />
-      <Toaster position="top-center" />
+      <Toaster position="top-right" />
       <Analytics />
     </>
   );
