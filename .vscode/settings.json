@@ -4,8 +4,7 @@
   // "workbench.settings.editor": "json",
   "window.autoDetectColorScheme": true,
   "workbench.preferredLightColorTheme": "Lumos Light",
-  "workbench.preferredDarkColorTheme": "Default Dark Modern",
-
+  "workbench.preferredDarkColorTheme": "Lumos Dark Soft",
   "breadcrumbs.enabled": true,
   "explorer.compactFolders": false,
   "editor.wordWrap": "on",
@@ -33,7 +32,6 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "explorer.confirmDragAndDrop": false,
   "javascript.updateImportsOnFileMove.enabled": "always",
-
   "files.exclude": {
     "**/.open-next": true,
     "**/.sst": true,

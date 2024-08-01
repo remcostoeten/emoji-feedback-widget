@@ -2,10 +2,94 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "../styles/_misc.css";
+@import "../styles/_animations.css";
+
+.bezier {
+  transition-timing-function: cubic-bezier(0.6, -1.2, 0.2, 2.2);
+}
+
+body,
+html {
+  width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  font-family: "SF Pro Text", "SF Pro Icons", "AOS Icons", "Helvetica Neue",
+    Helvetica, Arial, sans-serif, system-ui;
+  color: white;
+}
+
+body::after {
+  --line: hsl(0 0% 95% / 0.15);
+  --size: 60px;
+  content: "";
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  background:
+    linear-gradient(90deg, var(--line) 1px, transparent 1px var(--size)) 50% 50% /
+      var(--size) var(--size),
+    linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% /
+      var(--size) var(--size);
+  -webkit-mask: linear-gradient(-15deg, transparent 30%, white);
+  mask: linear-gradient(-15deg, transparent 30%, white);
+  top: 0;
+  z-index: -1;
+  transform: translate3d(0, 0, -100vmin);
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --border: #333333;
+  --section-border: "#ffffff24";
+  --section: #0b0a0b;
+  --card-light: "#171716";
+  --section-light: "#101110";
+  --body: #000101;
+  --button-bg: "#0B0A0B";
+  --button-hover: "#1f1f1f";
+  --text: "#ededed";
+  --text-sub: "#a1a1a1";
+  --text-disabled: "#888888";
+
+  --bezier-one: cubic-bezier(0.6, -1.2, 0.2, 2.2);
+  --bezier-two: cubic-bezier(0.02, 0.01, 0.21, 1);
+  --bezier-three: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --bezier-four: cubic-bezier(0.77, 0, 0.175, 1);
+  --bezier-five: cubic-bezier(0.23, 1, 0.32, 1);
+  --bezier-six: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+}
+
+.bezier-one {
+  transition-timing-function: var(--bezier-one);
+}
+
+.bezier-two {
+  transition-timing-function: var(--bezier-two);
+}
+
+.bezier-three {
+  transition-timing-function: var(--bezier-three);
+}
+
+.bezier-four {
+  transition-timing-function: var(--bezier-four);
+}
+
+.bezier-five {
+  transition-timing-function: var(--bezier-five);
+}
+
+.bezier-six {
+  transition-timing-function: var(--bezier-six);
 }
 
 @media (prefers-color-scheme: dark) {
