@@ -1,8 +1,3 @@
-export type FeedbackData = {
-  opinion: string;
-  feedback: string;
-};
-
 export type OpinionEmoji = {
   text: string;
   emoji: string;
@@ -25,3 +20,19 @@ export type EmojiButtonProps = {
   selectedOpinion: string | null;
   onSelect: (opinion: string) => void;
 };
+
+export interface Feedback {
+  id: number;
+  opinion: string | null;
+  feedback: string | null;
+  timestamp: string;
+}
+
+export interface EmojiCount {
+  [emoji: string]: number;
+}
+
+export interface FeedbackData {
+  feedbacks: Feedback[];
+  emojiCounts: EmojiCount;
+}

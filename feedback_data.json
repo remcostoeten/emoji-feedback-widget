@@ -1,0 +1,20 @@
+{
+  "feedbacks": [
+    {
+      "id": 1722607875399,
+      "opinion": "love it",
+      "feedback": "d",
+      "timestamp": "2024-08-02T14:11:15.399Z"
+    },
+    {
+      "id": 1722607998585,
+      "opinion": "DOPE!",
+      "feedback": "This shit fire as fuck",
+      "timestamp": "2024-08-02T14:13:18.585Z"
+    }
+  ],
+  "emojiCounts": {
+    "love it": 1,
+    "DOPE!": 1
+  }
+}
