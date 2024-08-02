@@ -1,5 +1,8 @@
 import { OpinionEmoji } from '../utils/types'
 
+export const ENABLE_LOCAL_STORAGE = process.env.ENABLE_LOCAL_STORAGE === 'true'
+export const USE_DATABASE = process.env.USE_DATABASE === 'true'
+
 export const opinionEmojis: OpinionEmoji[] = [
 	{ text: 'love it', emoji: '😍' },
 	{ text: 'DOPE!', emoji: '🔥' },

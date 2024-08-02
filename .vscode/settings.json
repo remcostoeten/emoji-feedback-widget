@@ -62,10 +62,10 @@
 		"typescript",
 		"typescriptreact"
 	],
-	"prettier.requireConfig": true,
+	"prettier.requireConfig": false,
 	"workbench.sideBar.location": "right",
 	"files.autoSave": "onFocusChange",
-	"terminal.integrated.enableMultiLinePasteWarning": false,
+	"terminal.integrated.enableMultiLinePasteWarning": "auto",
 	"workbench.colorTheme": "Vesper Purple Dark",
 	"editor.fontFamily": "\"Geist Mono\"",
 	"git.enableSmartCommit": true,
@@ -81,10 +81,10 @@
 		"github.copilot.editor.useTabCompletion": true, // Use tab completion for suggestions
 		"github.copilot.editor.acceptSuggestionOnEnter": true, // Accept suggestions with Enter key
 		// Suggestions Configuration
-		"github.copilot.suggestion.maxSuggestions": 5, // Maximum number of suggestions displayed
-		"github.copilot.suggestion.timeout": 1000, // Timeout for suggestion responses (in milliseconds)
+		"github.copilot.suggestion.maxSuggestions": 225, // Maximum number of suggestions displayed
+		"github.copilot.suggestion.timeout": 100, // Timeout for suggestion responses (in milliseconds)
 		// Advanced Settings
-		"github.copilot.advanced.experimentalFeatures": false, // Enable or disable experimental features
+		"github.copilot.advanced.experimentalFeatures": true, // Enable or disable experimental features
 		"github.copilot.advanced.loggingLevel": "info", // Logging level for debugging
 		"github.copilot.advanced.tracking": true, // Enable or disable tracking settings for telemetry
 		// Language-Specific Settings
@@ -92,7 +92,7 @@
 		"github.copilot.languageSupport.enableForPython": true, // Enable suggestions for Python
 		"github.copilot.languageSupport.enableForTypeScript": true, // Enable suggestions for TypeScript
 		// User Experience Settings
-		"github.copilot.feedback.enable": true, // Enable feedback collection
+		"github.copilot.feedback.enable": false, // Enable feedback collection
 		"github.copilot.theme": "dark" // Set the theme for Copilot suggestions
 	},
 	"window.zoomLevel": 2
