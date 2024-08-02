@@ -29,10 +29,8 @@ body::after {
   width: 100vw;
   position: fixed;
   background:
-    linear-gradient(90deg, var(--line) 1px, transparent 1px var(--size)) 50% 50% /
-      var(--size) var(--size),
-    linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% /
-      var(--size) var(--size);
+    linear-gradient(90deg, var(--line) 1px, transparent 1px var(--size)) 50% 50% / var(--size) var(--size),
+    linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% / var(--size) var(--size);
   -webkit-mask: linear-gradient(-15deg, transparent 30%, white);
   mask: linear-gradient(-15deg, transparent 30%, white);
   top: 0;
@@ -46,7 +44,8 @@ body::after {
   --background-end-rgb: 255, 255, 255;
   --border: #333333;
   --section-border: '#ffffff24';
-  --section: #0b0a0b;
+  /* --section: #0b0a0b; */
+  --section: '#0A0A0A';
   --card-light: '#171716';
   --section-light: '#101110';
   --body: #000101;
@@ -74,12 +73,9 @@ body::after {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 @layer utilities {

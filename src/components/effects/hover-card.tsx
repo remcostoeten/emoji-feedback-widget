@@ -41,7 +41,7 @@ export default function HoverCard({
             transparent 40%
           );
           border-radius: inherit;
-          content: "";
+          content: '';
           height: 100%;
           left: 0;
           top: 0;

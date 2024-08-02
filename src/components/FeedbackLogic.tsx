@@ -174,7 +174,7 @@ export function Feedback() {
         <motion.section
           ref={sectionRef}
           aria-label={t('feedbackSectionLabel')}
-          className="fixed bottom-0 left-0 right-0 max-w-full mx-auto flex justify-center mb-10"
+          className='fixed bottom-0 left-0 right-0 max-w-full mx-auto flex justify-center mb-10'
           initial={showFeedbackMotionConfig.initial}
           animate={showFeedbackMotionConfig.animate(isAnimatingOut)}
           exit={showFeedbackMotionConfig.exit}
@@ -186,17 +186,17 @@ export function Feedback() {
             animate={{
               borderRadius: selectedOpinion || storedEmoji ? '0.5rem' : '2rem',
             }}
-            className="min-w-[300px] md:min-w-[400px] h-auto w-fit border py-2 bg-section-light hover:bg-[#171716] shadow-sm border-border transition-all bezier-ones duration-500 gap-4 relative"
+            className='min-w-[300px] md:min-w-[400px] h-auto w-fit border py-2 bg-section-light hover:bg-[#171716] shadow-sm border-border transition-all bezier-ones duration-500 gap-4 relative'
           >
             {!isTextareaVisible && !storedEmoji ? (
-              <div className="flex flex-wrap items-center justify-between w-full px-7 translate-x-1.5 gap-x-6">
-                <h2 id="feedback-label" className="text-sm text-disabled">
+              <div className='flex flex-wrap items-center justify-between w-full px-7 translate-x-1.5 gap-x-6'>
+                <h2 id='feedback-label' className='text-sm text-disabled'>
                   {t('feedbackLabel')}
                 </h2>
                 <div
-                  className="flex items-center text-text emojis"
-                  role="group"
-                  aria-labelledby="feedback-label"
+                  className='flex items-center text-text emojis'
+                  role='group'
+                  aria-labelledby='feedback-label'
                 >
                   {opinionEmojis.map((item) => (
                     <EmojiButton
@@ -211,10 +211,10 @@ export function Feedback() {
             ) : (
               <AnimatePresence>
                 {(selectedOpinion || storedEmoji) && !isSubmitted && (
-                  <div className="">
+                  <div className=''>
                     <button
                       onClick={handleClose}
-                      className="unset absolute -top-5 z-50 shadow-white/10 shadow-xl -right-2.5"
+                      className='unset absolute -top-5 z-50 shadow-white/10 shadow-xl -right-2.5'
                       aria-label={t('closeFeedbackForm')}
                     >
                       <CloseIcon />
@@ -224,7 +224,7 @@ export function Feedback() {
                       animate={afterEmojiClick.animate}
                       exit={afterEmojiClick.exit}
                       transition={afterEmojiClick.transition}
-                      className="mx-auto flex items-center flex-col "
+                      className='mx-auto flex items-center flex-col '
                     >
                       <motion.form
                         initial={formAnimation.initial}
@@ -233,20 +233,20 @@ export function Feedback() {
                         exit={formAnimation.exit}
                         ref={formRef}
                         onSubmit={handleSubmit}
-                        className="flex flex-col mx-auto w-full px-4 gap-4 "
+                        className='flex flex-col mx-auto w-full px-4 gap-4 '
                       >
                         <input
-                          type="hidden"
-                          name="opinion"
+                          type='hidden'
+                          name='opinion'
                           value={selectedOpinion || storedEmoji || ''}
                         />
                         <textarea
-                          name="feedback"
+                          name='feedback'
                           value={feedbackText}
                           onChange={(e) => setFeedbackText(e.target.value)}
                           onKeyDown={handleKeyDown}
                           placeholder={t('feedbackPlaceholder')}
-                          className="min-h-32 x rounded-md bg-body focus:bg-section focus:border-none focus:outline-none transition-all duration-700 border border-border px-4 py-4 mt-2"
+                          className='min-h-32 x rounded-md bg-body focus:bg-section focus:border-none focus:outline-none transition-all duration-700 border border-border px-4 py-4 mt-2'
                           aria-label={t('additionalFeedback')}
                           onFocus={() => setIsTextareaFocused(true)}
                           onBlur={() => setIsTextareaFocused(false)}
@@ -254,7 +254,7 @@ export function Feedback() {
                         {isTextareaFocused && (
                           <BorderBeam size={250} duration={12} delay={9} />
                         )}
-                        <div className="flex items-center justify-end w-full">
+                        <div className='flex items-center justify-end w-full'>
                           <CoolButton
                             hasCoolMode={true}
                             isNotEmpty={isButtonEnabled}
@@ -271,13 +271,13 @@ export function Feedback() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="flex flex-col items-center justify-center p-4"
-                    role="status"
+                    className='flex flex-col items-center justify-center p-4'
+                    role='status'
                   >
-                    <span aria-hidden="true" className="text-2xl">
+                    <span aria-hidden='true' className='text-2xl'>
                       {selectedEmoji}
                     </span>
-                    <p className="text-center">
+                    <p className='text-center'>
                       <SparklesText text={t('postSubmitText')} />
                     </p>
                   </motion.div>

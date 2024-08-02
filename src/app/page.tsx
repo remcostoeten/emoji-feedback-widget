@@ -54,7 +54,7 @@ export default function Component() {
   const positiveFeedback =
     (feedbackData?.emojiCounts?.['love it'] || 0) +
     (feedbackData?.emojiCounts?.['DOPE!'] || 0)
-  const negativeFeedback = feedbackData?.emojiCounts?.["it's shit"] || 0
+  const negativeFeedback = feedbackData?.emojiCounts?.['its shit'] || 0
 
   useEffect(() => {
     let result = feedbackData.feedbacks
@@ -72,7 +72,7 @@ export default function Component() {
     result = result.filter((feedback) => {
       if (feedback.opinion === 'love it' || feedback.opinion === 'DOPE!')
         return filters.positive
-      if (feedback.opinion === "it's shit") return filters.negative
+      if (feedback.opinion === 'its shit') return filters.negative
       return filters.neutral
     })
 
@@ -106,46 +106,48 @@ export default function Component() {
   const handleSortChange = (sortOption) => setSortBy(sortOption)
 
   return (
-    <div className="w-full max-w-6xl mx-auto p-4 md:p-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <div className='w-full max-w-6xl mx-auto p-4 md:p-6'>
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-6'>
         <HoverCard>
-          <Card className="!bg-[#E7E6E7] text-[#000101] p-4 flex items-center justify-between">
+          <Card className='!bg-[#E7E6E7] text-[#000101] p-4 flex items-center justify-between'>
             <div>
-              <h3 className="text-2xl font-bold">Total Feedback</h3>
-              <p className="text-4xl font-bold">{totalFeedback}</p>
+              <h3 className='text-2xl font-bold'>Total Feedback</h3>
+              <p className='text-4xl font-bold'>{totalFeedback}</p>
             </div>
-            <SmileIcon className="w-12 h-12" />
+            <SmileIcon className='w-12 h-12' />
           </Card>
         </HoverCard>
         <HoverCard>
-          <Card className="!bg-[#202021] text-accent-foreground p-4 flex items-center justify-between">
+          <Card className='!bg-[#202021]   
+          !bg-section  border border-vercelborder/10
+          text-accent-foreground p-4 flex items-center justify-between'>
             <div>
-              <h3 className="text-2xl font-bold">Positive Feedback</h3>
-              <p className="text-4xl font-bold">{positiveFeedback}</p>
+              <h3 className='text-2xl font-bold'>Positive Feedback</h3>
+              <p className='text-4xl font-bold'>{positiveFeedback}</p>
             </div>
-            <ThumbsUpIcon className="w-12 h-12" />
+            <ThumbsUpIcon className='w-12 h-12' />
           </Card>
         </HoverCard>
         <HoverCard>
-          <Card className="!bg-[#242428] text-secondary-foreground p-4 flex items-center justify-between">
+          <Card className='!bg-section shadow-white/5 border border-vercelborder/10 text-secondary-foreground p-4 flex items-center justify-between'>
             <div>
-              <h3 className="text-2xl font-bold">Negative Feedback</h3>
-              <p className="text-4xl font-bold">{negativeFeedback}</p>
+              <h3 className='text-2xl font-bold'>Negative Feedback</h3>
+              <p className='text-4xl font-bold'>{negativeFeedback}</p>
             </div>
-            <ThumbsDownIcon className="w-12 h-12" />
+            <ThumbsDownIcon className='w-12 h-12' />
           </Card>
         </HoverCard>
       </div>
       <HoverCard>
-        <Card className="border-[#3d3838]  border shadow-sm shadow-white/10 bg-[#0B0A0B]">
+        <Card className='border-vercelborder/10  border shadow-sm shadow-white/10 bg-section'>
           <CardHeader>
-            <CardTitle className="text-text mb-2 ml-1">Feedback Logs</CardTitle>
-            <div className="flex items-center align-bottom gap-2">
-              <div className="flex flex-col gap-4">
+            <CardTitle className='text-text mb-2 ml-1'>Feedback Logs</CardTitle>
+            <div className='flex items-center align-bottom gap-2'>
+              <div className='flex flex-col gap-4'>
                 <Input
-                  type="search"
-                  placeholder="Search feedback..."
-                  className="border-border border border-opacity-25 w-fit"
+                  type='search'
+                  placeholder='Search feedback...'
+                  className='border-border border border-opacity-25 w-fit'
                   value={searchTerm}
                   onChange={handleSearchChange}
                 />
@@ -153,15 +155,15 @@ export default function Component() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
-                    variant="actions"
-                    className="border-border border border-opacity-25 w-fit"
-                    size="sm"
+                    variant='actions'
+                    className='border-border border border-opacity-25 w-fit'
+                    size='sm'
                   >
-                    <FilterIcon className=" w-4 h-4" />
+                    <FilterIcon className=' w-4 h-4' />
                     <span>Filter</span>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
+                <DropdownMenuContent align='end'>
                   <DropdownMenuLabel>Filter by:</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuCheckboxItem
@@ -187,15 +189,15 @@ export default function Component() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
-                    variant="actions"
-                    className="border-border border border-opacity-25 w-fit"
-                    size="sm"
+                    variant='actions'
+                    className='border-border border border-opacity-25 w-fit'
+                    size='sm'
                   >
-                    <ListOrderedIcon className="w-4 h-4" />
+                    <ListOrderedIcon className='w-4 h-4' />
                     <span>Sort</span>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
+                <DropdownMenuContent align='end'>
                   <DropdownMenuLabel>Sort by:</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onSelect={() => handleSortChange('newest')}>
@@ -230,7 +232,7 @@ export default function Component() {
                 {filteredFeedback.length > 0 ? (
                   filteredFeedback.map((feedback) => (
                     <TableRow key={feedback.id}>
-                      <TableCell className="font-medium">
+                      <TableCell className='font-medium'>
                         {feedback.id}
                       </TableCell>
                       <TableCell>{feedback.opinion}</TableCell>
@@ -242,7 +244,7 @@ export default function Component() {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={4} className="text-center">
+                    <TableCell colSpan={4} className='text-center'>
                       No feedback available
                     </TableCell>
                   </TableRow>
@@ -250,7 +252,7 @@ export default function Component() {
               </TableBody>
             </Table>
           </CardContent>
-          <CardFooter className="text-sm text-muted-foreground">
+          <CardFooter className='text-sm text-muted-foreground'>
             Showing {filteredFeedback.length} of {totalFeedback} feedback
             entries
           </CardFooter>

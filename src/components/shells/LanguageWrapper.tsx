@@ -31,9 +31,9 @@ const LanguageWrapper: React.FC<LanguageWrapperProps> = ({ children }) => {
     return (
       <>
         {!isFeedbackHidden && <FeedbackSkeleton />}
-        <nav className="flex fixed top-12 gap-4 left-4 items-center">
-          <a href="/">Home </a>
-          <a href="/test">Test page</a>
+        <nav className='flex fixed top-12 gap-4 left-4 items-center'>
+          <a href='/'>Home </a>
+          <a href='/test'>Test page</a>
         </nav>
       </>
     )

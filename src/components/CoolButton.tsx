@@ -21,23 +21,23 @@ export default function CoolButton({
     <>
       <p>
         <AnimatedSubscribeButton
-          buttonColor="#fff"
-          buttonTextColor="#000000"
+          buttonColor='#fff'
+          buttonTextColor='#000000'
           disabled={!isNotEmpty || isLoading}
           subscribeStatus={false}
           initialText={
-            <span className="group inline-flex items-center">
+            <span className='group inline-flex items-center'>
               {t('submitFeedback')}
-              <ChevronRightIcon className="ml-1 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              <ChevronRightIcon className='ml-1 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1' />
             </span>
           }
           changeText={
-            <div className="flex items-center gap-4">
-              <p className="translate-x-12">{t('feedbackSent')}</p>
+            <div className='flex items-center gap-4'>
+              <p className='translate-x-12'>{t('feedbackSent')}</p>
               <img
-                src="/rocket.webp"
-                alt="rocket"
-                className="translate-x-28 h-12 w-12 absolute"
+                src='/rocket.webp'
+                alt='rocket'
+                className='translate-x-28 h-12 w-12 absolute'
               />
             </div>
           }

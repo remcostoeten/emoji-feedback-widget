@@ -23,6 +23,7 @@ const config: Config = {
         input: 'var(--body)',
         'section-light': 'var(--section)',
         text: 'var(--text)',
+        vercelborder: 'rgb(237,237,237)',
         border: 'var(--border)',
         'card-light': 'var(--card-light)',
         'dark-text': 'var(--text-sub)',

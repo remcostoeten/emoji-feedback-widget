@@ -12,7 +12,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <I18nextProvider i18n={i18n}>
       {children}
       <SpeedInsights />
-      <Toaster position="top-right" />
+      <Toaster position='top-right' />
       <Analytics />
     </I18nextProvider>
   )
