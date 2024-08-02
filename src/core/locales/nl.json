@@ -10,5 +10,6 @@
   "emptyFeedbackError": "Geef alsjeblieft aanvullende feedback voordat je indient.",
   "feedbackSuccess": "Feedback succesvol opgeslagen",
   "feedbackError": "Fout bij het opslaan van feedback",
-  "submitError": "Er is een fout opgetreden bij het indienen van feedback. Probeer het opnieuw."
+  "submitError": "Er is een fout opgetreden bij het indienen van feedback. Probeer het opnieuw.",
+  "surveyResults": "Enquêteresultaten"
 }
