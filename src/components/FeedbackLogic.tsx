@@ -86,7 +86,7 @@ export function Feedback() {
     const formData = new FormData(event.currentTarget);
     const feedback = formData.get("feedback");
 
-    if (!feedback.trim()) {
+    if (typeof feedback === "string" && feedback.trim()) {
       toast(t("emptyFeedbackError"));
       return;
     }

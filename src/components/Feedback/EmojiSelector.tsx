@@ -2,6 +2,7 @@
 "use client";
 
 import useLocalStorage from "@/core/hooks/useLocalStorage";
+import { cn } from "@/core/utils/helpers";
 import { EmojiButtonProps } from "@/core/utils/types";
 
 export default function EmojiButton({
