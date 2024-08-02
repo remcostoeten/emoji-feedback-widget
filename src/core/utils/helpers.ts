@@ -22,3 +22,15 @@ export const RGBA_COLORS = [
   `rgba(50,55,255,${ALPHA_CHANNEL.XXSMALL})`,
   `rgba(255,255,50,${ALPHA_CHANNEL.XXSMALL})`,
 ]
+
+export const getBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_APP_URL) {
+    return process.env.NEXT_PUBLIC_APP_URL
+  }
+
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`
+  }
+
+  return 'http://localhost:3000'
+}
