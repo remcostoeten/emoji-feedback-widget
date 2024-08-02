@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useRef, useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { BorderBeam } from "./misc/BorderEffects";
@@ -19,7 +20,7 @@ import {
   formAnimation,
 } from "@/core/config/motion-config";
 import useLocalStorage from "@/core/hooks/useLocalStorage";
-import SparklesText from "./misc/SparkleText";
+import SparklesText from "./effects/SparkleText";
 
 export function Feedback() {
   const { t } = useTranslation();
@@ -37,6 +38,7 @@ export function Feedback() {
   const [isAnimatingOut, setIsAnimatingOut] = useState(false);
   const [isRateLimited, setIsRateLimited] = useState(false);
   const formRef = useRef(null);
+  const sectionRef = useRef(null);
 
   const isButtonEnabled = feedbackText.trim().length > 0 && !isRateLimited;
   const selectedEmojiObject = opinionEmojis.find(
@@ -67,6 +69,28 @@ export function Feedback() {
     }
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        handleClose();
+      }
+    };
+
+    const handleClickOutside = (e) => {
+      if (sectionRef.current && !sectionRef.current.contains(e.target)) {
+        handleClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   function handleEmojiSelect(opinion) {
     setSelectedOpinion(opinion);
     setIsTextareaVisible(true);
@@ -86,7 +110,7 @@ export function Feedback() {
     const formData = new FormData(event.currentTarget);
     const feedback = formData.get("feedback");
 
-    if (typeof feedback === "string" && feedback.trim()) {
+    if (!feedback) {
       toast(t("emptyFeedbackError"));
       return;
     }
@@ -95,15 +119,17 @@ export function Feedback() {
     try {
       const result = await submitFeedbackAction(formData);
       if (result.success) {
-        localStorage.setItem("lastFeedbackSubmission", Date.now().toString());
-        setIsRateLimited(true);
-        setTimeout(() => setIsRateLimited(false), RATE_LIMIT_INTERVAL);
-        setSubmissionState(true);
-        toast.success(t("feedbackSuccess"));
         setTimeout(() => {
-          setIsAnimatingOut(true);
-          setTimeout(resetForm, 500);
-        }, 2200);
+          localStorage.setItem("lastFeedbackSubmission", Date.now().toString());
+          setIsRateLimited(true);
+          setTimeout(() => setIsRateLimited(false), RATE_LIMIT_INTERVAL);
+          setSubmissionState(true);
+          toast.success(t("feedbackSuccess"));
+          setTimeout(() => {
+            setIsAnimatingOut(true);
+            setTimeout(resetForm, 500);
+          }, 1250);
+        }, 1500);
       } else {
         toast.error(t("feedbackError"));
       }
@@ -130,6 +156,13 @@ export function Feedback() {
     }
   }
 
+  function handleKeyDown(e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e);
+    }
+  }
+
   if (feedbackHidden && !storedEmoji) {
     return null;
   }
@@ -138,6 +171,7 @@ export function Feedback() {
     <AnimatePresence>
       {(!feedbackHidden || storedEmoji) && (
         <motion.section
+          ref={sectionRef}
           aria-label={t("feedbackSectionLabel")}
           className="fixed bottom-0 left-0 right-0 max-w-full mx-auto flex justify-center mb-10"
           initial={showFeedbackMotionConfig.initial}
@@ -209,8 +243,9 @@ export function Feedback() {
                           name="feedback"
                           value={feedbackText}
                           onChange={(e) => setFeedbackText(e.target.value)}
+                          onKeyDown={handleKeyDown}
                           placeholder={t("feedbackPlaceholder")}
-                          className="min-h-32 x rounded-md bg-body focus:bg-section focus:border-none focus:outline-none transition-all duration-700 border border-border p-2 mt-2"
+                          className="min-h-32 x rounded-md bg-body focus:bg-section focus:border-none focus:outline-none transition-all duration-700 border border-border px-4 py-4 mt-2"
                           aria-label={t("additionalFeedback")}
                           onFocus={() => setIsTextareaFocused(true)}
                           onBlur={() => setIsTextareaFocused(false)}

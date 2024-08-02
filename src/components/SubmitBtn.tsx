@@ -35,7 +35,7 @@ export const AnimatedSubscribeButton: React.FC<
       {isSubscribed ? (
         <motion.button
           disabled={disabled}
-          className="relative flex w-[200px] items-center justify-center overflow-hidden rounded-md bg-white p-[10px] outline outline-1 outline-black"
+          className="relative flex w-[200px] items-center justify-center  mb-2  overflow-hidden rounded-md bg-black/40 border-black border-1  p-[10px] outline outline-1 outline-black"
           onClick={handleClick}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

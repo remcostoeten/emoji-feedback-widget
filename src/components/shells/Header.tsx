@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import LanguageDropdown from "../misc/LanguageDropdown";
 import { t } from "i18next";
+import ActionsMenu from "../misc/ActionsMenu";
 
 export const Header = () => {
   return <SlideTabs />;
@@ -32,13 +33,6 @@ const SlideTabs = () => {
           Home
         </Tab>
         <Tab
-          href="/test"
-          setPosition={setPosition}
-          isActive={pathname === "/test"}
-        >
-          Pricing
-        </Tab>
-        <Tab
           href="survey-results"
           setPosition={setPosition}
           isActive={pathname === "/survey-results"}
@@ -52,6 +46,9 @@ const SlideTabs = () => {
         />
 
         <Cursor position={position} />
+        <li>
+          <ActionsMenu />
+        </li>
       </ul>
     </nav>
   );
