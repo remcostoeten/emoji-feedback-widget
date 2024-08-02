@@ -27,7 +27,7 @@ const SlideTabs = () => {
 	const pathname = usePathname()
 
 	return (
-		<nav className="fixed top-4">
+		<nav className="fixed  z-50 top-4">
 			<ul className="relative mx-auto flex w-fit rounded-full border-2 border-black p-1 justify-center items-center content-center">
 				<Tab
 					href="/"
