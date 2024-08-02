@@ -1,78 +1,78 @@
 .emojis {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border-radius: 4rem;
-  box-shadow: 0 2px 12px 2px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	border-radius: 4rem;
+	box-shadow: 0 2px 12px 2px rgba(0, 0, 0, 0.1);
 
-  .emoji {
-    cursor: pointer;
-    user-select: none;
-    transition: all 0.3s;
+	.emoji {
+		cursor: pointer;
+		user-select: none;
+		transition: all 0.3s;
 
-    &:not(:first-child) {
-      margin-left: 8px;
-    }
+		&:not(:first-child) {
+			margin-left: 8px;
+		}
 
-    &.active {
-      animation-name: emoji;
-      animation-duration: 0.6s;
-      animation-direction: forwards;
-      animation-timing-function: ease-out;
-      animation-iteration-count: 1;
-      scale: 1.3;
-    }
+		&.active {
+			animation-name: emoji;
+			animation-duration: 0.6s;
+			animation-direction: forwards;
+			animation-timing-function: ease-out;
+			animation-iteration-count: 1;
+			scale: 1.3;
+		}
 
-    &:hover {
-      transform: scale(1.5);
-    }
-  }
+		&:hover {
+			transform: scale(1.5);
+		}
+	}
 }
 
 @keyframes emoji {
-  5% {
-    transform: translateY(1rem);
-  }
+	5% {
+		transform: translateY(1rem);
+	}
 
-  10% {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
+	10% {
+		transform: translateY(0) scale(1);
+		opacity: 1;
+	}
 
-  50% {
-    transform: translateY(-4rem) scale(1.5) rotateY(90deg);
-  }
+	50% {
+		transform: translateY(-4rem) scale(1.5) rotateY(90deg);
+	}
 
-  80% {
-    opacity: 0;
-  }
+	80% {
+		opacity: 0;
+	}
 
-  100% {
-    transform: translateY(-8rem) scale(2) rotateY(180deg);
-    opacity: 0;
-  }
+	100% {
+		transform: translateY(-8rem) scale(2) rotateY(180deg);
+		opacity: 0;
+	}
 }
 
 .bezier-one {
-  transition-timing-function: var(--bezier-one);
+	transition-timing-function: var(--bezier-one);
 }
 
 .bezier-two {
-  transition-timing-function: var(--bezier-two);
+	transition-timing-function: var(--bezier-two);
 }
 
 .bezier-three {
-  transition-timing-function: var(--bezier-three);
+	transition-timing-function: var(--bezier-three);
 }
 
 .bezier-four {
-  transition-timing-function: var(--bezier-four);
+	transition-timing-function: var(--bezier-four);
 }
 
 .bezier-five {
-  transition-timing-function: var(--bezier-five);
+	transition-timing-function: var(--bezier-five);
 }
 
 .bezier-six {
-  transition-timing-function: var(--bezier-six);
+	transition-timing-function: var(--bezier-six);
 }
