@@ -10,6 +10,7 @@ import React, {
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import LanguageDropdown from "../misc/LanguageDropdown";
+import { t } from "i18next";
 
 export const Header = () => {
   return <SlideTabs />;
@@ -38,11 +39,11 @@ const SlideTabs = () => {
           Pricing
         </Tab>
         <Tab
-          href="/blog"
+          href="survey-results"
           setPosition={setPosition}
-          isActive={pathname === "/blog"}
+          isActive={pathname === "/survey-results"}
         >
-          Blog
+          {t("surveyResults")}
         </Tab>
         <Tab
           languageDropdown

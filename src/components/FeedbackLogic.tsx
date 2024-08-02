@@ -8,14 +8,26 @@ import { submitFeedbackAction } from "@/core/server/actions";
 import EmojiButton from "./EmojiButton";
 import { CloseIcon } from "./Icons";
 import { useTranslation } from "react-i18next";
-import { RATE_LIMIT_INTERVAL, TIME_TO_SHOW_FEEDBACK_FORM, opinionEmojis } from "@/core/config";
-import { showFeedbackMotionConfig, afterEmojiClick, formAnimation } from "@/core/config/motion-config";
+import {
+  RATE_LIMIT_INTERVAL,
+  TIME_TO_SHOW_FEEDBACK_FORM,
+  opinionEmojis,
+} from "@/core/config";
+import {
+  showFeedbackMotionConfig,
+  afterEmojiClick,
+  formAnimation,
+} from "@/core/config/motion-config";
 import useLocalStorage from "@/core/hooks/useLocalStorage";
+import SparklesText from "./misc/SparkleText";
 
 export function Feedback() {
   const { t } = useTranslation();
-  const [feedbackHidden, setFeedbackHidden] = useLocalStorage('feedbackHidden', false);
-  const [storedEmoji, setStoredEmoji] = useLocalStorage('selectedEmoji', null);
+  const [feedbackHidden, setFeedbackHidden] = useLocalStorage(
+    "feedbackHidden",
+    false,
+  );
+  const [storedEmoji, setStoredEmoji] = useLocalStorage("selectedEmoji", null);
   const [selectedOpinion, setSelectedOpinion] = useState(null);
   const [isSubmitted, setSubmissionState] = useState(false);
   const [isTextareaFocused, setIsTextareaFocused] = useState(false);
@@ -27,10 +39,17 @@ export function Feedback() {
   const formRef = useRef(null);
 
   const isButtonEnabled = feedbackText.trim().length > 0 && !isRateLimited;
+  const selectedEmojiObject = opinionEmojis.find(
+    (item) => item.text === storedEmoji,
+  );
+  const selectedEmoji = selectedEmojiObject ? selectedEmojiObject.emoji : "";
 
   useEffect(() => {
     if (!feedbackHidden && !storedEmoji) {
-      const timer = setTimeout(() => setFeedbackHidden(false), TIME_TO_SHOW_FEEDBACK_FORM);
+      const timer = setTimeout(
+        () => setFeedbackHidden(false),
+        TIME_TO_SHOW_FEEDBACK_FORM,
+      );
       return () => clearTimeout(timer);
     }
   }, [feedbackHidden, storedEmoji, setFeedbackHidden]);
@@ -38,7 +57,8 @@ export function Feedback() {
   useEffect(() => {
     const lastSubmissionTime = localStorage.getItem("lastFeedbackSubmission");
     if (lastSubmissionTime) {
-      const timeSinceLastSubmission = Date.now() - parseInt(lastSubmissionTime, 10);
+      const timeSinceLastSubmission =
+        Date.now() - parseInt(lastSubmissionTime, 10);
       if (timeSinceLastSubmission < RATE_LIMIT_INTERVAL) {
         setIsRateLimited(true);
         const remainingTime = RATE_LIMIT_INTERVAL - timeSinceLastSubmission;
@@ -128,17 +148,28 @@ export function Feedback() {
           <motion.div
             layout
             initial={{ borderRadius: "2rem" }}
-            animate={{ borderRadius: selectedOpinion || storedEmoji ? "0.5rem" : "2rem" }}
-            className="min-w-[300px] md:min-w-[400px] h-auto w-fit border py-2 bg-section-light hover:bg-[#171716] shadow-sm border-border transition-all bezier-ones duration-500 gap-4"
+            animate={{
+              borderRadius: selectedOpinion || storedEmoji ? "0.5rem" : "2rem",
+            }}
+            className="min-w-[300px] md:min-w-[400px] h-auto w-fit border py-2 bg-section-light hover:bg-[#171716] shadow-sm border-border transition-all bezier-ones duration-500 gap-4 relative"
           >
             {!isTextareaVisible && !storedEmoji ? (
               <div className="flex flex-wrap items-center justify-between w-full px-7 translate-x-1.5 gap-x-6">
                 <h2 id="feedback-label" className="text-sm text-disabled">
                   {t("feedbackLabel")}
                 </h2>
-                <div className="flex items-center text-text emojis" role="group" aria-labelledby="feedback-label">
+                <div
+                  className="flex items-center text-text emojis"
+                  role="group"
+                  aria-labelledby="feedback-label"
+                >
                   {opinionEmojis.map((item) => (
-                    <EmojiButton key={item.text} item={item} selectedOpinion={selectedOpinion} onSelect={handleEmojiSelect} />
+                    <EmojiButton
+                      key={item.text}
+                      item={item}
+                      selectedOpinion={selectedOpinion}
+                      onSelect={handleEmojiSelect}
+                    />
                   ))}
                 </div>
               </div>
@@ -158,7 +189,7 @@ export function Feedback() {
                       animate={afterEmojiClick.animate}
                       exit={afterEmojiClick.exit}
                       transition={afterEmojiClick.transition}
-                      className="mx-auto flex items-center flex-col relative"
+                      className="mx-auto flex items-center flex-col "
                     >
                       <motion.form
                         initial={formAnimation.initial}
@@ -167,9 +198,13 @@ export function Feedback() {
                         exit={formAnimation.exit}
                         ref={formRef}
                         onSubmit={handleSubmit}
-                        className="flex flex-col mx-auto w-full px-4 gap-4 falling-effect"
+                        className="flex flex-col mx-auto w-full px-4 gap-4 "
                       >
-                        <input type="hidden" name="opinion" value={selectedOpinion || storedEmoji || ''} />
+                        <input
+                          type="hidden"
+                          name="opinion"
+                          value={selectedOpinion || storedEmoji || ""}
+                        />
                         <textarea
                           name="feedback"
                           value={feedbackText}
@@ -184,7 +219,12 @@ export function Feedback() {
                           <BorderBeam size={250} duration={12} delay={9} />
                         )}
                         <div className="flex items-center justify-end w-full">
-                          <CoolButton hasCoolMode={true} isNotEmpty={isButtonEnabled} onClick={() => formRef.current?.requestSubmit()} isLoading={isLoading} />
+                          <CoolButton
+                            hasCoolMode={true}
+                            isNotEmpty={isButtonEnabled}
+                            onClick={() => formRef.current?.requestSubmit()}
+                            isLoading={isLoading}
+                          />
                         </div>
                       </motion.form>
                     </motion.div>
@@ -195,13 +235,15 @@ export function Feedback() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="flex flex-col items-center justify-start gap-2 pt-4 text-sm font-normal"
+                    className="flex flex-col items-center justify-center p-4"
                     role="status"
                   >
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 dark:bg-sky-500">
-                      <span aria-hidden="true">✓</span>
-                    </div>
-                    {t("postSubmitText")}
+                    <span aria-hidden="true" className="text-2xl">
+                      {selectedEmoji}
+                    </span>
+                    <p className="text-center">
+                      <SparklesText text={t("postSubmitText")} />
+                    </p>
                   </motion.div>
                 )}
               </AnimatePresence>
