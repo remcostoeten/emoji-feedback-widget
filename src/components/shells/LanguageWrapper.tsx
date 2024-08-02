@@ -7,39 +7,39 @@ import { FeedbackSkeleton } from '../Loaders'
 import LanguageDropdown from '../menus/LanguageDropdown'
 
 interface LanguageWrapperProps {
-  children: React.ReactNode
+	children: React.ReactNode
 }
 
 const LanguageWrapper: React.FC<LanguageWrapperProps> = ({ children }) => {
-  const { i18n } = useTranslation()
-  const [isHydrated, setIsHydrated] = useState(false)
-  const [isFeedbackHidden, setIsFeedbackHidden] = useState(true)
+	const { i18n } = useTranslation()
+	const [isHydrated, setIsHydrated] = useState(false)
+	const [isFeedbackHidden, setIsFeedbackHidden] = useState(true)
 
-  useEffect(() => {
-    const savedLanguage = localStorage.getItem('language')
-    if (savedLanguage && savedLanguage !== i18n.language) {
-      i18n.changeLanguage(savedLanguage)
-    }
+	useEffect(() => {
+		const savedLanguage = localStorage.getItem('language')
+		if (savedLanguage && savedLanguage !== i18n.language) {
+			i18n.changeLanguage(savedLanguage)
+		}
 
-    const feedbackHidden = localStorage.getItem('feedbackHidden')
-    setIsFeedbackHidden(feedbackHidden === 'true')
+		const feedbackHidden = localStorage.getItem('feedbackHidden')
+		setIsFeedbackHidden(feedbackHidden === 'true')
 
-    setIsHydrated(true)
-  }, [i18n])
+		setIsHydrated(true)
+	}, [i18n])
 
-  if (!isHydrated) {
-    return (
-      <>
-        {!isFeedbackHidden && <FeedbackSkeleton />}
-        <nav className='flex fixed top-12 gap-4 left-4 items-center'>
-          <a href='/'>Home </a>
-          <a href='/test'>Test page</a>
-        </nav>
-      </>
-    )
-  }
+	if (!isHydrated) {
+		return (
+			<>
+				{!isFeedbackHidden && <FeedbackSkeleton />}
+				<nav className="flex fixed top-12 gap-4 left-4 items-center">
+					<a href="/">Home </a>
+					<a href="/test">Test page</a>
+				</nav>
+			</>
+		)
+	}
 
-  return <>{children}</>
+	return <>{children}</>
 }
 
 export default LanguageWrapper

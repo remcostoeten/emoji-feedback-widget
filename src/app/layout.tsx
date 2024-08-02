@@ -16,21 +16,21 @@ const inter = Inter({ subsets: ['latin'] })
 // };
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode
+	children: React.ReactNode
 }>) {
-  return (
-    <html>
-      <body className={`${inter.className} bg-body`}>
-        <Providers>
-          <LanguageWrapper>
-            <Header />
-            {children}
-            <Feedback />
-          </LanguageWrapper>
-        </Providers>
-      </body>
-    </html>
-  )
+	return (
+		<html>
+			<body className={`${inter.className} bg-body`}>
+				<Providers>
+					<LanguageWrapper>
+						<Header />
+						{children}
+						<Feedback />
+					</LanguageWrapper>
+				</Providers>
+			</body>
+		</html>
+	)
 }

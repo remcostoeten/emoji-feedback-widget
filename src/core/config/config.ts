@@ -1,10 +1,10 @@
 import { OpinionEmoji } from '../utils/types'
 
 export const opinionEmojis: OpinionEmoji[] = [
-  { text: 'love it', emoji: '😍' },
-  { text: 'DOPE!', emoji: '🔥' },
-  { text: "its shit", emoji: '💩' },
-  { text: 'sickening', emoji: '🤮' },
+	{ text: 'love it', emoji: '😍' },
+	{ text: 'DOPE!', emoji: '🔥' },
+	{ text: 'its shit', emoji: '💩' },
+	{ text: 'sickening', emoji: '🤮' },
 ]
 
 // If disabled results won't be logged to .json locally.

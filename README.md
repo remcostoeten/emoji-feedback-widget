@@ -14,12 +14,12 @@
 
 Here're some of the project's best features:
 
-- 🎭 Emoji-based quick feedback
-- 📝 Optional text feedback
-- 🎨 Animated UI using Framer Motion
-- 🌐 Internationalization support
-- 💾 Local storage of feedback data
-- 📊 Feedback data visualization page
+-   🎭 Emoji-based quick feedback
+-   📝 Optional text feedback
+-   🎨 Animated UI using Framer Motion
+-   🌐 Internationalization support
+-   💾 Local storage of feedback data
+-   📊 Feedback data visualization page
 
 <h2>🛠️ Installation Steps:</h2>
 
@@ -39,11 +39,11 @@ cd emoji-feedback-form; npm i; npm run dev
 
 Technologies used in the project:
 
-- React 19
-- NextJS 15
-- TypeScript
-- Tailwind CSS
-- Framer Motion
-- Server actions
-- i18next
-- ShadCN
+-   React 19
+-   NextJS 15
+-   TypeScript
+-   Tailwind CSS
+-   Framer Motion
+-   Server actions
+-   i18next
+-   ShadCN
