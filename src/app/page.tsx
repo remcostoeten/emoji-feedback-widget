@@ -136,18 +136,6 @@ useEffect(() => {
         </HoverCard>
       </div>
       
-      <form action={submitFeedbackAction} className="mb-6">
-        <select name="opinion" required className="mb-2 p-2 border rounded">
-          {opinionEmojis.map((option) => (
-            <option key={option.text} value={option.text}>
-              {option.emoji} {option.text}
-            </option>
-          ))}
-        </select>
-        <textarea name="feedback" placeholder="Your feedback" required className="w-full p-2 mb-2 border rounded"></textarea>
-        <Button type="submit">Submit Feedback</Button>
-      </form>
-
       <HoverCard>
         <Card className="border-[#3d3838] border shadow-sm shadow-white/10 bg-[#0B0A0B]">
           <CardHeader>
@@ -165,7 +153,7 @@ useEffect(() => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
-                    variant="outline"
+                    variant="actions"
                     className="border-border border border-opacity-25 w-fit"
                     size="sm"
                   >
@@ -199,7 +187,7 @@ useEffect(() => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
-                    variant="outline"
+                    variant="actions"
                     className="border-border border border-opacity-25 w-fit"
                     size="sm"
                   >

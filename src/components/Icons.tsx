@@ -66,11 +66,11 @@ function TrashIcon(props) {
 function CloseIcon() {
 	return (
 		<svg
-			className="withIcon_icon__MHUeb"
+			className="withIcon_icon__MHUeb "
 			fill="none"
 			height="24"
 			shapeRendering="geometricPrecision"
-			stroke="#0B0A0B"
+			stroke="rgba(255,255,255,.4)"
 			strokeLinecap="round"
 			strokeLinejoin="round"
 			strokeWidth="1.5"

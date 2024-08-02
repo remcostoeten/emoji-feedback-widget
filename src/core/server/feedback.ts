@@ -17,14 +17,12 @@ function getEmojiFromOpinion(opinionText: string): string {
     return opinion ? opinion.emoji : opinionText
 }
 
-export async function submitFeedbackAction(formData: FormData) {
+export async function submitFeedbackAction(prevState: any, formData: FormData) {
     const opinion = formData.get('opinion') as string
     const feedback = formData.get('feedback') as string
-
     const emoji = getEmojiFromOpinion(opinion)
 
     const newFeedback = {
-        id: Date.now(),
         opinion: emoji,
         feedback: feedback,
         timestamp: new Date().toISOString(),
@@ -33,9 +31,14 @@ export async function submitFeedbackAction(formData: FormData) {
     try {
         await db.insert(feedbacks).values(newFeedback)
 
-        const existingCount = await db.select().from(emojiCounts).where(eq(emojiCounts.emoji, emoji))
+        const existingCount = await db
+            .select()
+            .from(emojiCounts)
+            .where(eq(emojiCounts.emoji, emoji))
+
         if (existingCount.length > 0) {
-            await db.update(emojiCounts)
+            await db
+                .update(emojiCounts)
                 .set({ count: existingCount[0].count + 1 })
                 .where(eq(emojiCounts.emoji, emoji))
         } else {
@@ -43,12 +46,13 @@ export async function submitFeedbackAction(formData: FormData) {
         }
 
         revalidatePath('/')
-        return { success: true, message: 'Feedback saved successfully to database' }
+        return { success: true, message: 'Feedback saved successfully' }
     } catch (error) {
-        console.error('Error saving feedback to database:', error)
-        return { success: false, message: 'Error saving feedback to database' }
+        console.error('Error saving feedback:', error)
+        return { success: false, message: 'Error saving feedback' }
     }
 }
+
 
 export async function getFeedbackData(): Promise<FeedbackData> {
     if (USE_DATABASE) {
@@ -73,4 +77,23 @@ export async function getFeedbackData(): Promise<FeedbackData> {
         // Your existing JSON reading logic here
         // ...
     }
+}
+
+export async function getEmojiCountsAction() {
+    try {
+        const counts = await db.select().from(emojiCounts)
+        return counts.reduce((acc, { emoji, count }) => {
+            acc[emoji] = count
+            return acc
+        }, {} as Record<string, number>)
+    } catch (error) {
+        console.error('Error fetching emoji counts:', error)
+        return {}
+    }
+}
+
+export async function checkRateLimitAction() {
+    // Implement rate limiting logic here
+    // This is a placeholder implementation
+    return { isRateLimited: false, remainingTime: 0 }
 }
