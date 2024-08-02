@@ -4,6 +4,13 @@ import fs from "fs/promises";
 import path from "path";
 import { ENABLE_LOCAL_STORAGE } from "../config";
 
+interface Feedback {
+  id: number;
+  opinion: FormDataEntryValue | null;
+  feedback: FormDataEntryValue | null;
+  timestamp: string;
+}
+
 export async function submitFeedbackAction(formData: FormData) {
   if (!ENABLE_LOCAL_STORAGE) {
     console.log("Local storage is disabled. Feedback not saved.");
@@ -13,8 +20,8 @@ export async function submitFeedbackAction(formData: FormData) {
   const opinion = formData.get("opinion");
   const feedback = formData.get("feedback");
 
-  const newFeedback = {
-    id: Date.now(),
+  const newFeedback: Feedback = {
+    id: Date.now(), // Assuming id is generated based on the current timestamp
     opinion,
     feedback,
     timestamp: new Date().toISOString(),
@@ -22,7 +29,7 @@ export async function submitFeedbackAction(formData: FormData) {
 
   try {
     const filePath = path.join(process.cwd(), "feedback.json");
-    let feedbackData = [];
+    let feedbackData: Feedback[] = [];
 
     try {
       const fileContent = await fs.readFile(filePath, "utf-8");
