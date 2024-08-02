@@ -2,6 +2,7 @@ import { CheckIcon, ChevronRightIcon } from 'lucide-react'
 import { AnimatedSubscribeButton } from './SubmitBtn'
 import { CoolButtonProps } from '@/core/utils/types'
 import { useTranslation } from 'react-i18next'
+import Image from 'next/image'
 
 export default function CoolButton({
 	onClick,
@@ -36,10 +37,12 @@ export default function CoolButton({
 							<p className="translate-x-12">
 								{t('feedbackSent')}
 							</p>
-							<img
+							<Image
 								src="/rocket.webp"
 								alt="rocket"
-								className="translate-x-28 h-12 w-12 absolute"
+								className="translate-x-28 absolute"
+								width={48}
+								height={48}
 							/>
 						</div>
 					}
