@@ -1,0 +1,14 @@
+{
+    "feedbackSectionLabel": "Feedback",
+    "feedbackLabel": "Wat vind je van de site?",
+    "closeFeedbackForm": "Sluit feedbackformulier",
+    "feedbackPlaceholder": "Nog opmerkingen?",
+    "additionalFeedback": "Aanvullende feedback",
+    "postSubmitText": "Bedankt voor je feedback!",
+    "emojiReceived": "Emoji-feedback ontvangen. Voeg meer details toe als je wilt.",
+    "rateLimitedError": "Je kunt slechts één keer per 24 uur feedback indienen. Probeer het later opnieuw.",
+    "emptyFeedbackError": "Geef alsjeblieft aanvullende feedback voordat je indient.",
+    "feedbackSuccess": "Feedback succesvol opgeslagen",
+    "feedbackError": "Fout bij het opslaan van feedback",
+    "submitError": "Er is een fout opgetreden bij het indienen van feedback. Probeer het opnieuw."
+}

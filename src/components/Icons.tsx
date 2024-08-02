@@ -5,7 +5,7 @@ function CloseIcon() {
       fill="none"
       height="24"
       shapeRendering="geometricPrecision"
-      stroke="#333333"
+      stroke="#0B0A0B"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="1.5"

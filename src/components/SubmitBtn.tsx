@@ -7,7 +7,7 @@ interface AnimatedSubscribeButtonProps {
   buttonColor: string;
   buttonTextColor?: string;
   subscribeStatus: boolean;
-  disabled: boolean;
+  disabled?: boolean;
   initialText: React.ReactElement | string;
   changeText: React.ReactElement | string;
 }
