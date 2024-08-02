@@ -38,11 +38,11 @@ const SlideTabs = () => {
           Pricing
         </Tab>
         <Tab
-          href="/blog"
+          href="/country"
           setPosition={setPosition}
-          isActive={pathname === "/blog"}
+          isActive={pathname === "/country"}
         >
-          Blog
+          Country
         </Tab>
         <Tab
           languageDropdown

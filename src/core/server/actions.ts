@@ -22,7 +22,7 @@ export async function submitFeedbackAction(formData: FormData) {
 
   try {
     const filePath = path.join(process.cwd(), "feedback.json");
-    let feedbackData = [];
+    let feedbackData: (typeof newFeedback)[] = [];
 
     try {
       const fileContent = await fs.readFile(filePath, "utf-8");
