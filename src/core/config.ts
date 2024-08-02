@@ -16,4 +16,7 @@ export const opinionEmojis: OpinionEmoji[] = [
 // If disabled results won't be logged to .json locally.
 export const ENABLE_LOCAL_STORAGE = true;
 
-export const TIME_TO_SHOW_FEEDBACK_FORM = 5000; // 5s
+export const TIME_TO_SHOW_FEEDBACK_FORM = 1000; // 5s
+
+// The duration between being able to submit.
+export const RATE_LIMIT_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours in milliseconds

@@ -16,13 +16,20 @@ import useDebounce from "@/core/hooks/useDebounce";
 import EmojiButton from "./EmojiButton";
 import { CloseIcon } from "./Icons";
 import { useTranslation } from "react-i18next";
-import { opinionEmojis, TIME_TO_SHOW_FEEDBACK_FORM } from "@/core/config";
+import {
+  RATE_LIMIT_INTERVAL,
+  TIME_TO_SHOW_FEEDBACK_FORM,
+  opinionEmojis,
+} from "@/core/config";
+import {
+  showFeedbackMotionConfig,
+  afterEmojiClick,
+  formAnimation,
+} from "@/core/config/motion-config";
 
 const MemoizedCoolButton = React.memo(CoolButton);
 
-const RATE_LIMIT_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-
-export const Feedback: React.FC = () => {
+export function Feedback() {
   const { t } = useTranslation();
   const [selectedOpinion, setSelectedOpinion] = useState<string | null>(null);
   const [isSubmitted, setSubmissionState] = useState(false);
@@ -30,7 +37,7 @@ export const Feedback: React.FC = () => {
   const [isTextareaVisible, setIsTextareaVisible] = useState(false);
   const [feedbackText, setFeedbackText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isFeedbackHidden, setIsFeedbackHidden] = useState(true); // Initially hidden
+  const [isFeedbackHidden, setIsFeedbackHidden] = useState(true);
   const [isAnimatingOut, setIsAnimatingOut] = useState(false);
   const [isRateLimited, setIsRateLimited] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -46,7 +53,7 @@ export const Feedback: React.FC = () => {
       setIsFeedbackHidden(false);
     }, TIME_TO_SHOW_FEEDBACK_FORM);
 
-    return () => clearTimeout(timer); // Clean up timer on component unmount
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -169,19 +176,16 @@ export const Feedback: React.FC = () => {
         <motion.section
           aria-label={t("feedbackSectionLabel")}
           className="fixed bottom-0 left-0 right-0 max-w-full mx-auto flex justify-center mb-10"
-          initial={{ opacity: 0, y: 100 }}
-          animate={{
-            opacity: isAnimatingOut ? 0 : 1,
-            y: isAnimatingOut ? 100 : 0,
-          }}
-          exit={{ opacity: 0, y: 100 }}
-          transition={{ duration: 0.5 }}
+          initial={showFeedbackMotionConfig.initial}
+          animate={showFeedbackMotionConfig.animate(isAnimatingOut)}
+          exit={showFeedbackMotionConfig.exit}
+          transition={showFeedbackMotionConfig.transition}
         >
           <motion.div
             layout
             initial={{ borderRadius: "2rem" }}
             animate={{ borderRadius: selectedOpinion ? "0.5rem" : "2rem" }}
-            className="relative min-w-[300px] md:min-w-[400px] h-auto w-fit border py-2 bg-section-light hover:bg-[#171716] shadow-sm border-border transition-all bezier-ones duration-500 gap-4"
+            className="min-w-[300px] md:min-w-[400px] h-auto w-fit border py-2 bg-section-light hover:bg-[#171716] shadow-sm border-border transition-all bezier-ones duration-500 gap-4"
           >
             {!isTextareaVisible ? (
               <div className="flex flex-wrap items-center justify-between w-full px-7 translate-x-1.5 gap-x-6">
@@ -206,7 +210,7 @@ export const Feedback: React.FC = () => {
             ) : (
               <AnimatePresence>
                 {selectedOpinion && !isSubmitted && (
-                  <div className="relative">
+                  <div className="">
                     <button
                       onClick={handleClose}
                       className="unset absolute -top-5 z-50 shadow-white/10 shadow-xl -right-2.5"
@@ -215,16 +219,20 @@ export const Feedback: React.FC = () => {
                       <CloseIcon />
                     </button>
                     <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="mx-auto flex items-center flex-col"
+                      initial={afterEmojiClick.initial}
+                      animate={afterEmojiClick.animate}
+                      exit={afterEmojiClick.exit}
+                      transition={afterEmojiClick.transition}
+                      className="mx-auto flex items-center flex-col relative"
                     >
-                      <form
+                      <motion.form
+                        initial={formAnimation.initial}
+                        animate={formAnimation.animate}
+                        transition={formAnimation.transition}
+                        exit={formAnimation.exit}
                         ref={formRef}
                         onSubmit={handleSubmit}
-                        className="flex flex-col mx-auto w-full px-4 gap-4"
+                        className="flex flex-col mx-auto w-full px-4 gap-4 falling-effect"
                       >
                         <input
                           type="hidden"
@@ -253,7 +261,7 @@ export const Feedback: React.FC = () => {
                             isLoading={isLoading}
                           />
                         </div>
-                      </form>
+                      </motion.form>
                     </motion.div>
                   </div>
                 )}
@@ -278,6 +286,6 @@ export const Feedback: React.FC = () => {
       )}
     </AnimatePresence>
   );
-};
+}
 
 export default React.memo(Feedback);
