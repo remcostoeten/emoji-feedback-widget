@@ -1,32 +1,32 @@
-"use client";
+'use client'
 
-import React, { useState, useRef, useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useRef, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const languages = [
-  { code: "en", name: "English", flag: "🇬🇧" },
-  { code: "nl", name: "Nederlands", flag: "🇳🇱" },
-];
+  { code: 'en', name: 'English', flag: '🇬🇧' },
+  { code: 'nl', name: 'Nederlands', flag: '🇳🇱' },
+]
 
 const LanguageDropdown: React.FC = () => {
-  const { i18n } = useTranslation();
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const { i18n } = useTranslation()
+  const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const savedLanguage = localStorage.getItem("language");
+    const savedLanguage = localStorage.getItem('language')
     if (savedLanguage && savedLanguage !== i18n.language) {
-      i18n.changeLanguage(savedLanguage);
+      i18n.changeLanguage(savedLanguage)
     }
-  }, [i18n]);
+  }, [i18n])
   const currentLanguage =
-    languages.find((lang) => lang.code === i18n.language) || languages[0];
+    languages.find((lang) => lang.code === i18n.language) || languages[0]
 
   const handleLanguageChange = (langCode: string) => {
-    i18n.changeLanguage(langCode);
-    setIsOpen(false);
-  };
+    i18n.changeLanguage(langCode)
+    setIsOpen(false)
+  }
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -34,15 +34,15 @@ const LanguageDropdown: React.FC = () => {
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
-        setIsOpen(false);
+        setIsOpen(false)
       }
-    };
+    }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside)
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
@@ -95,7 +95,7 @@ const LanguageDropdown: React.FC = () => {
         )}
       </AnimatePresence>
     </div>
-  );
-};
+  )
+}
 
-export default LanguageDropdown;
+export default LanguageDropdown

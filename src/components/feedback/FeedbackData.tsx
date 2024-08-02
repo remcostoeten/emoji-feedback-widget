@@ -1,21 +1,21 @@
-"use client";
-import { useEffect, useState } from "react";
-import { getFeedbackData } from "@/core/server/actions";
-import { FeedbackData } from "@/core/utils/types";
+'use client'
+import { useEffect, useState } from 'react'
+import { getFeedbackData } from '@/core/server/actions'
+import { FeedbackData } from '@/core/utils/types'
 
 export default function FeedbackDataPage() {
-  const [data, setData] = useState<FeedbackData | null>(null);
+  const [data, setData] = useState<FeedbackData | null>(null)
 
   useEffect(() => {
     async function fetchData() {
-      const feedbackData = await getFeedbackData();
-      setData(feedbackData);
+      const feedbackData = await getFeedbackData()
+      setData(feedbackData)
     }
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   if (!data) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>
   }
 
   return (
@@ -46,5 +46,5 @@ export default function FeedbackDataPage() {
         {JSON.stringify(data, null, 2)}
       </pre>
     </div>
-  );
+  )
 }

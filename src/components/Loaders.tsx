@@ -1,4 +1,4 @@
-import { Skeleton } from "./shells/SkeletonShell";
+import { Skeleton } from './shells/SkeletonShell'
 
 const FeedbackSkeleton = () => (
   <>
@@ -26,7 +26,7 @@ const FeedbackSkeleton = () => (
       </div>
     </section>
   </>
-);
+)
 
 function TriangleLoader() {
   return (
@@ -35,7 +35,7 @@ function TriangleLoader() {
         <polygon points="43 8 79 72 7 72"></polygon>
       </svg>
     </div>
-  );
+  )
 }
 
-export { TriangleLoader, FeedbackSkeleton };
+export { TriangleLoader, FeedbackSkeleton }

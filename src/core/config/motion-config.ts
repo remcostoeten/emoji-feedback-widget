@@ -8,18 +8,18 @@ const showFeedbackMotionConfig = {
   }),
   exit: { scale: 0.5, opacity: 0, y: 100 },
   transition: {
-    type: "spring",
+    type: 'spring',
     stiffness: 75,
     duration: 0.5,
     ease: [0.16, 0.1, 0.3, 1],
   },
-};
+}
 
 // The configuration object for the animation that starts when a user clicks on an emoji and the feedback form shows up.
 const afterEmojiClick = {
   initial: { height: 0, opacity: 0 },
   animate: {
-    height: "auto",
+    height: 'auto',
     opacity: 1,
     transition: {
       height: { duration: 0.4, delay: 0.4 * 0.25 },
@@ -31,19 +31,19 @@ const afterEmojiClick = {
     duration: 0.4,
     ease: [0.16, 0.1, 0.3, 1],
   },
-};
+}
 
 // The configuration object for the animation of the form which shows up after the emoji click animation for a nicer effect than having them fire simultaneously
 
 const formAnimation = {
-  initial: { scale: 0.7, opacity: 0, rotateX: "31deg", rotateZ: "0deg" },
+  initial: { scale: 0.7, opacity: 0, rotateX: '31deg', rotateZ: '0deg' },
   animate: {
     opacity: 1,
     scale: 1,
-    rotateX: "0deg",
-    rotateZ: "0deg",
+    rotateX: '0deg',
+    rotateZ: '0deg',
     transition: {
-      ease: "easeInOut",
+      ease: 'easeInOut',
       duration: 0.35,
       delay: 0.3, // 0.3 seconds delay after afterEmojiClick animation
     },
@@ -53,9 +53,9 @@ const formAnimation = {
     duration: 0.4,
     ease: [0.16, 0.1, 0.3, 1],
   },
-};
+}
 
-export { showFeedbackMotionConfig, afterEmojiClick, formAnimation };
+export { showFeedbackMotionConfig, afterEmojiClick, formAnimation }
 
 /**
  * Configuration object for feedback motion.

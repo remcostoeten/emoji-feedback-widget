@@ -1,170 +1,171 @@
-"use client";
+'use client'
 
-import React, { useRef, useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { BorderBeam } from "./misc/BorderEffects";
-import { toast } from "sonner";
-import CoolButton from "./CoolButton";
-import { submitFeedbackAction } from "@/core/server/actions";
-import EmojiButton from "./EmojiButton";
-import { CloseIcon } from "./Icons";
-import { useTranslation } from "react-i18next";
-import {
-  RATE_LIMIT_INTERVAL,
-  TIME_TO_SHOW_FEEDBACK_FORM,
-  opinionEmojis,
-} from "@/core/config";
+import React, { useRef, useState, useEffect } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { toast } from 'sonner'
+import CoolButton from './CoolButton'
+import { submitFeedbackAction } from '@/core/server/actions'
+import EmojiButton from './EmojiButton'
+import { CloseIcon } from './Icons'
+import { useTranslation } from 'react-i18next'
+
 import {
   showFeedbackMotionConfig,
   afterEmojiClick,
   formAnimation,
-} from "@/core/config/motion-config";
-import useLocalStorage from "@/core/hooks/useLocalStorage";
-import SparklesText from "./effects/SparkleText";
+} from '@/core/config/motion-config'
+import useLocalStorage from '@/core/hooks/useLocalStorage'
+import SparklesText from './effects/SparkleText'
+import {
+  opinionEmojis,
+  TIME_TO_SHOW_FEEDBACK_FORM,
+  RATE_LIMIT_INTERVAL,
+} from '@/core/config/config'
+import { BorderBeam } from './shells/BorderEffects'
 
 export function Feedback() {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   const [feedbackHidden, setFeedbackHidden] = useLocalStorage(
-    "feedbackHidden",
+    'feedbackHidden',
     false,
-  );
-  const [storedEmoji, setStoredEmoji] = useLocalStorage("selectedEmoji", null);
-  const [selectedOpinion, setSelectedOpinion] = useState(null);
-  const [isSubmitted, setSubmissionState] = useState(false);
-  const [isTextareaFocused, setIsTextareaFocused] = useState(false);
-  const [isTextareaVisible, setIsTextareaVisible] = useState(false);
-  const [feedbackText, setFeedbackText] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isAnimatingOut, setIsAnimatingOut] = useState(false);
-  const [isRateLimited, setIsRateLimited] = useState(false);
-  const formRef = useRef(null);
-  const sectionRef = useRef(null);
+  )
+  const [storedEmoji, setStoredEmoji] = useLocalStorage('selectedEmoji', null)
+  const [selectedOpinion, setSelectedOpinion] = useState(null)
+  const [isSubmitted, setSubmissionState] = useState(false)
+  const [isTextareaFocused, setIsTextareaFocused] = useState(false)
+  const [isTextareaVisible, setIsTextareaVisible] = useState(false)
+  const [feedbackText, setFeedbackText] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [isAnimatingOut, setIsAnimatingOut] = useState(false)
+  const [isRateLimited, setIsRateLimited] = useState(false)
+  const formRef = useRef(null)
+  const sectionRef = useRef(null)
 
-  const isButtonEnabled = feedbackText.trim().length > 0 && !isRateLimited;
+  const isButtonEnabled = feedbackText.trim().length > 0 && !isRateLimited
   const selectedEmojiObject = opinionEmojis.find(
     (item) => item.text === storedEmoji,
-  );
-  const selectedEmoji = selectedEmojiObject ? selectedEmojiObject.emoji : "";
+  )
+  const selectedEmoji = selectedEmojiObject ? selectedEmojiObject.emoji : ''
 
   useEffect(() => {
     if (!feedbackHidden && !storedEmoji) {
       const timer = setTimeout(
         () => setFeedbackHidden(false),
         TIME_TO_SHOW_FEEDBACK_FORM,
-      );
-      return () => clearTimeout(timer);
+      )
+      return () => clearTimeout(timer)
     }
-  }, [feedbackHidden, storedEmoji, setFeedbackHidden]);
+  }, [feedbackHidden, storedEmoji, setFeedbackHidden])
 
   useEffect(() => {
-    const lastSubmissionTime = localStorage.getItem("lastFeedbackSubmission");
+    const lastSubmissionTime = localStorage.getItem('lastFeedbackSubmission')
     if (lastSubmissionTime) {
       const timeSinceLastSubmission =
-        Date.now() - parseInt(lastSubmissionTime, 10);
+        Date.now() - parseInt(lastSubmissionTime, 10)
       if (timeSinceLastSubmission < RATE_LIMIT_INTERVAL) {
-        setIsRateLimited(true);
-        const remainingTime = RATE_LIMIT_INTERVAL - timeSinceLastSubmission;
-        setTimeout(() => setIsRateLimited(false), remainingTime);
+        setIsRateLimited(true)
+        const remainingTime = RATE_LIMIT_INTERVAL - timeSinceLastSubmission
+        setTimeout(() => setIsRateLimited(false), remainingTime)
       }
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === "Escape") {
-        handleClose();
+      if (e.key === 'Escape') {
+        handleClose()
       }
-    };
+    }
 
     const handleClickOutside = (e) => {
       if (sectionRef.current && !sectionRef.current.contains(e.target)) {
-        handleClose();
+        handleClose()
       }
-    };
+    }
 
-    document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener('mousedown', handleClickOutside)
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   function handleEmojiSelect(opinion) {
-    setSelectedOpinion(opinion);
-    setIsTextareaVisible(true);
-    setStoredEmoji(opinion);
-    setFeedbackHidden(true);
-    toast(t("emojiReceived"));
+    setSelectedOpinion(opinion)
+    setIsTextareaVisible(true)
+    setStoredEmoji(opinion)
+    setFeedbackHidden(true)
+    toast(t('emojiReceived'))
   }
 
   async function handleSubmit(event) {
-    event.preventDefault();
+    event.preventDefault()
 
     if (isRateLimited) {
-      toast(t("rateLimitedError"));
-      return;
+      toast(t('rateLimitedError'))
+      return
     }
 
-    const formData = new FormData(event.currentTarget);
-    const feedback = formData.get("feedback");
+    const formData = new FormData(event.currentTarget)
+    const feedback = formData.get('feedback')
 
     if (!feedback) {
-      toast(t("emptyFeedbackError"));
-      return;
+      toast(t('emptyFeedbackError'))
+      return
     }
 
-    setIsLoading(true);
+    setIsLoading(true)
     try {
-      const result = await submitFeedbackAction(formData);
+      const result = await submitFeedbackAction(formData)
       if (result.success) {
         setTimeout(() => {
-          localStorage.setItem("lastFeedbackSubmission", Date.now().toString());
-          setIsRateLimited(true);
-          setTimeout(() => setIsRateLimited(false), RATE_LIMIT_INTERVAL);
-          setSubmissionState(true);
-          toast.success(t("feedbackSuccess"));
+          localStorage.setItem('lastFeedbackSubmission', Date.now().toString())
+          setIsRateLimited(true)
+          setTimeout(() => setIsRateLimited(false), RATE_LIMIT_INTERVAL)
+          setSubmissionState(true)
+          toast.success(t('feedbackSuccess'))
           setTimeout(() => {
-            setIsAnimatingOut(true);
-            setTimeout(resetForm, 500);
-          }, 1250);
-        }, 1500);
+            setIsAnimatingOut(true)
+            setTimeout(resetForm, 500)
+          }, 1250)
+        }, 1500)
       } else {
-        toast.error(t("feedbackError"));
+        toast.error(t('feedbackError'))
       }
     } catch (error) {
-      toast.error(t("submitError"));
+      toast.error(t('submitError'))
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }
 
   function handleClose() {
-    setIsAnimatingOut(true);
-    setTimeout(resetForm, 500);
+    setIsAnimatingOut(true)
+    setTimeout(resetForm, 500)
   }
 
   function resetForm() {
-    setSelectedOpinion(null);
-    setSubmissionState(false);
-    setIsTextareaVisible(false);
-    setFeedbackText("");
-    setStoredEmoji(null);
+    setSelectedOpinion(null)
+    setSubmissionState(false)
+    setIsTextareaVisible(false)
+    setFeedbackText('')
+    setStoredEmoji(null)
     if (formRef.current) {
-      formRef.current.reset();
+      formRef.current.reset()
     }
   }
 
   function handleKeyDown(e) {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSubmit(e);
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      handleSubmit(e)
     }
   }
 
   if (feedbackHidden && !storedEmoji) {
-    return null;
+    return null
   }
 
   return (
@@ -172,7 +173,7 @@ export function Feedback() {
       {(!feedbackHidden || storedEmoji) && (
         <motion.section
           ref={sectionRef}
-          aria-label={t("feedbackSectionLabel")}
+          aria-label={t('feedbackSectionLabel')}
           className="fixed bottom-0 left-0 right-0 max-w-full mx-auto flex justify-center mb-10"
           initial={showFeedbackMotionConfig.initial}
           animate={showFeedbackMotionConfig.animate(isAnimatingOut)}
@@ -181,16 +182,16 @@ export function Feedback() {
         >
           <motion.div
             layout
-            initial={{ borderRadius: "2rem" }}
+            initial={{ borderRadius: '2rem' }}
             animate={{
-              borderRadius: selectedOpinion || storedEmoji ? "0.5rem" : "2rem",
+              borderRadius: selectedOpinion || storedEmoji ? '0.5rem' : '2rem',
             }}
             className="min-w-[300px] md:min-w-[400px] h-auto w-fit border py-2 bg-section-light hover:bg-[#171716] shadow-sm border-border transition-all bezier-ones duration-500 gap-4 relative"
           >
             {!isTextareaVisible && !storedEmoji ? (
               <div className="flex flex-wrap items-center justify-between w-full px-7 translate-x-1.5 gap-x-6">
                 <h2 id="feedback-label" className="text-sm text-disabled">
-                  {t("feedbackLabel")}
+                  {t('feedbackLabel')}
                 </h2>
                 <div
                   className="flex items-center text-text emojis"
@@ -214,7 +215,7 @@ export function Feedback() {
                     <button
                       onClick={handleClose}
                       className="unset absolute -top-5 z-50 shadow-white/10 shadow-xl -right-2.5"
-                      aria-label={t("closeFeedbackForm")}
+                      aria-label={t('closeFeedbackForm')}
                     >
                       <CloseIcon />
                     </button>
@@ -237,16 +238,16 @@ export function Feedback() {
                         <input
                           type="hidden"
                           name="opinion"
-                          value={selectedOpinion || storedEmoji || ""}
+                          value={selectedOpinion || storedEmoji || ''}
                         />
                         <textarea
                           name="feedback"
                           value={feedbackText}
                           onChange={(e) => setFeedbackText(e.target.value)}
                           onKeyDown={handleKeyDown}
-                          placeholder={t("feedbackPlaceholder")}
+                          placeholder={t('feedbackPlaceholder')}
                           className="min-h-32 x rounded-md bg-body focus:bg-section focus:border-none focus:outline-none transition-all duration-700 border border-border px-4 py-4 mt-2"
-                          aria-label={t("additionalFeedback")}
+                          aria-label={t('additionalFeedback')}
                           onFocus={() => setIsTextareaFocused(true)}
                           onBlur={() => setIsTextareaFocused(false)}
                         />
@@ -277,7 +278,7 @@ export function Feedback() {
                       {selectedEmoji}
                     </span>
                     <p className="text-center">
-                      <SparklesText text={t("postSubmitText")} />
+                      <SparklesText text={t('postSubmitText')} />
                     </p>
                   </motion.div>
                 )}
@@ -287,7 +288,7 @@ export function Feedback() {
         </motion.section>
       )}
     </AnimatePresence>
-  );
+  )
 }
 
-export default Feedback;
+export default Feedback

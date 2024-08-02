@@ -1,5 +1,5 @@
-@import "../styles/animations.css";
-@import "../styles/misc.css";
+@import '../styles/animations.css';
+@import '../styles/misc.css';
 
 @tailwind base;
 @tailwind components;
@@ -16,7 +16,7 @@ body {
   display: grid;
   place-items: center;
   min-height: 100vh;
-  font-family: "SF Pro Text", "SF Pro Icons", "AOS Icons", "Helvetica Neue",
+  font-family: 'SF Pro Text', 'SF Pro Icons', 'AOS Icons', 'Helvetica Neue',
     Helvetica, Arial, sans-serif, system-ui;
   color: white;
 }
@@ -24,7 +24,7 @@ body {
 body::after {
   --line: hsl(0 0% 95% / 0.15);
   --size: 60px;
-  content: "";
+  content: '';
   height: 100vh;
   width: 100vw;
   position: fixed;
@@ -45,16 +45,16 @@ body::after {
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
   --border: #333333;
-  --section-border: "#ffffff24";
+  --section-border: '#ffffff24';
   --section: #0b0a0b;
-  --card-light: "#171716";
-  --section-light: "#101110";
+  --card-light: '#171716';
+  --section-light: '#101110';
   --body: #000101;
-  --button-bg: "#0B0A0B";
-  --button-hover: "#1f1f1f";
-  --text: "#ededed";
-  --text-sub: "#a1a1a1";
-  --text-disabled: "#888888";
+  --button-bg: '#0B0A0B';
+  --button-hover: '#1f1f1f';
+  --text: '#ededed';
+  --text-sub: '#a1a1a1';
+  --text-disabled: '#888888';
 
   --bezier-one: cubic-bezier(0.6, -1.2, 0.2, 2.2);
   --bezier-two: cubic-bezier(0.02, 0.01, 0.21, 1);
@@ -86,4 +86,8 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.border-card {
+  border: 1px solid rgb(229, 231, 235);
 }

@@ -5,10 +5,10 @@ const Skeleton = ({ className }) => (
     </span>
     <br />
   </div>
-);
+)
 
 const SVGSkeleton = ({ className }) => (
-  <svg className={className + " animate-pulse rounded bg-gray-300"} />
-);
+  <svg className={className + ' animate-pulse rounded bg-gray-300'} />
+)
 
-export { Skeleton, SVGSkeleton };
+export { Skeleton, SVGSkeleton }

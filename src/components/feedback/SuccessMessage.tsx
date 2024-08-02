@@ -1,9 +1,9 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { useTranslation } from "react-i18next";
+import React from 'react'
+import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 
 export const SuccessMessage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <motion.div
@@ -16,7 +16,7 @@ export const SuccessMessage: React.FC = () => {
       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 dark:bg-sky-500">
         <span aria-hidden="true">✓</span>
       </div>
-      {t("postSubmitText")}
+      {t('postSubmitText')}
     </motion.div>
-  );
-};
+  )
+}
