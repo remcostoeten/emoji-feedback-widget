@@ -1,0 +1,14 @@
+{
+  "feedbackSectionLabel": "Feedback",
+  "feedbackLabel": "How's your experience?",
+  "closeFeedbackForm": "Close feedback form",
+  "feedbackPlaceholder": "Any additional thoughts?",
+  "additionalFeedback": "Additional feedback",
+  "postSubmitText": "Thank you for your feedback!",
+  "emojiReceived": "Emoji feedback received. Add more details if you wish.",
+  "rateLimitedError": "You can only submit feedback once every 24 hours. Please try again later.",
+  "emptyFeedbackError": "Please provide additional feedback before submitting.",
+  "feedbackSuccess": "Feedback saved successfully",
+  "feedbackError": "Error saving feedback",
+  "submitError": "An error occurred while submitting feedback. Please try again."
+}

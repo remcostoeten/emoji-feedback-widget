@@ -1,9 +1,10 @@
+"use client";
+
 import CoolButton from "@/components/CoolButton";
 import { BorderBeam } from "@/components/misc/BorderEffects";
-import ShinyButton from "@/components/misc/ShinyBtn";
+import SparklesText from "@/components/misc/SparkleText";
 import { AnimatedSubscribeButton } from "@/components/SubmitBtn";
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
-import React from "react";
 
 export default function page() {
   return (
@@ -11,6 +12,7 @@ export default function page() {
       className="mx-auto container p-10 grid place-ite
     ms-center"
     >
+      <SparklesText text="Magic UI" />;
       <AnimatedSubscribeButton
         buttonColor="#000000"
         buttonTextColor="#ffffff"
@@ -27,6 +29,7 @@ export default function page() {
             Subscribed{" "}
           </span>
         }
+        disabled={false}
       />
       <CoolButton
         hasCoolMode={true}

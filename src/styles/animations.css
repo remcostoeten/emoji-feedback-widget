@@ -8,8 +8,11 @@
   .emoji {
     cursor: pointer;
     user-select: none;
-    margin: 0 0.5rem;
     transition: all 0.3s;
+
+    &:not(:first-child) {
+      margin-left: 8px;
+    }
 
     &.active {
       animation-name: emoji;
