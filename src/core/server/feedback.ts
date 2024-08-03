@@ -38,16 +38,14 @@ export async function submitFeedbackAction(formData: FormData) {
 				set: { count: sql`${emojiCounts.count} + 1` },
 			})
 
-		// If there's feedback text, save it to the feedbacks table
-		if (feedback) {
-			await db.insert(feedbacks).values({
-				opinion: opinion,
-				feedback: feedback,
-				timestamp: new Date().toISOString(),
-			})
-		}
+		// Always save to the feedbacks table, even if feedback is empty
+		await db.insert(feedbacks).values({
+			opinion: opinion,
+			feedback: feedback || '', // Use an empty string if feedback is null
+			timestamp: new Date().toISOString(),
+		})
 
-		console.log('Emoji count updated for:', opinion)
+		console.log('Feedback saved for:', opinion)
 		return { success: true, message: 'Feedback saved successfully' }
 	} catch (error) {
 		console.error('Error saving feedback:', error)
