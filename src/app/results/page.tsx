@@ -248,20 +248,6 @@ export default function Component() {
 									>
 										Oldest
 									</DropdownMenuItem>
-									<DropdownMenuItem
-										onSelect={() =>
-											handleSortChange('highest')
-										}
-									>
-										Highest Rating
-									</DropdownMenuItem>
-									<DropdownMenuItem
-										onSelect={() =>
-											handleSortChange('lowest')
-										}
-									>
-										Lowest Rating
-									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenu>
 						</div>

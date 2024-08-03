@@ -28,7 +28,7 @@ import NumberTicker from '@/components/effects/NumberTicker'
 import SparklesText from '@/components/effects/SparkleText'
 
 export default function Component() {
-	const { t } = useTranslation() // Initialize the translation hook
+	const { t } = useTranslation()
 	const [feedbackData, setFeedbackData] = useState([])
 	const [emojiCounts, setEmojiCounts] = useState({})
 	const [searchTerm, setSearchTerm] = useState('')
@@ -134,12 +134,6 @@ export default function Component() {
 
 	return (
 		<div className="container mx-auto py-8 bg-card-light">
-			<header className="mb-8">
-				<h1 className="text-[40px] font-bold">
-					<SparklesText text={t('feedbackSectionLabel')} />
-				</h1>
-				<p className="text-muted-foreground">{t('feedbackLabel')}</p>
-			</header>
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
 				<HoverCard gradientOpacity={0.3}>
 					<Card>
@@ -183,12 +177,11 @@ export default function Component() {
 
 			<div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div className="col-span-1 md:col-span-2">
-					<Input
+					<Input className='vercel-card'
 						type="search"
 						placeholder={t('feedbackPlaceholder')}
 						value={searchTerm}
 						onChange={(e) => setSearchTerm(e.target.value)}
-						className="w-full"
 					/>
 				</div>
 				<div className="flex items-center gap-2">
