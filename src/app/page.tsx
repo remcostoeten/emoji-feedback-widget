@@ -177,7 +177,8 @@ export default function Component() {
 
 			<div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div className="col-span-1 md:col-span-2">
-					<Input className='vercel-card'
+					<Input
+						className="vercel-card"
 						type="search"
 						placeholder={t('feedbackPlaceholder')}
 						value={searchTerm}

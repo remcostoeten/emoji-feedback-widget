@@ -1,5 +1,5 @@
 {
-	"feedbackSectionLabel": "Feedback",
+	"feedbackSectionLabel": "Allle feedback",
 	"feedbackLabel": "Wat vind je van de site?",
 	"closeFeedbackForm": "Sluit feedbackformulier",
 	"feedbackPlaceholder": "Nog opmerkingen?",
@@ -27,5 +27,6 @@
 	"negativeFeedback": "Negatieve feedback",
 	"neutralFeedback": "Neutrale feedback",
 	"noFeedback": "Geen feedback beschikbaar",
-	"totalFeedback": "Totaal feedback"
+	"totalFeedback": "Totaal feedback",
+	"languageChanged": "Taal verandert naar {{language}}"
 }

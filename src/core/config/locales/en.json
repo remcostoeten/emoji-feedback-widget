@@ -1,5 +1,5 @@
 {
-	"feedbackSectionLabel": "Feedback",
+	"feedbackSectionLabel": "All feedback",
 	"feedbackLabel": "How's your experience?",
 	"closeFeedbackForm": "Close feedback form",
 	"feedbackPlaceholder": "Any additional thoughts?",
@@ -27,5 +27,6 @@
 	"positiveFeedback": "Positive Feedback",
 	"negativeFeedback": "Negative Feedback",
 	"neutralFeedback": "Neutral Feedback",
-	"noFeedback": "No feedback available"
+	"noFeedback": "No feedback available",
+	"languageChanged": "Language changed to {{language}}"
 }

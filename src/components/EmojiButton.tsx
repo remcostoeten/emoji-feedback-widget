@@ -20,7 +20,8 @@ export default function EmojiButton({
 			aria-label={`Select ${item.text} feedback`}
 			aria-pressed={selectedOpinion === item.text}
 		>
-			{item.emoji}{item.c}
+			{item.emoji}
+			{item.c}
 		</button>
 	)
 }

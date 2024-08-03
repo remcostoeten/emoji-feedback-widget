@@ -1,6 +1,12 @@
 'use client'
 
-import React, { useRef, useState, useEffect } from 'react'
+import React, {
+	useRef,
+	useState,
+	useEffect,
+	useTransition,
+	useOptimistic,
+} from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { toast } from 'sonner'
 import CoolButton from './CoolButton'
@@ -8,7 +14,6 @@ import { submitFeedbackAction } from '@/core/server/feedback'
 import EmojiButton from './EmojiButton'
 import { CloseIcon } from './Icons'
 import { useTranslation } from 'react-i18next'
-
 import {
 	showFeedbackMotionConfig,
 	afterEmojiClick,
@@ -31,12 +36,17 @@ export function Feedback() {
 	const [isTextareaFocused, setIsTextareaFocused] = useState(false)
 	const [isTextareaVisible, setIsTextareaVisible] = useState(false)
 	const [feedbackText, setFeedbackText] = useState('')
-	const [isLoading, setIsLoading] = useState(false)
 	const [isAnimatingOut, setIsAnimatingOut] = useState(false)
 	const formRef = useRef(null)
 	const sectionRef = useRef(null)
+	const [isPending, startTransition] = useTransition()
 
-	const isButtonEnabled = feedbackText.trim().length > 0 && !isLoading
+	const [optimisticFeedback, addOptimisticFeedback] = useOptimistic(
+		{ opinion: null, feedback: '' },
+		(state, newFeedback) => ({ ...state, ...newFeedback })
+	)
+
+	const isButtonEnabled = feedbackText.trim().length > 0 && !isPending
 	const selectedEmojiObject = opinionEmojis.find(
 		(item) => item.text === storedEmoji
 	)
@@ -82,39 +92,29 @@ export function Feedback() {
 		toast(t('emojiReceived'))
 	}
 
-	async function handleSubmit(event) {
-		event.preventDefault()
+	async function handleSubmit(formData) {
+		addOptimisticFeedback({
+			opinion: formData.get('opinion'),
+			feedback: formData.get('feedback'),
+		})
 
-		if (isLoading) {
-			return
-		}
-
-		const formData = new FormData(event.currentTarget)
-		const feedback = formData.get('feedback')
-
-		if (!feedback) {
-			toast(t('emptyFeedbackError'))
-			return
-		}
-
-		setIsLoading(true)
-		try {
-			const result = await submitFeedbackAction(formData)
-			if (result.success) {
-				setSubmissionState(true)
-				toast.success(t('feedbackSuccess'))
-				setTimeout(() => {
-					setIsAnimatingOut(true)
-					setTimeout(resetForm, 500)
-				}, 1250)
-			} else {
-				toast.error(t('feedbackError'))
+		startTransition(async () => {
+			try {
+				const result = await submitFeedbackAction(formData)
+				if (result.success) {
+					setSubmissionState(true)
+					toast.success(t('feedbackSuccess'))
+					setTimeout(() => {
+						setIsAnimatingOut(true)
+						setTimeout(resetForm, 500)
+					}, 1250)
+				} else {
+					toast.error(t('feedbackError'))
+				}
+			} catch (error) {
+				toast.error(t('submitError'))
 			}
-		} catch (error) {
-			toast.error(t('submitError'))
-		} finally {
-			setIsLoading(false)
-		}
+		})
 	}
 
 	async function handleCloseAndSubmitEmoji() {
@@ -122,19 +122,24 @@ export function Feedback() {
 			const formData = new FormData()
 			formData.append('opinion', selectedOpinion || storedEmoji)
 
-			try {
-				const result = await submitFeedbackAction(formData)
-				if (result.success) {
-					toast.success(t('emojiSubmitted'))
-					console.log('Emoji submitted successfully')
-				} else {
-					toast.error(t('emojiSubmissionError'))
-					console.error('Emoji submission failed:', result.message)
+			startTransition(async () => {
+				try {
+					const result = await submitFeedbackAction(formData)
+					if (result.success) {
+						toast.success(t('emojiSubmitted'))
+						console.log('Emoji submitted successfully')
+					} else {
+						toast.error(t('emojiSubmissionError'))
+						console.error(
+							'Emoji submission failed:',
+							result.message
+						)
+					}
+				} catch (error) {
+					toast.error(t('submitError'))
+					console.error('Error submitting emoji:', error)
 				}
-			} catch (error) {
-				toast.error(t('submitError'))
-				console.error('Error submitting emoji:', error)
-			}
+			})
 		}
 
 		resetForm()
@@ -154,13 +159,6 @@ export function Feedback() {
 		setIsAnimatingOut(false)
 		if (formRef.current) {
 			formRef.current.reset()
-		}
-	}
-
-	function handleKeyDown(e) {
-		if (e.key === 'Enter' && !e.shiftKey) {
-			e.preventDefault()
-			handleSubmit(e)
 		}
 	}
 
@@ -253,7 +251,7 @@ export function Feedback() {
 													}
 													exit={formAnimation.exit}
 													ref={formRef}
-													onSubmit={handleSubmit}
+													action={handleSubmit}
 													className="flex flex-col mx-auto w-full px-4 gap-4 "
 												>
 													<input
@@ -272,9 +270,6 @@ export function Feedback() {
 															setFeedbackText(
 																e.target.value
 															)
-														}
-														onKeyDown={
-															handleKeyDown
 														}
 														placeholder={t(
 															'feedbackPlaceholder'
@@ -311,7 +306,7 @@ export function Feedback() {
 																formRef.current?.requestSubmit()
 															}
 															isLoading={
-																isLoading
+																isPending
 															}
 														/>
 													</div>
