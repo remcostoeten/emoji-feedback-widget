@@ -1,5 +1,5 @@
 
-@ts-
+// @ts-nocheck
 "use client";
 
 import React, { useCallback, useEffect } from "react";
@@ -7,7 +7,7 @@ import { motion, useMotionTemplate, useMotionValue, animate } from "framer-motio
 
 import { cn } from "@/core/utils/helpers";
 
-export interface MagicCardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface HoverCardProps extends React.HTMLAttributes<HTMLDivElement> {
   gradientSize?: number;
   gradientColor?: string;
   gradientOpacity?: number;
@@ -19,7 +19,7 @@ export default function HoverCard({
   gradientSize = 200,
   gradientColor = "#262626",
   gradientOpacity = 0.8,
-}: MagicCardProps) {
+}: HoverCardProps) {
   const mouseX = useMotionValue(-gradientSize);
   const mouseY = useMotionValue(-gradientSize);
  

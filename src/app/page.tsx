@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo, useEffect } from 'react'
+import { useTranslation } from 'react-i18next' // Import the useTranslation hook
 import {
 	Table,
 	TableBody,
@@ -23,8 +24,11 @@ import {
 import { getFeedbackData } from '@/core/server/feedback'
 import HoverCard from '@/components/effects/hover-card'
 import { ChevronDownIcon } from 'lucide-react'
+import NumberTicker from '@/components/effects/NumberTicker'
+import SparklesText from '@/components/effects/SparkleText'
 
 export default function Component() {
+	const { t } = useTranslation() // Initialize the translation hook
 	const [feedbackData, setFeedbackData] = useState([])
 	const [emojiCounts, setEmojiCounts] = useState({})
 	const [searchTerm, setSearchTerm] = useState('')
@@ -107,7 +111,7 @@ export default function Component() {
 					)
 						return 0
 					if (positiveEmojis.includes(a.opinion)) return -1
-					return 1
+					return
 				})
 				break
 			case 'lowest':
@@ -131,21 +135,20 @@ export default function Component() {
 	return (
 		<div className="container mx-auto py-8 bg-card-light">
 			<header className="mb-8">
-				<h1 className="text-2xl font-bold">Feedback Data</h1>
-				<p className="text-muted-foreground">
-					Overview of Emoji Feedback
-				</p>
+				<h1 className="text-[40px] font-bold">
+					<SparklesText text={t('feedbackSectionLabel')} />
+				</h1>
+				<p className="text-muted-foreground">{t('feedbackLabel')}</p>
 			</header>
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
 				<HoverCard gradientOpacity={0.3}>
-					{' '}
 					<Card>
 						<CardHeader>
-							<CardTitle>Total Feedback</CardTitle>
+							<CardTitle>{t('totalFeedback')}</CardTitle>
 						</CardHeader>
 						<CardContent>
 							<div className="text-4xl font-bold">
-								{totalFeedback}
+								<NumberTicker value={totalFeedback} />
 							</div>
 						</CardContent>
 					</Card>
@@ -154,11 +157,11 @@ export default function Component() {
 				<HoverCard gradientOpacity={0.3}>
 					<Card>
 						<CardHeader>
-							<CardTitle>Positive Feedback</CardTitle>
+							<CardTitle>{t('positiveFeedback')}</CardTitle>
 						</CardHeader>
 						<CardContent>
 							<div className="text-4xl font-bold">
-								{positiveFeedback}
+								<NumberTicker value={positiveFeedback} />
 							</div>
 						</CardContent>
 					</Card>
@@ -167,21 +170,22 @@ export default function Component() {
 				<HoverCard gradientOpacity={0.3}>
 					<Card>
 						<CardHeader>
-							<CardTitle>Custom Feedback</CardTitle>
+							<CardTitle>{t('negativeFeedback')}</CardTitle>
 						</CardHeader>
 						<CardContent>
 							<div className="text-4xl font-bold">
-								Custom Content
+								<NumberTicker value={negativeFeedback} />
 							</div>
 						</CardContent>
 					</Card>
 				</HoverCard>
 			</div>
+
 			<div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div className="col-span-1 md:col-span-2">
 					<Input
 						type="search"
-						placeholder="Search feedback..."
+						placeholder={t('feedbackPlaceholder')}
 						value={searchTerm}
 						onChange={(e) => setSearchTerm(e.target.value)}
 						className="w-full"
@@ -193,12 +197,12 @@ export default function Component() {
 							<Button variant="actions" className="w-full">
 								<span className="mr-2">
 									{filterOption === 'all'
-										? 'All'
+										? t('feedbackSectionLabel')
 										: filterOption === 'positive'
-											? 'Positive'
+											? t('positiveFeedback')
 											: filterOption === 'negative'
-												? 'Negative'
-												: 'Neutral'}
+												? t('negativeFeedback')
+												: t('neutralFeedback')}
 								</span>
 								<ChevronDownIcon className="h-4 w-4" />
 							</Button>
@@ -210,7 +214,7 @@ export default function Component() {
 									filterOption === 'all' ? 'bg-accent' : ''
 								}
 							>
-								All
+								{t('feedbackSectionLabel')}
 							</DropdownMenuItem>
 							<DropdownMenuItem
 								onSelect={() => setFilterOption('positive')}
@@ -220,7 +224,7 @@ export default function Component() {
 										: ''
 								}
 							>
-								Positive
+								{t('positiveFeedback')}
 							</DropdownMenuItem>
 							<DropdownMenuItem
 								onSelect={() => setFilterOption('negative')}
@@ -230,7 +234,7 @@ export default function Component() {
 										: ''
 								}
 							>
-								Negative
+								{t('negativeFeedback')}
 							</DropdownMenuItem>
 							<DropdownMenuItem
 								onSelect={() => setFilterOption('neutral')}
@@ -240,21 +244,22 @@ export default function Component() {
 										: ''
 								}
 							>
-								Neutral
+								{t('neutralFeedback')}
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
+
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button variant="actions" className="w-full">
 								<span className="mr-2">
 									{sortOption === 'newest'
-										? 'Newest'
+										? t('newest')
 										: sortOption === 'oldest'
-											? 'Oldest'
+											? t('oldest')
 											: sortOption === 'highest'
-												? 'Highest Rating'
-												: 'Lowest Rating'}
+												? t('highestRating')
+												: t('lowestRating')}
 								</span>
 								<ChevronDownIcon className="h-4 w-4" />
 							</Button>
@@ -266,7 +271,7 @@ export default function Component() {
 									sortOption === 'newest' ? 'bg-accent' : ''
 								}
 							>
-								Newest
+								{t('newest')}
 							</DropdownMenuItem>
 							<DropdownMenuItem
 								onSelect={() => setSortOption('oldest')}
@@ -274,7 +279,7 @@ export default function Component() {
 									sortOption === 'oldest' ? 'bg-accent' : ''
 								}
 							>
-								Oldest
+								{t('oldest')}
 							</DropdownMenuItem>
 							<DropdownMenuItem
 								onSelect={() => setSortOption('highest')}
@@ -282,7 +287,7 @@ export default function Component() {
 									sortOption === 'highest' ? 'bg-accent' : ''
 								}
 							>
-								Highest Rating
+								{t('highestRating')}
 							</DropdownMenuItem>
 							<DropdownMenuItem
 								onSelect={() => setSortOption('lowest')}
@@ -290,20 +295,21 @@ export default function Component() {
 									sortOption === 'lowest' ? 'bg-accent' : ''
 								}
 							>
-								Lowest Rating
+								{t('lowestRating')}
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>
 			</div>
+
 			<div className="overflow-x-auto">
 				<Table>
 					<TableHeader>
 						<TableRow>
-							<TableHead>Emoji</TableHead>
-							<TableHead>Opinion</TableHead>
-							<TableHead>Feedback</TableHead>
-							<TableHead>Timestamp</TableHead>
+							<TableHead>{t('emoji')}</TableHead>
+							<TableHead>{t('opinion')}</TableHead>
+							<TableHead>{t('feedback')}</TableHead>
+							<TableHead>{t('timestamp')}</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
@@ -313,7 +319,7 @@ export default function Component() {
 									colSpan={4}
 									className="text-center py-8"
 								>
-									Loading...
+									{t('loading')}
 								</TableCell>
 							</TableRow>
 						) : filteredFeedback.length > 0 ? (
@@ -331,16 +337,16 @@ export default function Component() {
 														  feedback.opinion ===
 																'🤮'
 														? 'outline'
-														: 'default'
+														: 'secondary'
 											}
 										>
 											{feedback.opinion === '🔥' ||
 											feedback.opinion === '😍'
-												? 'positive'
+												? t('positive')
 												: feedback.opinion === '💩' ||
 													  feedback.opinion === '🤮'
-													? 'negative'
-													: 'neutral'}
+													? t('negative')
+													: t('neutral')}
 										</Badge>
 									</TableCell>
 									<TableCell>{feedback.feedback}</TableCell>
@@ -357,7 +363,7 @@ export default function Component() {
 									colSpan={4}
 									className="text-center py-8"
 								>
-									No feedback available.
+									{t('noFeedback')}
 								</TableCell>
 							</TableRow>
 						)}

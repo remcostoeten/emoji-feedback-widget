@@ -4,7 +4,7 @@
 	// "workbench.settings.editor": "json",
 	"window.autoDetectColorScheme": true,
 	"workbench.preferredLightColorTheme": "Lumos Light",
-	"workbench.preferredDarkColorTheme": "Lumos Dark Soft",
+	"workbench.preferredDarkColorTheme": "Vesper ++",
 	"breadcrumbs.enabled": true,
 	"explorer.compactFolders": false,
 	"editor.wordWrap": "on",

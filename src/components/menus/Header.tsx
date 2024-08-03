@@ -48,6 +48,9 @@ const SlideTabs = () => {
 				<li className="ml-4">
 					<ActionsMenu />
 				</li>
+				<li className="ml-4">
+					<LanguageDropdown />
+				</li>
 			</ul>
 		</nav>
 	)
