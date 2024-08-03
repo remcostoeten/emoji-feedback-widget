@@ -163,5 +163,5 @@ export interface EmojiCount {
 
 export interface FeedbackData {
 	feedbacks: Feedback[]
-	emojiCounts: Record<string, number>;
+	emojiCounts: Record<string, number>
 }

@@ -9,7 +9,8 @@ export default function EmojiButton({
 }: EmojiButtonProps) {
 	return (
 		<button
-      onClick={() => onSelect(item.text)}			className={cn(
+			onClick={() => onSelect(item.text)}
+			className={cn(
 				'flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 emoji',
 				selectedOpinion === item.text
 					? 'bg-section-light stroke-body-500 dark:bg-body-4900 dark:stroke-body-500 !animate-pulse'

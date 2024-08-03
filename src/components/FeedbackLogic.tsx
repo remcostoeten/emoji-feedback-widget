@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { toast } from 'sonner'
 import CoolButton from './CoolButton'
-import { submitFeedbackAction } from '@/core/server/actions'
+import { submitFeedbackAction } from '@/core/server/feedback'
 import EmojiButton from './EmojiButton'
 import { CloseIcon } from './Icons'
 import { useTranslation } from 'react-i18next'
@@ -16,11 +16,7 @@ import {
 } from '@/core/config/motion-config'
 import useLocalStorage from '@/core/hooks/useLocalStorage'
 import SparklesText from './effects/SparkleText'
-import {
-	opinionEmojis,
-	TIME_TO_SHOW_FEEDBACK_FORM,
-	RATE_LIMIT_INTERVAL,
-} from '@/core/config/config'
+import { opinionEmojis, TIME_TO_SHOW_FEEDBACK_FORM } from '@/core/config/config'
 import { BorderBeam } from './shells/BorderEffects'
 
 export function Feedback() {
@@ -37,11 +33,10 @@ export function Feedback() {
 	const [feedbackText, setFeedbackText] = useState('')
 	const [isLoading, setIsLoading] = useState(false)
 	const [isAnimatingOut, setIsAnimatingOut] = useState(false)
-	const [isRateLimited, setIsRateLimited] = useState(false)
 	const formRef = useRef(null)
 	const sectionRef = useRef(null)
 
-	const isButtonEnabled = feedbackText.trim().length > 0 && !isRateLimited
+	const isButtonEnabled = feedbackText.trim().length > 0 && !isLoading
 	const selectedEmojiObject = opinionEmojis.find(
 		(item) => item.text === storedEmoji
 	)
@@ -56,22 +51,6 @@ export function Feedback() {
 			return () => clearTimeout(timer)
 		}
 	}, [feedbackHidden, storedEmoji, setFeedbackHidden])
-
-	useEffect(() => {
-		const lastSubmissionTime = localStorage.getItem(
-			'lastFeedbackSubmission'
-		)
-		if (lastSubmissionTime) {
-			const timeSinceLastSubmission =
-				Date.now() - parseInt(lastSubmissionTime, 10)
-			if (timeSinceLastSubmission < RATE_LIMIT_INTERVAL) {
-				setIsRateLimited(true)
-				const remainingTime =
-					RATE_LIMIT_INTERVAL - timeSinceLastSubmission
-				setTimeout(() => setIsRateLimited(false), remainingTime)
-			}
-		}
-	}, [])
 
 	useEffect(() => {
 		const handleKeyDown = (e) => {
@@ -106,8 +85,7 @@ export function Feedback() {
 	async function handleSubmit(event) {
 		event.preventDefault()
 
-		if (isRateLimited) {
-			toast(t('rateLimitedError'))
+		if (isLoading) {
 			return
 		}
 
@@ -123,23 +101,12 @@ export function Feedback() {
 		try {
 			const result = await submitFeedbackAction(formData)
 			if (result.success) {
+				setSubmissionState(true)
+				toast.success(t('feedbackSuccess'))
 				setTimeout(() => {
-					localStorage.setItem(
-						'lastFeedbackSubmission',
-						Date.now().toString()
-					)
-					setIsRateLimited(true)
-					setTimeout(
-						() => setIsRateLimited(false),
-						RATE_LIMIT_INTERVAL
-					)
-					setSubmissionState(true)
-					toast.success(t('feedbackSuccess'))
-					setTimeout(() => {
-						setIsAnimatingOut(true)
-						setTimeout(resetForm, 500)
-					}, 1250)
-				}, 1500)
+					setIsAnimatingOut(true)
+					setTimeout(resetForm, 500)
+				}, 1250)
 			} else {
 				toast.error(t('feedbackError'))
 			}
@@ -150,9 +117,32 @@ export function Feedback() {
 		}
 	}
 
+	async function handleCloseAndSubmitEmoji() {
+		if (selectedOpinion || storedEmoji) {
+			const formData = new FormData()
+			formData.append('opinion', selectedOpinion || storedEmoji)
+
+			try {
+				const result = await submitFeedbackAction(formData)
+				if (result.success) {
+					toast.success(t('emojiSubmitted'))
+					console.log('Emoji submitted successfully')
+				} else {
+					toast.error(t('emojiSubmissionError'))
+					console.error('Emoji submission failed:', result.message)
+				}
+			} catch (error) {
+				toast.error(t('submitError'))
+				console.error('Error submitting emoji:', error)
+			}
+		}
+
+		resetForm()
+	}
+
 	function handleClose() {
 		setIsAnimatingOut(true)
-		setTimeout(resetForm, 500)
+		setTimeout(handleCloseAndSubmitEmoji, 500)
 	}
 
 	function resetForm() {
@@ -161,6 +151,7 @@ export function Feedback() {
 		setIsTextareaVisible(false)
 		setFeedbackText('')
 		setStoredEmoji(null)
+		setIsAnimatingOut(false)
 		if (formRef.current) {
 			formRef.current.reset()
 		}

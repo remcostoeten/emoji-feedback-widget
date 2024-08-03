@@ -1,319 +1,377 @@
+/**
+ * v0 by Vercel.
+ * @see https://v0.dev/t/OlTm6nH4lRs
+ * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
+ */
 'use client'
-import { useEffect, useState } from 'react'
-import HoverCard from '@/components/effects/hover-card'
-import {
-	Card,
-	CardHeader,
-	CardTitle,
-	CardContent,
-	CardFooter,
-} from '@/components/ui/card'
+
+import { useState, useMemo } from 'react'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,
 	DropdownMenuContent,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
-	DropdownMenuCheckboxItem,
 	DropdownMenuItem,
 } from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
 import {
 	Table,
-	TableBody,
-	TableCell,
-	TableHead,
 	TableHeader,
 	TableRow,
+	TableHead,
+	TableBody,
+	TableCell,
 } from '@/components/ui/table'
-import {
-	SmileIcon,
-	ThumbsUpIcon,
-	ThumbsDownIcon,
-	FilterIcon,
-	ListOrderedIcon,
-} from 'lucide-react'
-import { getFeedbackData, submitFeedbackAction } from '@/core/server/feedback'
-import { opinionEmojis } from '@/core/config/config'
-import { Feedback, FeedbackData } from '@/core/utils/types'
+import { Badge } from '@/components/ui/badge'
 
-export default function FeedbackComponent() {
-	const [feedbackData, setFeedbackData] = useState<FeedbackData>({
-		feedbacks: [],
-		emojiCounts: {},
-	})
-	const [filteredFeedback, setFilteredFeedback] = useState<Feedback[]>([])
+export default function Component() {
+	const [feedbackData, setFeedbackData] = useState([
+		{
+			id: 1,
+			opinion: 'positive',
+			feedback: 'Great product, love the new features!',
+			timestamp: '2023-06-01 10:30:00',
+		},
+		{
+			id: 2,
+			opinion: 'negative',
+			feedback: 'Disappointed with the performance, needs improvement.',
+			timestamp: '2023-06-02 14:45:00',
+		},
+		{
+			id: 3,
+			opinion: 'positive',
+			feedback: 'Excellent customer service, very responsive team.',
+			timestamp: '2023-06-03 09:15:00',
+		},
+		{
+			id: 4,
+			opinion: 'neutral',
+			feedback: 'The product is okay, but could be better.',
+			timestamp: '2023-06-04 16:20:00',
+		},
+		{
+			id: 5,
+			opinion: 'negative',
+			feedback: 'Buggy software, very frustrating to use.',
+			timestamp: '2023-06-05 11:50:00',
+		},
+	])
 	const [searchTerm, setSearchTerm] = useState('')
-	const [filters, setFilters] = useState({
-		positive: true,
-		negative: true,
-		neutral: true,
-	})
-	const [sortBy, setSortBy] = useState('newest')
-
-	useEffect(() => {
-		const fetchData = async () => {
-			const data = await getFeedbackData()
-			setFeedbackData(data)
-			setFilteredFeedback(data.feedbacks)
-		}
-		fetchData()
-	}, [])
-
-	const totalFeedback = feedbackData.feedbacks.length
-	const positiveFeedback =
-		(feedbackData.emojiCounts['😍'] || 0) +
-		(feedbackData.emojiCounts['🔥'] || 0)
-	const negativeFeedback =
-		(feedbackData.emojiCounts['💩'] || 0) +
-		(feedbackData.emojiCounts['🤮'] || 0)
-
-	useEffect(() => {
-		let result = feedbackData.feedbacks
-
-		// Apply search
+	const [filterOption, setFilterOption] = useState('all')
+	const [sortOption, setSortOption] = useState('newest')
+	const [loading, setLoading] = useState(false)
+	const totalFeedback = feedbackData.length
+	const positiveFeedback = feedbackData.filter(
+		(feedback) => feedback.opinion === 'positive'
+	).length
+	const negativeFeedback = feedbackData.filter(
+		(feedback) => feedback.opinion === 'negative'
+	).length
+	const filteredFeedback = useMemo(() => {
+		let filtered = feedbackData
 		if (searchTerm) {
-			result = result.filter(
-				(feedback) =>
-					feedback.opinion
-						.toLowerCase()
-						.includes(searchTerm.toLowerCase()) ||
-					feedback.feedback
-						?.toLowerCase()
-						.includes(searchTerm.toLowerCase())
+			filtered = filtered.filter((feedback) =>
+				feedback.feedback
+					.toLowerCase()
+					.includes(searchTerm.toLowerCase())
 			)
 		}
-
-		// Apply filters
-		result = result.filter((feedback) => {
-			if (feedback.opinion === '😍' || feedback.opinion === '🔥')
-				return filters.positive
-			if (feedback.opinion === '💩' || feedback.opinion === '🤮')
-				return filters.negative
-			return filters.neutral
-		})
-
-		// Apply sorting
-		switch (sortBy) {
+		if (filterOption !== 'all') {
+			filtered = filtered.filter(
+				(feedback) => feedback.opinion === filterOption
+			)
+		}
+		switch (sortOption) {
 			case 'newest':
-				result.sort(
+				filtered = filtered.sort(
 					(a, b) =>
 						new Date(b.timestamp).getTime() -
 						new Date(a.timestamp).getTime()
 				)
 				break
 			case 'oldest':
-				result.sort(
-					(
-						a: { timestamp: string | number | Date },
-						b: { timestamp: string | number | Date }
-					) =>
+				filtered = filtered.sort(
+					(a, b) =>
 						new Date(a.timestamp).getTime() -
 						new Date(b.timestamp).getTime()
 				)
 				break
+			case 'highest':
+				filtered = filtered.sort((a, b) => {
+					if (a.opinion === 'positive' && b.opinion === 'positive') {
+						return 0
+					} else if (a.opinion === 'positive') {
+						return -1
+					} else {
+						return 1
+					}
+				})
+				break
+			case 'lowest':
+				filtered = filtered.sort((a, b) => {
+					if (a.opinion === 'negative' && b.opinion === 'negative') {
+						return 0
+					} else if (a.opinion === 'negative') {
+						return -1
+					} else {
+						return 1
+					}
+				})
+				break
 			default:
 				break
 		}
-
-		setFilteredFeedback(result)
-	}, [searchTerm, filters, sortBy, feedbackData])
-
-	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-		setSearchTerm(e.target.value)
-
-	const handleFilterChange = (filterName: keyof typeof filters) => {
-		setFilters((prev) => ({ ...prev, [filterName]: !prev[filterName] }))
-	}
-
-	const handleSortChange = (sortOption: string) => setSortBy(sortOption)
-
+		return filtered
+	}, [feedbackData, searchTerm, filterOption, sortOption])
+	const opinionEmojis = [
+		{ text: 'positive', emoji: '🔥' },
+		{ text: 'positive', emoji: '😍' },
+		{ text: 'negative', emoji: '💩' },
+		{ text: 'negative', emoji: '🤮' },
+	]
 	return (
-		<div className="w-full max-w-6xl mx-auto p-4 md:p-6">
-			<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-				<HoverCard>
-					<Card className="!bg-[#E7E6E7] text-[#000101] p-4 flex items-center justify-between">
-						<div>
-							<h3 className="text-2xl font-bold">
-								Total Feedback
-							</h3>
-							<p className="text-4xl font-bold">
-								{totalFeedback}
-							</p>
-						</div>
-						<SmileIcon className="w-12 h-12" />
-					</Card>
-				</HoverCard>
-				<HoverCard>
-					<Card className="!bg-[#202021] text-accent-foreground p-4 flex items-center justify-between">
-						<div>
-							<h3 className="text-2xl font-bold">
-								Positive Feedback
-							</h3>
-							<p className="text-4xl font-bold">
-								{positiveFeedback}
-							</p>
-						</div>
-						<ThumbsUpIcon className="w-12 h-12" />
-					</Card>
-				</HoverCard>
-				<HoverCard>
-					<Card className="!bg-[#242428] text-secondary-foreground p-4 flex items-center justify-between">
-						<div>
-							<h3 className="text-2xl font-bold">
-								Negative Feedback
-							</h3>
-							<p className="text-4xl font-bold">
-								{negativeFeedback}
-							</p>
-						</div>
-						<ThumbsDownIcon className="w-12 h-12" />
-					</Card>
-				</HoverCard>
-			</div>
-
-			<HoverCard>
-				<Card className="border-[#3d3838] border shadow-sm shadow-white/10 bg-[#0B0A0B]">
+		<div className="container mx-auto px-4 md:px-6 py-8">
+			<header className="mb-8">
+				<h1 className="text-2xl font-bold">Feedback Data</h1>
+				<p className="text-muted-foreground">
+					Overview of Emoji Feedback
+				</p>
+			</header>
+			<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+				<Card>
 					<CardHeader>
-						<CardTitle className="text-text mb-2 ml-1">
-							Feedback Logs
-						</CardTitle>
-						<div className="flex items-center align-bottom gap-2">
-							<div className="flex flex-col gap-4">
-								<Input
-									type="search"
-									placeholder="Search feedback..."
-									className="border-border border border-opacity-25 w-fit"
-									value={searchTerm}
-									onChange={handleSearchChange}
-								/>
-							</div>
-							<DropdownMenu>
-								<DropdownMenuTrigger asChild>
-									<Button
-										variant="actions"
-										className="border-border border border-opacity-25 w-fit"
-										size="sm"
-									>
-										<FilterIcon className="w-4 h-4" />
-										<span>Filter</span>
-									</Button>
-								</DropdownMenuTrigger>
-								<DropdownMenuContent align="end">
-									<DropdownMenuLabel>
-										Filter by:
-									</DropdownMenuLabel>
-									<DropdownMenuSeparator />
-									<DropdownMenuCheckboxItem
-										checked={filters.positive}
-										onCheckedChange={() =>
-											handleFilterChange('positive')
-										}
-									>
-										Positive
-									</DropdownMenuCheckboxItem>
-									<DropdownMenuCheckboxItem
-										checked={filters.negative}
-										onCheckedChange={() =>
-											handleFilterChange('negative')
-										}
-									>
-										Negative
-									</DropdownMenuCheckboxItem>
-									<DropdownMenuCheckboxItem
-										checked={filters.neutral}
-										onCheckedChange={() =>
-											handleFilterChange('neutral')
-										}
-									>
-										Neutral
-									</DropdownMenuCheckboxItem>
-								</DropdownMenuContent>
-							</DropdownMenu>
-							<DropdownMenu>
-								<DropdownMenuTrigger asChild>
-									<Button
-										variant="actions"
-										className="border-border border border-opacity-25 w-fit"
-										size="sm"
-									>
-										<ListOrderedIcon className="w-4 h-4" />
-										<span>Sort</span>
-									</Button>
-								</DropdownMenuTrigger>
-								<DropdownMenuContent align="end">
-									<DropdownMenuLabel>
-										Sort by:
-									</DropdownMenuLabel>
-									<DropdownMenuSeparator />
-									<DropdownMenuItem
-										onSelect={() =>
-											handleSortChange('newest')
-										}
-									>
-										Newest
-									</DropdownMenuItem>
-									<DropdownMenuItem
-										onSelect={() =>
-											handleSortChange('oldest')
-										}
-									>
-										Oldest
-									</DropdownMenuItem>
-								</DropdownMenuContent>
-							</DropdownMenu>
-						</div>
+						<CardTitle>Total Feedback</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<Table>
-							<TableHeader>
-								<TableRow>
-									<TableHead>ID</TableHead>
-									<TableHead>Opinion</TableHead>
-									<TableHead>Feedback</TableHead>
-									<TableHead>Timestamp</TableHead>
-								</TableRow>
-							</TableHeader>
-							<TableBody>
-								{filteredFeedback.length > 0 ? (
-									filteredFeedback.map((feedback) => (
-										<TableRow key={feedback.id}>
-											<TableCell className="font-medium">
-												{feedback.id}
-											</TableCell>
-											<TableCell>
-												{feedback.opinion}
-											</TableCell>
-											<TableCell>
-												{feedback.feedback}
-											</TableCell>
-											<TableCell>
-												{new Date(
-													feedback.timestamp
-												).toLocaleString()}
-											</TableCell>
-										</TableRow>
-									))
-								) : (
-									<TableRow>
-										<TableCell
-											colSpan={4}
-											className="text-center"
-										>
-											No feedback available
-										</TableCell>
-									</TableRow>
-								)}
-							</TableBody>
-						</Table>
+						<div className="text-4xl font-bold">
+							{totalFeedback}
+						</div>
 					</CardContent>
-					<CardFooter className="text-sm text-muted-foreground">
-						Showing {filteredFeedback.length} of {totalFeedback}{' '}
-						feedback entries
-					</CardFooter>
 				</Card>
-			</HoverCard>
+				<Card>
+					<CardHeader>
+						<CardTitle>Positive Feedback</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<div className="text-4xl font-bold">
+							{positiveFeedback}
+						</div>
+					</CardContent>
+				</Card>
+				<Card>
+					<CardHeader>
+						<CardTitle>Negative Feedback</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<div className="text-4xl font-bold">
+							{negativeFeedback}
+						</div>
+					</CardContent>
+				</Card>
+			</div>
+			<div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+				<div className="col-span-1 md:col-span-2">
+					<Input
+						type="search"
+						placeholder="Search feedback..."
+						value={searchTerm}
+						onChange={(e) => setSearchTerm(e.target.value)}
+						className="w-full"
+					/>
+				</div>
+				<div className="flex items-center gap-2">
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button variant="actions" className="w-full">
+								<span className="mr-2">
+									{filterOption === 'all'
+										? 'All'
+										: filterOption === 'positive'
+											? 'Positive'
+											: filterOption === 'negative'
+												? 'Negative'
+												: 'Neutral'}
+								</span>
+								<ChevronDownIcon className="h-4 w-4" />
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent>
+							<DropdownMenuItem
+								onSelect={() => setFilterOption('all')}
+								className={
+									filterOption === 'all' ? 'bg-accent' : ''
+								}
+							>
+								All
+							</DropdownMenuItem>
+							<DropdownMenuItem
+								onSelect={() => setFilterOption('positive')}
+								className={
+									filterOption === 'positive'
+										? 'bg-accent'
+										: ''
+								}
+							>
+								Positive
+							</DropdownMenuItem>
+							<DropdownMenuItem
+								onSelect={() => setFilterOption('negative')}
+								className={
+									filterOption === 'negative'
+										? 'bg-accent'
+										: ''
+								}
+							>
+								Negative
+							</DropdownMenuItem>
+							<DropdownMenuItem
+								onSelect={() => setFilterOption('neutral')}
+								className={
+									filterOption === 'neutral'
+										? 'bg-accent'
+										: ''
+								}
+							>
+								Neutral
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button variant="actions" className="w-full">
+								<span className="mr-2">
+									{sortOption === 'newest'
+										? 'Newest'
+										: sortOption === 'oldest'
+											? 'Oldest'
+											: sortOption === 'highest'
+												? 'Highest Rating'
+												: 'Lowest Rating'}
+								</span>
+								<ChevronDownIcon className="h-4 w-4" />
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent>
+							<DropdownMenuItem
+								onSelect={() => setSortOption('newest')}
+								className={
+									sortOption === 'newest' ? 'bg-accent' : ''
+								}
+							>
+								Newest
+							</DropdownMenuItem>
+							<DropdownMenuItem
+								onSelect={() => setSortOption('oldest')}
+								className={
+									sortOption === 'oldest' ? 'bg-accent' : ''
+								}
+							>
+								Oldest
+							</DropdownMenuItem>
+							<DropdownMenuItem
+								onSelect={() => setSortOption('highest')}
+								className={
+									sortOption === 'highest' ? 'bg-accent' : ''
+								}
+							>
+								Highest Rating
+							</DropdownMenuItem>
+							<DropdownMenuItem
+								onSelect={() => setSortOption('lowest')}
+								className={
+									sortOption === 'lowest' ? 'bg-accent' : ''
+								}
+							>
+								Lowest Rating
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
+				</div>
+			</div>
+			<div className="overflow-x-auto">
+				<Table>
+					<TableHeader>
+						<TableRow>
+							<TableHead>Emoji</TableHead>
+							<TableHead>Opinion</TableHead>
+							<TableHead>Feedback</TableHead>
+							<TableHead>Timestamp</TableHead>
+						</TableRow>
+					</TableHeader>
+					<TableBody>
+						{filteredFeedback.length > 0 ? (
+							filteredFeedback.map((feedback) => (
+								<TableRow key={feedback.id}>
+									<TableCell>
+										{
+											opinionEmojis.find(
+												(emoji) =>
+													emoji.text ===
+													feedback.opinion
+											)?.emoji
+										}
+									</TableCell>
+									<TableCell>
+										<Badge
+											variant={
+												feedback.opinion === 'positive'
+													? 'secondary'
+													: feedback.opinion ===
+														  'negative'
+														? 'outline'
+														: 'default'
+											}
+										>
+											{feedback.opinion}
+										</Badge>
+									</TableCell>
+									<TableCell>{feedback.feedback}</TableCell>
+									<TableCell>
+										{new Date(
+											feedback.timestamp
+										).toLocaleString()}
+									</TableCell>
+								</TableRow>
+							))
+						) : (
+							<TableRow>
+								<TableCell
+									colSpan={4}
+									className="text-center py-8"
+								>
+									No feedback available.
+								</TableCell>
+							</TableRow>
+						)}
+					</TableBody>
+				</Table>
+				{loading && (
+					<div className="flex justify-center py-8">
+						<div />
+					</div>
+				)}
+			</div>
 		</div>
+	)
+}
+
+function ChevronDownIcon(props) {
+	return (
+		<svg
+			{...props}
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		>
+			<path d="m6 9 6 6 6-6" />
+		</svg>
 	)
 }
