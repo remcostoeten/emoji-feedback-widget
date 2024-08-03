@@ -17,10 +17,10 @@ const ALPHA_CHANNEL = {
 }
 
 export const RGBA_COLORS = [
-	`rgba(55,255,50,${ALPHA_CHANNEL.XXSMALL})`,
-	`rgba(255,55,50,${ALPHA_CHANNEL.XXSMALL})`,
-	`rgba(50,55,255,${ALPHA_CHANNEL.XXSMALL})`,
-	`rgba(255,255,50,${ALPHA_CHANNEL.XXSMALL})`,
+	`rgba(55,255,50,${ALPHA_CHANNEL.HALF})`,
+	`rgba(255,55,50,${ALPHA_CHANNEL.HALF})`,
+	`rgba(50,55,255,${ALPHA_CHANNEL.HALF})`,
+	`rgba(255,255,50,${ALPHA_CHANNEL.HALF})`,
 ]
 
 export const getBaseUrl = () => {

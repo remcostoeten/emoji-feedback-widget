@@ -17,6 +17,15 @@
 	"clearLocalStorage": "Clear local storage",
 	"actions.utillities": "Utilities",
 	"clearCache": "Clear cache",
+	"totalFeedback": "Total feedback",
 	"manageCookies": "Manage cookies",
-	"cacheCleared": "Cache cleared"
+	"cacheCleared": "Cache cleared",
+	"newest": "Newest",
+	"oldest": "Oldest",
+	"highestRating": "Highest Rating",
+	"lowestRating": "Lowest Rating",
+	"positiveFeedback": "Positive Feedback",
+	"negativeFeedback": "Negative Feedback",
+	"neutralFeedback": "Neutral Feedback",
+	"noFeedback": "No feedback available"
 }

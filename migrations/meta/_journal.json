@@ -1,0 +1,27 @@
+{
+	"version": "7",
+	"dialect": "sqlite",
+	"entries": [
+		{
+			"idx": 0,
+			"version": "6",
+			"when": 1722624614672,
+			"tag": "0000_strong_texas_twister",
+			"breakpoints": true
+		},
+		{
+			"idx": 1,
+			"version": "6",
+			"when": 1722626117896,
+			"tag": "0001_rich_yellowjacket",
+			"breakpoints": true
+		},
+		{
+			"idx": 2,
+			"version": "6",
+			"when": 1722643357805,
+			"tag": "0002_nebulous_wither",
+			"breakpoints": true
+		}
+	]
+}

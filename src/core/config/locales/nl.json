@@ -12,9 +12,20 @@
 	"feedbackError": "Fout bij het opslaan van feedback",
 	"submitError": "Er is een fout opgetreden bij het indienen van feedback. Probeer het opnieuw.",
 	"surveyResults": "Enquêteresultaten",
+	"submitFeedback": "Verstuur",
+	"feedbackSent": "Verzonden!",
 	"clearLocalStorage": "Clear local storage",
 	"actions.utillities": "Utilities",
 	"clearCache": "Clear cache",
 	"manageCookies": "Manage cookies",
-	"cacheCleared": "Geheugen gewist"
+	"cacheCleared": "Geheugen gewist",
+	"newest": "Nieuwste",
+	"oldest": "Oudste",
+	"highestRating": "Hoogste beoordeling",
+	"lowestRating": "Laagste beoordeling",
+	"positiveFeedback": "Positieve feedback",
+	"negativeFeedback": "Negatieve feedback",
+	"neutralFeedback": "Neutrale feedback",
+	"noFeedback": "Geen feedback beschikbaar",
+	"totalFeedback": "Totaal feedback"
 }

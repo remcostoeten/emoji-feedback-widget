@@ -1,85 +1,66 @@
-'use client'
 
-import React, { useRef, useEffect } from 'react'
-import { RGBA_COLORS } from '@/core/utils/helpers'
-import { HoverCardProps } from '@/core/utils/types'
+// @ts-nocheck
+"use client";
 
+import React, { useCallback, useEffect } from "react";
+import { motion, useMotionTemplate, useMotionValue, animate } from "framer-motion";
+
+import { cn } from "@/core/utils/helpers";
+
+export interface HoverCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  gradientSize?: number;
+  gradientColor?: string;
+  gradientOpacity?: number;
+}
+ 
 export default function HoverCard({
-	children,
-	width = 'w-full',
-	height = 'auto',
-	padding,
-	className = '',
-	...props
+  children,
+  className,
+  gradientSize = 200,
+  gradientColor = "#262626",
+  gradientOpacity = 0.8,
 }: HoverCardProps) {
-	const cardRef = useRef<HTMLDivElement | null>(null)
-
-	const HOVER_COLOR =
-		RGBA_COLORS[Math.floor(Math.random() * RGBA_COLORS.length)]
-
-	const handleOnMouseMove = (e: MouseEvent) => {
-		const target = e.currentTarget as HTMLDivElement
-		const rect = target.getBoundingClientRect()
-		const x = e.clientX - rect.left
-		const y = e.clientY - rect.top
-
-		target.style.setProperty('--mouse-x', `${x}px`)
-		target.style.setProperty('--mouse-y', `${y}px`)
-	}
-
-	useEffect(() => {
-		const card = cardRef.current
-		if (card) {
-			card.addEventListener('mousemove', handleOnMouseMove)
-
-			const style = document.createElement('style')
-			style.innerHTML = `
-        .card::before {
-          background: radial-gradient(
-            500px circle at var(--mouse-x) var(--mouse-y),
-            ${HOVER_COLOR},
-            transparent 40%
-          );
-          border-radius: inherit;
-          content: '';
-          height: 100%;
-          left: 0;
-          top: 0;
-          position: absolute;
-          width: 100%;
-          z-index: 2;
-          opacity: 0;
-          transition: opacity 500ms;
-        }
-      
-        .card:hover::before {
-          opacity: 1;
-        }
-      `
-
-			document.head.appendChild(style)
-
-			return () => {
-				card.removeEventListener('mousemove', handleOnMouseMove)
-				document.head.removeChild(style)
-			}
-		}
-	}, [])
-
-	const style = {
-		width,
-		height,
-		padding,
-	}
-
-	return (
-		<div
-			ref={cardRef}
-			className={`card cursor-pointer    relative ${className}`}
-			style={style}
-			{...props}
-		>
-			{children}
-		</div>
-	)
+  const mouseX = useMotionValue(-gradientSize);
+  const mouseY = useMotionValue(-gradientSize);
+ 
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const { left, top } = e.currentTarget.getBoundingClientRect();
+      mouseX.set(e.clientX - left);
+      mouseY.set(e.clientY - top);
+    },
+    [mouseX, mouseY],
+  );
+ 
+  const handleMouseLeave = useCallback(() => {
+    mouseX.set(-gradientSize);
+    mouseY.set(-gradientSize);
+  }, [mouseX, mouseY, gradientSize]);
+ 
+  useEffect(() => {
+    mouseX.set(-gradientSize);
+    mouseY.set(-gradientSize);
+  }, [mouseX, mouseY, gradientSize]);
+ 
+  return (
+    <div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={cn(
+        "vercel-card relative",
+        className,
+      )}
+    >
+      <div className="relative z-10">{children}</div>
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-0"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px, ${gradientColor}, transparent 100%)
+          `,
+          opacity: gradientOpacity,
+        }}
+      />
+    </div>
+  );
 }

@@ -22,11 +22,11 @@ export default function RootLayout({
 }>) {
 	return (
 		<html>
-			<body className={`${inter.className} bg-body`}>
+			<body className={`${inter.className} text-xl bg-body`}>
 				<Providers>
 					<LanguageWrapper>
 						<Header />
-						{children}
+						<main className="pt-[5%]">{children}</main>
 						<Feedback />
 					</LanguageWrapper>
 				</Providers>

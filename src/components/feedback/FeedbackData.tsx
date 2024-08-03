@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { getFeedbackData } from '@/core/server/actions'
+import { getFeedbackData } from '@/core/server/feedback'
 import { FeedbackData } from '@/core/utils/types'
 
 export default function FeedbackDataPage() {

@@ -1,5 +1,8 @@
 import { OpinionEmoji } from '../utils/types'
 
+export const ENABLE_LOCAL_STORAGE = process.env.ENABLE_LOCAL_STORAGE === 'true'
+export const USE_DATABASE = process.env.USE_DATABASE === 'true'
+
 export const opinionEmojis: OpinionEmoji[] = [
 	{ text: 'love it', emoji: '😍' },
 	{ text: 'DOPE!', emoji: '🔥' },
@@ -8,7 +11,7 @@ export const opinionEmojis: OpinionEmoji[] = [
 ]
 
 // If disabled results won't be logged to .json locally.
-export const ENABLE_LOCAL_STORAGE = true
+// export const ENABLE_LOCAL_STORAGE = true
 
 export const TIME_TO_SHOW_FEEDBACK_FORM = 5000 // 5s
 

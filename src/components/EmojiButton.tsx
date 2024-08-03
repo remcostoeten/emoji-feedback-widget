@@ -1,6 +1,7 @@
 import React from 'react'
 import { cn } from '@/core/utils/helpers'
 import { EmojiButtonProps } from '@/core/utils/types'
+import { it } from 'node:test'
 
 export default function EmojiButton({
 	item,
@@ -19,7 +20,7 @@ export default function EmojiButton({
 			aria-label={`Select ${item.text} feedback`}
 			aria-pressed={selectedOpinion === item.text}
 		>
-			{item.emoji}
+			{item.emoji}{item.c}
 		</button>
 	)
 }
