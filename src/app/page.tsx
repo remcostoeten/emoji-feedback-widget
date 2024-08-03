@@ -1,74 +1,61 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/OlTm6nH4lRs
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
 'use client'
 
-import { useState, useMemo } from 'react'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
+import { useState, useMemo, useEffect } from 'react'
 import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle,
+	Input,
+	Button,
+	Badge,
 	DropdownMenu,
 	DropdownMenuTrigger,
 	DropdownMenuContent,
 	DropdownMenuItem,
-} from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
-import {
-	Table,
-	TableHeader,
-	TableRow,
-	TableHead,
-	TableBody,
-	TableCell,
-} from '@/components/ui/table'
-import { Badge } from '@/components/ui/badge'
+} from '@/components/ui'
+import { getFeedbackData } from '@/core/server/feedback'
+import HoverCard from '@/components/effects/hover-card'
+import { ChevronDownIcon } from 'lucide-react'
 
 export default function Component() {
-	const [feedbackData, setFeedbackData] = useState([
-		{
-			id: 1,
-			opinion: 'positive',
-			feedback: 'Great product, love the new features!',
-			timestamp: '2023-06-01 10:30:00',
-		},
-		{
-			id: 2,
-			opinion: 'negative',
-			feedback: 'Disappointed with the performance, needs improvement.',
-			timestamp: '2023-06-02 14:45:00',
-		},
-		{
-			id: 3,
-			opinion: 'positive',
-			feedback: 'Excellent customer service, very responsive team.',
-			timestamp: '2023-06-03 09:15:00',
-		},
-		{
-			id: 4,
-			opinion: 'neutral',
-			feedback: 'The product is okay, but could be better.',
-			timestamp: '2023-06-04 16:20:00',
-		},
-		{
-			id: 5,
-			opinion: 'negative',
-			feedback: 'Buggy software, very frustrating to use.',
-			timestamp: '2023-06-05 11:50:00',
-		},
-	])
+	const [feedbackData, setFeedbackData] = useState([])
+	const [emojiCounts, setEmojiCounts] = useState({})
 	const [searchTerm, setSearchTerm] = useState('')
 	const [filterOption, setFilterOption] = useState('all')
 	const [sortOption, setSortOption] = useState('newest')
-	const [loading, setLoading] = useState(false)
+	const [loading, setLoading] = useState(true)
+
+	useEffect(() => {
+		async function fetchData() {
+			setLoading(true)
+			try {
+				const data = await getFeedbackData()
+				setFeedbackData(data.feedbacks)
+				setEmojiCounts(data.emojiCounts)
+			} catch (error) {
+				console.error('Error fetching feedback data:', error)
+			} finally {
+				setLoading(false)
+			}
+		}
+		fetchData()
+	}, [])
+
 	const totalFeedback = feedbackData.length
 	const positiveFeedback = feedbackData.filter(
-		(feedback) => feedback.opinion === 'positive'
+		(feedback) => feedback.opinion === '🔥' || feedback.opinion === '😍'
 	).length
 	const negativeFeedback = feedbackData.filter(
-		(feedback) => feedback.opinion === 'negative'
+		(feedback) => feedback.opinion === '💩' || feedback.opinion === '🤮'
 	).length
+
 	const filteredFeedback = useMemo(() => {
 		let filtered = feedbackData
 		if (searchTerm) {
@@ -79,9 +66,22 @@ export default function Component() {
 			)
 		}
 		if (filterOption !== 'all') {
-			filtered = filtered.filter(
-				(feedback) => feedback.opinion === filterOption
-			)
+			filtered = filtered.filter((feedback) => {
+				if (filterOption === 'positive')
+					return (
+						feedback.opinion === '🔥' || feedback.opinion === '😍'
+					)
+				if (filterOption === 'negative')
+					return (
+						feedback.opinion === '💩' || feedback.opinion === '🤮'
+					)
+				return (
+					feedback.opinion !== '🔥' &&
+					feedback.opinion !== '😍' &&
+					feedback.opinion !== '💩' &&
+					feedback.opinion !== '🤮'
+				)
+			})
 		}
 		switch (sortOption) {
 			case 'newest':
@@ -100,24 +100,26 @@ export default function Component() {
 				break
 			case 'highest':
 				filtered = filtered.sort((a, b) => {
-					if (a.opinion === 'positive' && b.opinion === 'positive') {
+					const positiveEmojis = ['🔥', '😍']
+					if (
+						positiveEmojis.includes(a.opinion) &&
+						positiveEmojis.includes(b.opinion)
+					)
 						return 0
-					} else if (a.opinion === 'positive') {
-						return -1
-					} else {
-						return 1
-					}
+					if (positiveEmojis.includes(a.opinion)) return -1
+					return 1
 				})
 				break
 			case 'lowest':
 				filtered = filtered.sort((a, b) => {
-					if (a.opinion === 'negative' && b.opinion === 'negative') {
+					const negativeEmojis = ['💩', '🤮']
+					if (
+						negativeEmojis.includes(a.opinion) &&
+						negativeEmojis.includes(b.opinion)
+					)
 						return 0
-					} else if (a.opinion === 'negative') {
-						return -1
-					} else {
-						return 1
-					}
+					if (negativeEmojis.includes(a.opinion)) return -1
+					return 1
 				})
 				break
 			default:
@@ -125,14 +127,9 @@ export default function Component() {
 		}
 		return filtered
 	}, [feedbackData, searchTerm, filterOption, sortOption])
-	const opinionEmojis = [
-		{ text: 'positive', emoji: '🔥' },
-		{ text: 'positive', emoji: '😍' },
-		{ text: 'negative', emoji: '💩' },
-		{ text: 'negative', emoji: '🤮' },
-	]
+
 	return (
-		<div className="container mx-auto px-4 md:px-6 py-8">
+		<div className="container mx-auto py-8 bg-card-light">
 			<header className="mb-8">
 				<h1 className="text-2xl font-bold">Feedback Data</h1>
 				<p className="text-muted-foreground">
@@ -140,36 +137,45 @@ export default function Component() {
 				</p>
 			</header>
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-				<Card>
-					<CardHeader>
-						<CardTitle>Total Feedback</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<div className="text-4xl font-bold">
-							{totalFeedback}
-						</div>
-					</CardContent>
-				</Card>
-				<Card>
-					<CardHeader>
-						<CardTitle>Positive Feedback</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<div className="text-4xl font-bold">
-							{positiveFeedback}
-						</div>
-					</CardContent>
-				</Card>
-				<Card>
-					<CardHeader>
-						<CardTitle>Negative Feedback</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<div className="text-4xl font-bold">
-							{negativeFeedback}
-						</div>
-					</CardContent>
-				</Card>
+				<HoverCard gradientOpacity={0.3}>
+					{' '}
+					<Card>
+						<CardHeader>
+							<CardTitle>Total Feedback</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<div className="text-4xl font-bold">
+								{totalFeedback}
+							</div>
+						</CardContent>
+					</Card>
+				</HoverCard>
+
+				<HoverCard gradientOpacity={0.3}>
+					<Card>
+						<CardHeader>
+							<CardTitle>Positive Feedback</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<div className="text-4xl font-bold">
+								{positiveFeedback}
+							</div>
+						</CardContent>
+					</Card>
+				</HoverCard>
+
+				<HoverCard gradientOpacity={0.3}>
+					<Card>
+						<CardHeader>
+							<CardTitle>Custom Feedback</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<div className="text-4xl font-bold">
+								Custom Content
+							</div>
+						</CardContent>
+					</Card>
+				</HoverCard>
 			</div>
 			<div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div className="col-span-1 md:col-span-2">
@@ -301,30 +307,40 @@ export default function Component() {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{filteredFeedback.length > 0 ? (
+						{loading ? (
+							<TableRow>
+								<TableCell
+									colSpan={4}
+									className="text-center py-8"
+								>
+									Loading...
+								</TableCell>
+							</TableRow>
+						) : filteredFeedback.length > 0 ? (
 							filteredFeedback.map((feedback) => (
 								<TableRow key={feedback.id}>
-									<TableCell>
-										{
-											opinionEmojis.find(
-												(emoji) =>
-													emoji.text ===
-													feedback.opinion
-											)?.emoji
-										}
-									</TableCell>
+									<TableCell>{feedback.opinion}</TableCell>
 									<TableCell>
 										<Badge
 											variant={
-												feedback.opinion === 'positive'
+												feedback.opinion === '🔥' ||
+												feedback.opinion === '😍'
 													? 'secondary'
 													: feedback.opinion ===
-														  'negative'
+																'💩' ||
+														  feedback.opinion ===
+																'🤮'
 														? 'outline'
 														: 'default'
 											}
 										>
-											{feedback.opinion}
+											{feedback.opinion === '🔥' ||
+											feedback.opinion === '😍'
+												? 'positive'
+												: feedback.opinion === '💩' ||
+													  feedback.opinion === '🤮'
+													? 'negative'
+													: 'neutral'}
 										</Badge>
 									</TableCell>
 									<TableCell>{feedback.feedback}</TableCell>
@@ -347,31 +363,7 @@ export default function Component() {
 						)}
 					</TableBody>
 				</Table>
-				{loading && (
-					<div className="flex justify-center py-8">
-						<div />
-					</div>
-				)}
 			</div>
 		</div>
-	)
-}
-
-function ChevronDownIcon(props) {
-	return (
-		<svg
-			{...props}
-			xmlns="http://www.w3.org/2000/svg"
-			width="24"
-			height="24"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			strokeWidth="2"
-			strokeLinecap="round"
-			strokeLinejoin="round"
-		>
-			<path d="m6 9 6 6 6-6" />
-		</svg>
 	)
 }

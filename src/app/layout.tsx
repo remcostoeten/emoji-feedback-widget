@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html>
-			<body className={`${inter.className} bg-[#9a8282]`}>
+			<body className={`${inter.className} bg-body`}>
 				<Providers>
 					<LanguageWrapper>
 						<Header />

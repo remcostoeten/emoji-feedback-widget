@@ -18,7 +18,7 @@ const config: Config = {
 		},
 		extend: {
 			colors: {
-				section: 'var(--section)',
+				section: '#0A0A0A',
 				body: 'var(--body)',
 				input: 'var(--body)',
 				'section-light': 'var(--section)',
