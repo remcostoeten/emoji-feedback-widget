@@ -1,14 +1,5 @@
 'use client'
 
-import { submitFeedbackAction } from '@/core/server/feedback'
-import { AnimatePresence, motion } from 'framer-motion'
-import { useEffect, useRef, useState, useTransition } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'sonner'
-import CoolButton from './CoolButton'
-import EmojiButton from './EmojiButton'
-import { CloseIcon } from './Icons'
-
 import { opinionEmojis, TIME_TO_SHOW_FEEDBACK_FORM } from '@/core/config/config'
 import {
 	afterEmojiClick,
@@ -16,7 +7,15 @@ import {
 	showFeedbackMotionConfig,
 } from '@/core/config/motion-config'
 import useLocalStorage from '@/core/hooks/useLocalStorage'
+import { submitFeedbackAction } from '@/core/server/feedback'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useEffect, useRef, useState, useTransition } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
+import CoolButton from './CoolButton'
 import SparklesText from './effects/SparkleText'
+import EmojiButton from './EmojiButton'
+import { CloseIcon } from './Icons'
 import { BorderBeam } from './shells/BorderEffects'
 
 export function Feedback() {
@@ -170,7 +169,7 @@ export function Feedback() {
 									? '0.5rem'
 									: '2rem',
 						}}
-						className="min-w-[300px] md:min-w-[400px] h-auto w-fit border py-2 bg-section-light hover:bg-[#171716] shadow-sm border-border transition-all bezier-ones duration-500 gap-4 relative"
+						className="min-w-[300px] md:min-w-[400px] h-auto w-fit border py-2 bg-section z-50 hover:bg-[#171716] shadow-sm border-border transition-all bezier-ones duration-500 gap-4 relative"
 					>
 						{!isTextareaVisible && !storedEmoji ? (
 							<div className="flex flex-wrap items-center justify-between w-full px-7 translate-x-1.5 gap-x-6">

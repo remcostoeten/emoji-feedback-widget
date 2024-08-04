@@ -5,8 +5,8 @@ import { t } from 'i18next'
 import { usePathname } from 'next/navigation'
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import ActionsMenu from './ActionsMenu'
+import FontSelector from './FontSelector'
 import LanguageDropdown from './LanguageDropdown'
-import { ConfirmDialogProvider } from '../ConfirmDialogProvider'
 
 export const Header = () => {
 	return <SlideTabs />
@@ -22,7 +22,7 @@ const SlideTabs = () => {
 	const pathname = usePathname()
 
 	return (
-		<nav className="fixed  z-50 top-4">
+		<nav className="z-50 top-4 mx-auto  mt-6">
 			<ul className="relative mx-auto flex w-fit rounded-full border-2 border-black p-1 justify-center items-center content-center">
 				<Tab
 					href="/"
@@ -40,14 +40,17 @@ const SlideTabs = () => {
 				</Tab>
 
 				<Cursor position={position} />
-				<li className="ml-4">
-					<ConfirmDialogProvider>
+				<div className="flex items-center space-x-4">
+					<li className="ml-4">
 						<ActionsMenu />
-					</ConfirmDialogProvider>
-				</li>
-				<li className="ml-4">
-					<LanguageDropdown />
-				</li>
+					</li>
+					<li className="ml-4">
+						<LanguageDropdown />
+					</li>
+					<li>
+						<FontSelector />
+					</li>
+				</div>
 			</ul>
 		</nav>
 	)

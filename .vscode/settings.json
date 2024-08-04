@@ -1,52 +1,52 @@
 {
-    "editor.tabSize": 4,
-    "editor.insertSpaces": true,
-    "editor.detectIndentation": false,
-    "files.autoSave": "onFocusChange",
-    "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "file",
-    "editor.codeActionsOnSave": {
-        "source.organizeImports": true,
-        "source.addMissingImports": true
-    },
-    "files.exclude": {
-        "**/.DS_Store": true,
-        "**/node_modules": true,
-        "**/.turbo": true,
-        "**/.next": true,
-        "**/dist": true,
-        "**/build": true,
-        "**/.astro": true,
-        "**/*.lock": true
-    },
-    "search.exclude": {
-        "**/.DS_Store": true,
-        "**/node_modules": true,
-        "**/.turbo": true,
-        "**/.next": true,
-        "**/dist": true,
-        "**/build": true,
-        "**/.astro": true,
-        "**/*.lock": true
-    },
-    "workbench.colorTheme": "Vesper Purple Dark",
-    "workbench.sideBar.location": "right",
-    "editor.fontFamily": "\"Geist Mono\"",
-    "git.enableSmartCommit": true,
-    "terminal.integrated.enableMultiLinePasteWarning": "auto",
-    "vscode_custom_css.imports": [
-        "file:///home/remcostoeten/.vscode/extensions/brandonkirbyson.vscode-animations-2.0.3/dist/updateHandler.js"
-    ],
-    "github.copilot.advanced": {
-        "github.copilot.enable": true,
-        "github.copilot.inlineSuggest.enable": true,
-        "github.copilot.inlineSuggest.show": true,
-        "github.copilot.editor.useTabCompletion": true,
-        "github.copilot.editor.acceptSuggestionOnEnter": true,
-        "github.copilot.suggestion.maxSuggestions": 225,
-        "github.copilot.suggestion.timeout": 100,
-        "github.copilot.advanced.experimentalFeatures": true,
-        "github.copilot.advanced.loggingLevel": "info",
-        "github.copilot.advanced.tracking": true
-    }
+	"editor.tabSize": 4,
+	"editor.insertSpaces": true,
+	"editor.detectIndentation": false,
+	"files.autoSave": "onFocusChange",
+	"editor.formatOnSave": true,
+	"editor.formatOnSaveMode": "file",
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": true,
+		"source.addMissingImports": true
+	},
+	"files.exclude": {
+		"**/.DS_Store": true,
+		"**/node_modules": true,
+		"**/.turbo": true,
+		"**/.next": true,
+		"**/dist": true,
+		"**/build": true,
+		"**/.astro": true,
+		"**/*.lock": true
+	},
+	"search.exclude": {
+		"**/.DS_Store": true,
+		"**/node_modules": true,
+		"**/.turbo": true,
+		"**/.next": true,
+		"**/dist": true,
+		"**/build": true,
+		"**/.astro": true,
+		"**/*.lock": true
+	},
+	"workbench.colorTheme": "Vesper Purple Dark",
+	"workbench.sideBar.location": "right",
+	"editor.fontFamily": "\"Geist Mono\"",
+	"git.enableSmartCommit": true,
+	"terminal.integrated.enableMultiLinePasteWarning": "auto",
+	"vscode_custom_css.imports": [
+		"file:///home/remcostoeten/.vscode/extensions/brandonkirbyson.vscode-animations-2.0.3/dist/updateHandler.js"
+	],
+	"github.copilot.advanced": {
+		"github.copilot.enable": true,
+		"github.copilot.inlineSuggest.enable": true,
+		"github.copilot.inlineSuggest.show": true,
+		"github.copilot.editor.useTabCompletion": true,
+		"github.copilot.editor.acceptSuggestionOnEnter": true,
+		"github.copilot.suggestion.maxSuggestions": 225,
+		"github.copilot.suggestion.timeout": 100,
+		"github.copilot.advanced.experimentalFeatures": true,
+		"github.copilot.advanced.loggingLevel": "info",
+		"github.copilot.advanced.tracking": true
+	}
 }

@@ -17,3 +17,6 @@ export const TIME_TO_SHOW_FEEDBACK_FORM = 5000 // 5 seconds
 
 // The duration between being able to submit feedback, in milliseconds.
 export const RATE_LIMIT_INTERVAL = 24 * 60 * 60 * 1000 // 24 hours in milliseconds
+
+// The amount of reviews shown per page
+export const DEFAULT_ITEMS_PER_PAGE = '10'

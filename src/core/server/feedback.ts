@@ -1,12 +1,12 @@
+// app/actions/feedback.ts
 'use server'
-import fs from 'fs/promises'
-import path from 'path'
-import { ENABLE_LOCAL_STORAGE, USE_DATABASE } from '../config/config'
-import { Feedback, FeedbackData } from '../utils/types'
-import { opinionEmojis } from '../config/config'
-import { emojiCounts, feedbacks } from './models/schema'
-import db from './database'
+
+import { opinionEmojis, USE_DATABASE } from '@/core/config/config'
+import db from '@/core/server/database'
+import { emojiCounts, feedbacks } from '@/core/server/models/schema'
+import { FeedbackData } from '@/core/utils/types'
 import { sql } from 'drizzle-orm/sql'
+import { revalidatePath } from 'next/cache'
 
 function getEmojiFromOpinion(opinionText: string): string {
 	const opinion = opinionEmojis.find((o) => o.text === opinionText)
@@ -46,6 +46,7 @@ export async function submitFeedbackAction(formData: FormData) {
 		})
 
 		console.log('Feedback saved for:', opinion)
+		revalidatePath('/feedback') // Revalidate the feedback page
 		return { success: true, message: 'Feedback saved successfully' }
 	} catch (error) {
 		console.error('Error saving feedback:', error)
@@ -78,6 +79,7 @@ export async function getFeedbackData(): Promise<FeedbackData> {
 	} else {
 		// Your existing JSON reading logic here
 		// ...
+		return { feedbacks: [], emojiCounts: {} }
 	}
 }
 
@@ -101,4 +103,14 @@ export async function checkRateLimitAction() {
 	// Implement rate limiting logic here
 	// This is a placeholder implementation
 	return { isRateLimited: false, remainingTime: 0 }
+}
+
+export async function getLatestFeedbackAction() {
+	try {
+		const data = await getFeedbackData()
+		return { success: true, data }
+	} catch (error) {
+		console.error('Error fetching latest feedback:', error)
+		return { success: false, error: 'Failed to fetch latest feedback' }
+	}
 }

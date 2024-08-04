@@ -1,10 +1,16 @@
 import { Feedback } from '@/components/FeedbackLogic'
-import FontSelector from '@/components/menus/FontSelector'
 import { Header } from '@/components/menus/Header'
 import Providers from '@/components/providers'
 import FontWrapper from '@/components/shells/FontWrapper'
 import LanguageWrapper from '@/components/shells/LanguageWrapper'
+import { Metadata } from 'next'
 import '../styles/app.css'
+
+export const metadata: Metadata = {
+	title: 'Your Site Title',
+	description: 'Your site description goes here',
+	viewport: 'width=device-width, initial-scale=1',
+}
 
 export default function RootLayout({
 	children,
@@ -12,15 +18,12 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html>
+		<html lang="en">
 			<body className="text-xl bg-body">
 				<Providers>
 					<LanguageWrapper>
 						<FontWrapper>
 							<Header />
-							<div className="absolute top-4 right-4">
-								<FontSelector />
-							</div>
 							<main className="pt-[5%]">{children}</main>
 							<Feedback />
 						</FontWrapper>
