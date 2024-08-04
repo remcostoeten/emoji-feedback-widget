@@ -1,8 +1,10 @@
 import { OpinionEmoji } from '../utils/types'
 
+// Environment-based configuration
 export const ENABLE_LOCAL_STORAGE = process.env.ENABLE_LOCAL_STORAGE === 'true'
 export const USE_DATABASE = process.env.USE_DATABASE === 'true'
 
+// The emojis that can be selected for feedback.
 export const opinionEmojis: OpinionEmoji[] = [
 	{ text: 'love it', emoji: '😍' },
 	{ text: 'DOPE!', emoji: '🔥' },
@@ -10,11 +12,8 @@ export const opinionEmojis: OpinionEmoji[] = [
 	{ text: 'sickening', emoji: '🤮' },
 ]
 
-// If disabled results won't be logged to .json locally.
-// export const ENABLE_LOCAL_STORAGE = true
+// Time to show the feedback form in milliseconds.
+export const TIME_TO_SHOW_FEEDBACK_FORM = 5000 // 5 seconds
 
-export const TIME_TO_SHOW_FEEDBACK_FORM = 5000 // 5s
-
-// The duration between being able to submit.
+// The duration between being able to submit feedback, in milliseconds.
 export const RATE_LIMIT_INTERVAL = 24 * 60 * 60 * 1000 // 24 hours in milliseconds
-// Not fool proof since it's stored in localstorage.

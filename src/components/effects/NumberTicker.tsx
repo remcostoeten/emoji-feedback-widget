@@ -14,7 +14,7 @@ export default function NumberTicker({
 	value: number
 	direction?: 'up' | 'down'
 	className?: string
-	delay?: number // delay in s
+	delay?: number
 }) {
 	const ref = useRef<HTMLSpanElement>(null)
 	const motionValue = useMotionValue(direction === 'down' ? value : 0)
@@ -35,8 +35,9 @@ export default function NumberTicker({
 		() =>
 			springValue.on('change', (latest) => {
 				if (ref.current) {
-					ref.current.textContent =
-						Intl.NumberFormat('en-US').format(latest)
+					ref.current.textContent = Intl.NumberFormat('en-US').format(
+						Math.round(latest)
+					)
 				}
 			}),
 		[springValue]

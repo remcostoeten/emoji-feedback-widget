@@ -25,7 +25,6 @@ import { getFeedbackData } from '@/core/server/feedback'
 import HoverCard from '@/components/effects/hover-card'
 import { ChevronDownIcon } from 'lucide-react'
 import NumberTicker from '@/components/effects/NumberTicker'
-import SparklesText from '@/components/effects/SparkleText'
 
 export default function Component() {
 	const { t } = useTranslation()
@@ -238,7 +237,6 @@ export default function Component() {
 										: ''
 								}
 							>
-								
 								{t('neutralFeedback')}
 							</DropdownMenuItem>
 						</DropdownMenuContent>

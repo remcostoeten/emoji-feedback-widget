@@ -1,17 +1,12 @@
 'use client'
 
-import React, {
-	Dispatch,
-	SetStateAction,
-	useEffect,
-	useRef,
-	useState,
-} from 'react'
 import { motion } from 'framer-motion'
-import { usePathname } from 'next/navigation'
-import LanguageDropdown from './LanguageDropdown'
 import { t } from 'i18next'
+import { usePathname } from 'next/navigation'
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import ActionsMenu from './ActionsMenu'
+import LanguageDropdown from './LanguageDropdown'
+import { ConfirmDialogProvider } from '../ConfirmDialogProvider'
 
 export const Header = () => {
 	return <SlideTabs />
@@ -46,7 +41,9 @@ const SlideTabs = () => {
 
 				<Cursor position={position} />
 				<li className="ml-4">
-					<ActionsMenu />
+					<ConfirmDialogProvider>
+						<ActionsMenu />
+					</ConfirmDialogProvider>
 				</li>
 				<li className="ml-4">
 					<LanguageDropdown />

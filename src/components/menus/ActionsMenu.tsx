@@ -1,20 +1,20 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
 import {
 	DropdownMenu,
-	DropdownMenuTrigger,
 	DropdownMenuContent,
 	DropdownMenuItem,
-	DropdownMenuSeparator,
+	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
-import { CookieIcon, SettingsIcon, TrashIcon, XIcon } from '../Icons'
 import useLocalStorage from '@/core/hooks/useLocalStorage'
-import { useTranslation } from 'react-i18next' // Import the useTranslation hook
+
 import { toast } from 'sonner'
+import { CookieIcon, SettingsIcon, TrashIcon } from '../Icons'
+import { useTranslation } from 'react-i18next'
 
 export default function ActionsMenu() {
-	const { t } = useTranslation() // Initialize the t function
+	const { t } = useTranslation()
 	const [, setStoredValue] = useLocalStorage(
 		'feedbackHidden',
 		'feedbackHidden'
@@ -28,7 +28,6 @@ export default function ActionsMenu() {
 	}
 
 	const handleClearCache = () => {
-		// Add your clear cache logic here
 		alert(t('clearCache'))
 	}
 

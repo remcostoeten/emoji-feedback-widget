@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
+import * as React from 'react'
 
 import { cn } from '@core/utils/helpers'
 
@@ -11,11 +11,11 @@ const badgeVariants = cva(
 				default:
 					'border-transparent bg-zinc-900 text-zinc-50 shadow hover:bg-zinc-900/80 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-50/80',
 				secondary:
-					'border-transparent bg-zinc-100 text-zinc-900 hover:bg-zinc-100/80 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-800/80 shadow-xl shadow-green-400/40',
+					'border-transparent bg-zinc-100 text-zinc-900 hover:bg-zinc-100/80 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-800/80 shadow-xl shadow-green-400/10',
 				destructive:
 					'border-transparent bg-red-500 text-zinc-50 shadow hover:bg-red-500/80 dark:bg-red-900 dark:text-zinc-50 dark:hover:bg-red-900/80',
 				outline:
-					'text-zinc-950 dark:text-zinc-50 bg-section border-[#454545] text-white shadow-xl shadow-red-400/40',
+					'text-zinc-950 dark:text-zinc-50 bg-section border-[#454545] text-white shadow-xl shadow-red-400/10',
 			},
 		},
 		defaultVariants: {

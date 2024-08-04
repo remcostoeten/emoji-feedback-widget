@@ -1,3 +1,48 @@
+function FontIcon() {
+	;<svg
+		xmlns="http://www.w3.org/2000/svg"
+		x="0"
+		y="0"
+		fillRule="evenodd"
+		strokeLinejoin="round"
+		strokeMiterlimit="2"
+		clipRule="evenodd"
+		viewBox="0 0 64 80"
+	>
+		<circle cx="13" cy="57" r="1"></circle>
+		<circle cx="57.001" cy="13" r="1"></circle>
+		<path d="M32.011 52l.673-6.059a3 3 0 012.71-2.657l.607-.055V22h10v3a.997.997 0 001 1h4a.997.997 0 001-1V15a.997.997 0 00-1-1H13a.997.997 0 00-1 1v10a.997.997 0 001 1h4a.997.997 0 001-1v-3h10v24h-3a.997.997 0 00-1 1v4a.997.997 0 001 1z"></path>
+		<circle cx="65.939" cy="7.5" r="2" transform="rotate(45)"></circle>
+		<path d="M59.708 39.201a1 1 0 000-1.414l-4.243-4.243a1 1 0 00-1.414 0l-8.486 8.486 5.657 5.657zM48.683 49.898a1 1 0 00-.289-.797l-4.243-4.243a1 1 0 00-.797-.289l-7.779.707a1 1 0 00-.903.886L33.258 58.89a1 1 0 001.104 1.104L47.09 58.58a1 1 0 00.886-.903zm-2.034.286l-.591 6.498-10.674 1.186 1.186-10.674 6.498-.59z"></path>
+		<path d="M51.93 51.222a3.001 3.001 0 000-4.243l-5.657-5.657a3.003 3.003 0 00-4.243 0 3.003 3.003 0 000 4.243l5.657 5.657a3.001 3.001 0 004.243 0zm-1.414-2.829a1 1 0 11-1.414 1.414 1 1 0 011.414-1.414zm-7.071-4.242l2.828 2.828a1 1 0 001.414-1.414l-2.828-2.828a.999.999 0 10-1.414 1.414zM35.666 59l6.364-6.364a1 1 0 00-1.414-1.414l-6.364 6.364A1 1 0 0035.666 59zM57 4c-1.655 0-3 1.344-3 3s1.345 3 3 3c1.656 0 3-1.344 3-3s-1.344-3-3-3zm0 2a1 1 0 110 2.001 1 1 0 010-2zM7 4C5.345 4 4 5.344 4 7s1.345 3 3 3c1.656 0 3-1.344 3-3S8.656 4 7 4zm0 2a1 1 0 110 2.001 1 1 0 010-2zM7 54c-1.655 0-3 1.345-3 3 0 1.656 1.345 3 3 3 1.656 0 3-1.344 3-3 0-1.655-1.344-3-3-3zm0 2a1 1 0 110 2.001 1 1 0 010-2z"></path>
+		<path d="M34 -8H55V-6H34z" transform="rotate(90)"></path>
+		<path d="M17 58h13a1 1 0 000-2H17a1 1 0 000 2z"></path>
+		<path
+			d="M8.999 -8H29.999000000000002V-6H8.999z"
+			transform="rotate(90)"
+		></path>
+		<path d="M9 6H30V8H9z"></path>
+		<path d="M34 6H55V8H34z"></path>
+		<path d="M56 17v13a1 1 0 002 0V17a1 1 0 00-2 0zM7 29c-1.655 0-3 1.344-3 3s1.345 3 3 3c1.656 0 3-1.344 3-3s-1.344-3-3-3zm0 2a1 1 0 110 2.001 1 1 0 010-2zM32 4c-1.655 0-3 1.344-3 3s1.345 3 3 3c1.656 0 3-1.344 3-3s-1.344-3-3-3zm0 2a1 1 0 110 2.001 1 1 0 010-2z"></path>
+		<text
+			y="79"
+			fontFamily="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif"
+			fontSize="5"
+			fontWeight="bold"
+		>
+			Created by Ranah Pixel Studio
+		</text>
+		<text
+			y="84"
+			fontFamily="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif"
+			fontSize="5"
+			fontWeight="bold"
+		>
+			from the Noun Project
+		</text>
+	</svg>
+}
+
 function CookieIcon(props) {
 	return (
 		<svg
@@ -228,15 +273,16 @@ function XIcon(props) {
 	)
 }
 export {
+	ChevronDownIcon,
 	CloseIcon,
 	CookieIcon,
-	SettingsIcon,
-	TrashIcon,
-	XIcon,
 	FilterIcon,
+	FontIcon,
 	ListOrderedIcon,
+	SettingsIcon,
 	SmileIcon,
 	ThumbsDownIcon,
 	ThumbsUpIcon,
-	ChevronDownIcon,
+	TrashIcon,
+	XIcon,
 }
