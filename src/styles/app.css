@@ -14,11 +14,41 @@ html {
 
 body {
 	display: grid;
-	place-items: center;
 	min-height: 100vh;
 	font-family: 'SF Pro Text', 'SF Pro Icons', 'AOS Icons', 'Helvetica Neue',
 		Helvetica, Arial, sans-serif, system-ui;
 	color: white;
+}
+
+.container {
+	max-width: 100%;
+	margin: 0 auto;
+	padding: 0 15px;
+	margin-top: 50px;
+}
+
+@media (min-width: 576px) {
+	.container {
+		max-width: 540px;
+	}
+}
+
+@media (min-width: 768px) {
+	.container {
+		max-width: 720px;
+	}
+}
+
+@media (min-width: 992px) {
+	.container {
+		max-width: 960px;
+	}
+}
+
+@media (min-width: 1200px) {
+	.container {
+		max-width: 1024px;
+	}
 }
 
 body::after {

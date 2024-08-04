@@ -14,7 +14,7 @@ import {
 	SelectValue,
 } from '@/components/ui'
 import { useFeedbackStore } from '@/core/stores/feedback-store'
-import { ChevronDownIcon } from 'lucide-react'
+import { ChevronDownIcon, SearchIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 export default function FeedbackControls() {
@@ -32,14 +32,15 @@ export default function FeedbackControls() {
 
 	return (
 		<div className="mb-8 flex justify-between items-center gap-4">
-			<div className="col-span-1 md:col-span-2">
+			<div className="col-span-1 md:col-span-2 relative w-[400px]">
 				<Input
-					className="vercel-card w-[400px]"
+					className="vercel-card w-full placeholder:pl-10 pl-[100px]" // Add padding to the left
 					type="search"
 					placeholder={t('search')}
 					value={searchTerm}
 					onChange={(e) => setSearchTerm(e.target.value)}
 				/>
+				<SearchIcon className="absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-400" />
 			</div>
 			<div className="flex items-center gap-2">
 				<FilterDropdown />

@@ -27,6 +27,7 @@
 	"oldest": "Oldest",
 	"highestRating": "Highest Rating",
 	"lowestRating": "Lowest Rating",
+	"emojiSubmitted": "Emoji feedback submitted",
 	"positiveFeedback": "Positive Feedback",
 	"negativeFeedback": "Negative Feedback",
 	"neutralFeedback": "Neutral Feedback",
@@ -36,5 +37,10 @@
 	"DOPE!": "DOPE!",
 	"its shit": "its shit",
 	"sickening": "sickening",
-	"confirmClearCacheDescription": "This will remove all cached data. Do you want to proceed?"
+	"confirmClearCacheDescription": "This will remove all cached data. Do you want to proceed?",
+	"emoji": "Emoji",
+	"opinion": "Opinion",
+	"feedback": "Feedback",
+	"timestamp": "Timestamp",
+	"city": "City"
 }

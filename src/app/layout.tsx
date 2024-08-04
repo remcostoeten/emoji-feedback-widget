@@ -1,5 +1,6 @@
 import { Feedback } from '@/components/FeedbackLogic'
 import { Header } from '@/components/menus/Header'
+import { MobileMenu } from '@/components/menus/MobileMenu'
 import Providers from '@/components/providers'
 import FontWrapper from '@/components/shells/FontWrapper'
 import LanguageWrapper from '@/components/shells/LanguageWrapper'
@@ -23,8 +24,15 @@ export default function RootLayout({
 				<Providers>
 					<LanguageWrapper>
 						<FontWrapper>
-							<Header />
-							<main className="pt-[5%]">{children}</main>
+							<div className="hidden sm:block">
+								<Header />
+							</div>
+							<div className="sm:hidden p-4">
+								<MobileMenu />
+							</div>
+							<main className="container mx-auto pt-[5%]">
+								{children}
+							</main>
 							<Feedback />
 						</FontWrapper>
 					</LanguageWrapper>

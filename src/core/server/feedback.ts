@@ -1,17 +1,36 @@
-// app/actions/feedback.ts
 'use server'
 
 import { opinionEmojis, USE_DATABASE } from '@/core/config/config'
 import db from '@/core/server/database'
 import { emojiCounts, feedbacks } from '@/core/server/models/schema'
 import { FeedbackData } from '@/core/utils/types'
+import console from 'console'
 import { sql } from 'drizzle-orm/sql'
 import { revalidatePath } from 'next/cache'
+import { cache } from 'react'
 
 function getEmojiFromOpinion(opinionText: string): string {
 	const opinion = opinionEmojis.find((o) => o.text === opinionText)
 	return opinion ? opinion.emoji : opinionText
 }
+
+export const getLocation = cache(async () => {
+	try {
+		const response = await fetch('https://ipapi.co/json')
+		if (!response.ok) {
+			throw new Error('Failed to fetch location data')
+		}
+		const data = await response.json()
+		console.log(data)
+		return {
+			city: data.city || 'Unknown City',
+			country: data.country_name || 'Unknown Country',
+		}
+	} catch (error) {
+		console.error(error)
+		return { city: 'Unknown City', country: 'Unknown Country' }
+	}
+})
 
 export async function submitFeedbackAction(formData: FormData) {
 	if (!USE_DATABASE) {
@@ -21,10 +40,11 @@ export async function submitFeedbackAction(formData: FormData) {
 
 	let opinion = formData.get('opinion') as string
 	const feedback = formData.get('feedback') as string | null
-
 	console.log('Received opinion:', opinion)
 	console.log('Received feedback:', feedback)
 
+	// Get the location
+	const { city, country } = await getLocation()
 	// Replace opinion text with emoji
 	opinion = getEmojiFromOpinion(opinion)
 
@@ -38,15 +58,16 @@ export async function submitFeedbackAction(formData: FormData) {
 				set: { count: sql`${emojiCounts.count} + 1` },
 			})
 
-		// Always save to the feedbacks table, even if feedback is empty
 		await db.insert(feedbacks).values({
 			opinion: opinion,
-			feedback: feedback || '', // Use an empty string if feedback is null
+			feedback: feedback || '',
 			timestamp: new Date().toISOString(),
+			city: city,
+			country: country, // Save the country name
 		})
 
 		console.log('Feedback saved for:', opinion)
-		revalidatePath('/feedback') // Revalidate the feedback page
+		revalidatePath('/feedback')
 		return { success: true, message: 'Feedback saved successfully' }
 	} catch (error) {
 		console.error('Error saving feedback:', error)

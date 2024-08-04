@@ -169,7 +169,7 @@ export function Feedback() {
 									? '0.5rem'
 									: '2rem',
 						}}
-						className="min-w-[300px] md:min-w-[400px] h-auto w-fit border py-2 bg-section z-50 hover:bg-[#171716] shadow-sm border-border transition-all bezier-ones duration-500 gap-4 relative"
+						className="min-w-[300px] pb-4 md:min-w-[400px] h-auto w-fit border py-2 bg-section z-50 hover:bg-[#171716] shadow-sm border-border transition-all bezier-ones duration-500 gap-4 relative"
 					>
 						{!isTextareaVisible && !storedEmoji ? (
 							<div className="flex flex-wrap items-center justify-between w-full px-7 translate-x-1.5 gap-x-6">

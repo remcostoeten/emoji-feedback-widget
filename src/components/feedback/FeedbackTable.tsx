@@ -1,6 +1,4 @@
-// app/components/FeedbackTable.tsx
 'use client'
-
 import {
 	Badge,
 	Table,
@@ -10,6 +8,7 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui'
+import { opinionEmojis } from '@/core/config/config'
 import { useFeedbackStore } from '@/core/stores/feedback-store'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,9 +25,15 @@ export default function FeedbackTable() {
 		sortOption,
 	} = useFeedbackStore()
 
+	const positiveEmojis = opinionEmojis
+		.filter((e) => ['😍', '🔥'].includes(e.emoji))
+		.map((e) => e.emoji)
+	const negativeEmojis = opinionEmojis
+		.filter((e) => ['💩', '🤮'].includes(e.emoji))
+		.map((e) => e.emoji)
+
 	const filteredFeedback = useMemo(() => {
 		let filtered = feedbackData.feedbacks
-
 		if (searchTerm) {
 			filtered = filtered.filter((feedback) =>
 				feedback.feedback
@@ -36,18 +41,16 @@ export default function FeedbackTable() {
 					.includes(searchTerm.toLowerCase())
 			)
 		}
-
 		if (filterOption !== 'all') {
 			filtered = filtered.filter((feedback) => {
 				const { opinion } = feedback
 				if (filterOption === 'positive')
-					return ['🔥', '😍'].includes(opinion)
+					return positiveEmojis.includes(opinion)
 				if (filterOption === 'negative')
-					return ['💩', '🤮'].includes(opinion)
-				return !['🔥', '😍', '💩', '🤮'].includes(opinion)
+					return negativeEmojis.includes(opinion)
+				return ![...positiveEmojis, ...negativeEmojis].includes(opinion)
 			})
 		}
-
 		return filtered.sort((a, b) => {
 			switch (sortOption) {
 				case 'newest':
@@ -61,14 +64,21 @@ export default function FeedbackTable() {
 						new Date(b.timestamp).getTime()
 					)
 				case 'highest':
-					return ['🔥', '😍'].includes(b.opinion) ? 1 : -1
+					return positiveEmojis.includes(b.opinion) ? 1 : -1
 				case 'lowest':
-					return ['💩', '🤮'].includes(b.opinion) ? 1 : -1
+					return negativeEmojis.includes(b.opinion) ? 1 : -1
 				default:
 					return 0
 			}
 		})
-	}, [feedbackData, searchTerm, filterOption, sortOption])
+	}, [
+		feedbackData,
+		searchTerm,
+		filterOption,
+		sortOption,
+		positiveEmojis,
+		negativeEmojis,
+	])
 
 	const paginatedFeedback = filteredFeedback.slice(
 		(currentPage - 1) * itemsPerPage,
@@ -84,12 +94,15 @@ export default function FeedbackTable() {
 						<TableHead>{t('opinion')}</TableHead>
 						<TableHead>{t('feedback')}</TableHead>
 						<TableHead>{t('timestamp')}</TableHead>
+						<TableHead>{t('city')}</TableHead>
+						<TableHead>{t('country')}</TableHead>{' '}
+						{/* New column for country */}
 					</TableRow>
 				</TableHeader>
 				<TableBody>
 					{loading ? (
 						<TableRow>
-							<TableCell colSpan={4} className="text-center py-8">
+							<TableCell colSpan={6} className="text-center py-8">
 								{t('loading')}
 							</TableCell>
 						</TableRow>
@@ -102,7 +115,7 @@ export default function FeedbackTable() {
 						))
 					) : (
 						<TableRow>
-							<TableCell colSpan={4} className="text-center py-8">
+							<TableCell colSpan={6} className="text-center py-8">
 								{t('noFeedback')}
 							</TableCell>
 						</TableRow>
@@ -115,13 +128,18 @@ export default function FeedbackTable() {
 
 function FeedbackRow({ feedback }) {
 	const { t } = useTranslation()
-
 	const getOpinionType = (opinion) => {
-		if (['🔥', '😍'].includes(opinion)) return 'positive'
-		if (['💩', '🤮'].includes(opinion)) return 'negative'
+		const positiveEmojis = opinionEmojis
+			.filter((e) => ['😍', '🔥'].includes(e.emoji))
+			.map((e) => e.emoji)
+		const negativeEmojis = opinionEmojis
+			.filter((e) => ['💩', '🤮'].includes(e.emoji))
+			.map((e) => e.emoji)
+
+		if (positiveEmojis.includes(opinion)) return 'positive'
+		if (negativeEmojis.includes(opinion)) return 'negative'
 		return 'neutral'
 	}
-
 	const opinionType = getOpinionType(feedback.opinion)
 
 	return (
@@ -144,6 +162,11 @@ function FeedbackRow({ feedback }) {
 			<TableCell>
 				{new Date(feedback.timestamp).toLocaleString()}
 			</TableCell>
+			<TableCell>{feedback.city || t('unknownCity')}</TableCell>
+			<TableCell>
+				{feedback.country || t('unknownCountry')}
+			</TableCell>{' '}
+			{/* New cell for country */}
 		</TableRow>
 	)
 }

@@ -1,7 +1,7 @@
 {
 	"version": "6",
 	"dialect": "sqlite",
-	"id": "5e16991f-4fb4-4191-a5f9-b7c5068a97a9",
+	"id": "6e03552c-670c-44e4-97fb-ae7ea05a992e",
 	"prevId": "00000000-0000-0000-0000-000000000000",
 	"tables": {
 		"emoji_counts": {
@@ -18,7 +18,7 @@
 					"name": "count",
 					"type": "integer",
 					"primaryKey": false,
-					"notNull": false,
+					"notNull": true,
 					"autoincrement": false
 				}
 			},
@@ -53,6 +53,27 @@
 				},
 				"timestamp": {
 					"name": "timestamp",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false,
+					"autoincrement": false
+				},
+				"country": {
+					"name": "country",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false,
+					"autoincrement": false
+				},
+				"region": {
+					"name": "region",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false,
+					"autoincrement": false
+				},
+				"city": {
+					"name": "city",
 					"type": "text",
 					"primaryKey": false,
 					"notNull": false,

@@ -34,7 +34,13 @@
 	"confirmClearCacheDescription": "Dit zal alle gecachte gegevens verwijderen. Wilt u doorgaan?",
 	"confirm": "Bevestigen",
 	"cancel": "Annuleren",
+	"emojiSubmitted": "Emoji-feedback verzonden",
 	"its shit": "het is slecht",
 	"sickening": "walgelijk",
-	"confirmClearCacheTitle": "Weet je zeker dat je de cache wilt verwijderen?"
+	"confirmClearCacheTitle": "Weet je zeker dat je de cache wilt verwijderen?",
+	"emoji": "Emoji",
+	"opinion": "Mening",
+	"feedback": "Feedback",
+	"timestamp": "Tijdstempel",
+	"city": "Stad"
 }

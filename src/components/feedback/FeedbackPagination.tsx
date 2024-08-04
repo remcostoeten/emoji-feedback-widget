@@ -26,34 +26,38 @@ export default function FeedbackPagination() {
 	}
 
 	return (
-		<Pagination>
-			<PaginationContent>
-				<PaginationItem>
-					<PaginationPrevious
-						onClick={() => handlePageChange(currentPage - 1)}
-						disabled={currentPage === 1}
-					/>
-				</PaginationItem>
-				{[...Array(totalPages)].map((_, index) => (
-					<PaginationItem key={index}>
-						<PaginationLink
-							onClick={() => handlePageChange(index + 1)}
-							isActive={currentPage === index + 1}
-							className={
-								currentPage === index + 1 ? 'text-black' : ''
-							}
-						>
-							{index + 1}
-						</PaginationLink>
+		<footer className="mt-8">
+			<Pagination>
+				<PaginationContent>
+					<PaginationItem>
+						<PaginationPrevious
+							onClick={() => handlePageChange(currentPage - 1)}
+							disabled={currentPage === 1}
+						/>
 					</PaginationItem>
-				))}
-				<PaginationItem>
-					<PaginationNext
-						onClick={() => handlePageChange(currentPage + 1)}
-						disabled={currentPage === totalPages}
-					/>
-				</PaginationItem>
-			</PaginationContent>
-		</Pagination>
+					{[...Array(totalPages)].map((_, index) => (
+						<PaginationItem key={index}>
+							<PaginationLink
+								onClick={() => handlePageChange(index + 1)}
+								isActive={currentPage === index + 1}
+								className={
+									currentPage === index + 1
+										? 'text-black'
+										: ''
+								}
+							>
+								{index + 1}
+							</PaginationLink>
+						</PaginationItem>
+					))}
+					<PaginationItem>
+						<PaginationNext
+							onClick={() => handlePageChange(currentPage + 1)}
+							disabled={currentPage === totalPages}
+						/>
+					</PaginationItem>
+				</PaginationContent>
+			</Pagination>
+		</footer>
 	)
 }

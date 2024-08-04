@@ -1,8 +1,8 @@
 {
 	"version": "6",
 	"dialect": "sqlite",
-	"id": "81b0a043-ed44-4e0e-9e3b-5568f03716d1",
-	"prevId": "50080e78-3f9a-463e-b633-207a37ac160b",
+	"id": "e8659ccb-5e1b-4184-a2d9-5a53ba122af4",
+	"prevId": "10787f11-bca5-415f-b11a-4c7b19e58f79",
 	"tables": {
 		"emoji_counts": {
 			"name": "emoji_counts",
@@ -53,34 +53,6 @@
 				},
 				"timestamp": {
 					"name": "timestamp",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": false,
-					"autoincrement": false
-				},
-				"browser": {
-					"name": "browser",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": false,
-					"autoincrement": false
-				},
-				"os": {
-					"name": "os",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": false,
-					"autoincrement": false
-				},
-				"device": {
-					"name": "device",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": false,
-					"autoincrement": false
-				},
-				"ip": {
-					"name": "ip",
 					"type": "text",
 					"primaryKey": false,
 					"notNull": false,
