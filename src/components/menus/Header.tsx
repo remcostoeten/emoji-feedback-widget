@@ -30,9 +30,7 @@ const SlideTabs = () => {
                 >
                     Home
                 </Tab>
-                <xx>
-                    <Cursor position={position} />
-                </xx>
+                <Cursor position={position} />
                 <div className="flex items-center space-x-4">
                     <li className="ml-4">
                         <ActionsMenu />
