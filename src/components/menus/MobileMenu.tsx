@@ -7,16 +7,7 @@ import {
 	DrawerContent,
 	DrawerTrigger,
 } from '@/components/ui/drawer'
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '@/components/ui/select'
-import { ToggleGroup, ToggleGroupItem } from '@radix-ui/react-toggle-group'
 import { motion } from 'framer-motion'
-import { t } from 'i18next'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
@@ -47,82 +38,34 @@ const SlideTabs = () => {
 			</DrawerTrigger>
 			<DrawerContent className="bg-background p-6 sm:w-80">
 				<div className="flex items-center justify-between">
-					<Link
-						href="#"
-						className="flex items-center gap-2"
-						prefetch={false}
-					>
-						<MountainIcon className="h-6 w-6" />
-						<span className="text-lg font-semibold">Acme Inc</span>
-					</Link>
 					<DrawerClose>
 						<XIcon className="h-6 w-6" />
 					</DrawerClose>
 				</div>
-				<nav className="mt-8 space-y-4">
+				<nav>
 					<ul className="relative flex flex-col gap-8 mx-auto mt-6 md:flex-row rounded-full border-2 border-black p-1 content-center">
-						<Tab
-							href="/"
-							setPosition={setPosition}
-							isActive={pathname === '/'}
-						>
-							Home
-						</Tab>
-						<Tab
-							href="results"
-							setPosition={setPosition}
-							isActive={pathname === '/results'}
-						>
-							{t('surveyResults')}
-						</Tab>
-
+						<div className="hidden sm:block">
+							<Tab
+								href="/"
+								setPosition={setPosition}
+								isActive={pathname === '/'}
+							>
+								Home
+							</Tab>
+						</div>
 						<Cursor position={position} />
-						<div className="flex flex-col md:flex-row  space-x-4">
-							<li className="ml-4">
+						<div className="flex gap-4 flex-col md:flex-row  space-x-4">
+							<li className="ml-4 absolute top-4 right-4 sm:relative">
 								<ActionsMenu />
 							</li>
-							<li className="ml-4">
+							<li className="ml-0">
 								<LanguageDropdown />
 							</li>
-							<li>
+							<li className="ml-0">
 								<FontSelector />
 							</li>
 						</div>
 					</ul>
-					<Select>
-						<SelectTrigger className="w-full flex items-center justify-between">
-							<SelectValue placeholder="Select font" />
-							<ChevronDownIcon className="h-4 w-4 text-muted-foreground" />
-						</SelectTrigger>
-						<SelectContent>
-							<SelectItem value="inter">Inter</SelectItem>
-							<SelectItem value="roboto">Roboto</SelectItem>
-							<SelectItem value="opensans">Open Sans</SelectItem>
-						</SelectContent>
-					</Select>
-					<div className="flex items-center justify-between">
-						<span className="text-sm font-medium">Language</span>
-						<ToggleGroup type="single" defaultValue="en">
-							<ToggleGroupItem
-								value="en"
-								className="px-2 py-1 rounded-md bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
-							>
-								EN
-							</ToggleGroupItem>
-							<ToggleGroupItem
-								value="es"
-								className="px-2 py-1 rounded-md bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
-							>
-								ES
-							</ToggleGroupItem>
-							<ToggleGroupItem
-								value="fr"
-								className="px-2 py-1 rounded-md bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
-							>
-								FR
-							</ToggleGroupItem>
-						</ToggleGroup>
-					</div>
 				</nav>
 			</DrawerContent>
 		</Drawer>

@@ -1,13 +1,8 @@
 // @ts-nocheck
 'use client'
 
+import { motion, useMotionTemplate, useMotionValue } from 'framer-motion'
 import React, { useCallback, useEffect } from 'react'
-import {
-	motion,
-	useMotionTemplate,
-	useMotionValue,
-	animate,
-} from 'framer-motion'
 
 import { cn } from '@/core/utils/helpers'
 
@@ -50,7 +45,7 @@ export default function HoverCard({
 		<div
 			onMouseMove={handleMouseMove}
 			onMouseLeave={handleMouseLeave}
-			className={cn('vercel-card relative', className)}
+			className={cn('vercel-card relative w-1/2 sm:w-full', className)}
 		>
 			<div className="relative z-10">{children}</div>
 			<motion.div

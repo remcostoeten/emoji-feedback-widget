@@ -29,7 +29,7 @@ export default function FeedbackStats() {
 		}, [feedbackData])
 
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8 w-full">
 			<StatCard title={t('totalFeedback')} value={totalFeedback} />
 			<StatCard title={t('positiveFeedback')} value={positiveFeedback} />
 			<StatCard title={t('negativeFeedback')} value={negativeFeedback} />
@@ -40,7 +40,7 @@ export default function FeedbackStats() {
 function StatCard({ title, value }) {
 	return (
 		<HoverCard gradientOpacity={0.3}>
-			<Card>
+			<Card className="w-full">
 				<CardHeader>
 					<CardTitle>{title}</CardTitle>
 				</CardHeader>

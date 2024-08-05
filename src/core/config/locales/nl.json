@@ -42,5 +42,6 @@
 	"opinion": "Mening",
 	"feedback": "Feedback",
 	"timestamp": "Tijdstempel",
-	"city": "Stad"
+	"city": "Stad",
+	"feedbackPlaceholder": "Nog meer te vertellen?"
 }

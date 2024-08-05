@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className="text-xl bg-body">
+			<body className="text-xl bg-body overflow-x">
 				<Providers>
 					<LanguageWrapper>
 						<FontWrapper>
