@@ -8,7 +8,12 @@ import {
 } from '@/core/config/motion-config'
 import useLocalStorage from '@/core/hooks/useLocalStorage'
 import { submitFeedbackAction } from '@/core/server/feedback'
-import { AnimatePresence, motion } from 'framer-motion'
+import {
+	AnimatePresence,
+	motion,
+	useMotionValue,
+	useTransform,
+} from 'framer-motion'
 import { useEffect, useRef, useState, useTransition } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -34,6 +39,9 @@ export function Feedback() {
 	const formRef = useRef(null)
 	const sectionRef = useRef(null)
 	const [isPending, startTransition] = useTransition()
+
+	const dragY = useMotionValue(0)
+	const opacity = useTransform(dragY, [0, 100], [1, 0])
 
 	const isButtonEnabled = feedbackText.trim().length > 0 && !isPending
 
@@ -107,7 +115,7 @@ export function Feedback() {
 		})
 	}
 
-	async function handleClose() {
+	function handleClose() {
 		// Submit emoji-only feedback when closing without additional text
 		if (selectedOpinion || storedEmoji) {
 			const formData = new FormData()
@@ -129,7 +137,10 @@ export function Feedback() {
 		}
 
 		setIsAnimatingOut(true)
-		setTimeout(resetForm, 500)
+		setTimeout(() => {
+			resetForm()
+			setFeedbackHidden(true)
+		}, 500)
 	}
 
 	function resetForm() {
@@ -144,6 +155,13 @@ export function Feedback() {
 		}
 	}
 
+	const handleDragEnd = (event, info) => {
+		if (info.offset.y > 100) {
+			setFeedbackHidden(true)
+		}
+		dragY.set(0)
+	}
+
 	if (feedbackHidden && !storedEmoji) {
 		return null
 	}
@@ -154,11 +172,16 @@ export function Feedback() {
 				<motion.section
 					ref={sectionRef}
 					aria-label={t('feedbackSectionLabel')}
-					className="fixed bottom-0 left-0 right-0 max-w-full mx-auto flex justify-center mb-10"
+					className="fixed w-fit bottom-0 left-0 right-0 mx-auto flex justify-center mb-10"
 					initial={showFeedbackMotionConfig.initial}
 					animate={showFeedbackMotionConfig.animate(isAnimatingOut)}
 					exit={showFeedbackMotionConfig.exit}
 					transition={showFeedbackMotionConfig.transition}
+					drag="y"
+					dragConstraints={{ top: 0, bottom: 0 }}
+					dragElastic={0.2}
+					onDragEnd={handleDragEnd}
+					style={{ y: dragY, opacity }}
 				>
 					<motion.div
 						layout
@@ -169,8 +192,15 @@ export function Feedback() {
 									? '0.5rem'
 									: '2rem',
 						}}
-						className="min-w-[300px] pb-4 md:min-w-[400px] h-auto w-fit border py-2 bg-section z-50 hover:bg-[#171716] shadow-sm border-border transition-all bezier-ones duration-500 gap-4 relative"
+						className="min-w-[300px] pb-4 md:min-w-[400px] h-auto w-fit border py-2 bg-[#0A0A0A] z-50 hover:bg-[#171716] shadow-sm border-border transition-all bezier-ones duration-500 gap-4 relative"
 					>
+						<button
+							onClick={handleClose}
+							className="absolute -top-1 -left- text-disabled hover:text-text"
+							aria-label={t('closeFeedbackForm')}
+						>
+							<CloseIcon />
+						</button>
 						{!isTextareaVisible && !storedEmoji ? (
 							<div className="flex flex-wrap items-center justify-between w-full px-7 translate-x-1.5 gap-x-6">
 								<h2
@@ -199,15 +229,6 @@ export function Feedback() {
 								{(selectedOpinion || storedEmoji) &&
 									!isSubmitted && (
 										<div className="">
-											<button
-												onClick={handleClose}
-												className="unset absolute -top-5 z-50 shadow-white/10 shadow-xl -right-2.5"
-												aria-label={t(
-													'closeFeedbackForm'
-												)}
-											>
-												<CloseIcon />
-											</button>
 											<motion.div
 												initial={
 													afterEmojiClick.initial

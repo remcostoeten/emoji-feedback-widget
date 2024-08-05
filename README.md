@@ -12,6 +12,8 @@
 
 <h2>🧐 Features</h2>
 
+The initial storing in json local version only is on the branch json-onl
+
 Here're some of the project's best features:
 
 -   🎭 Emoji-based quick feedback
@@ -23,17 +25,7 @@ Here're some of the project's best features:
 
 <h2>🛠️ Installation Steps:</h2>
 
-<p>1. clone the repo</p>
-
-```
-git clone https://github.com/remcostoeten/Emoji-feedback-form emoji-feedback-form
-```
-
-<p>2. Install</p>
-
-```
-cd emoji-feedback-form; npm i; npm run dev
-```
+Contact me if you reall cant figure it out.
 
 <h2>💻 Built with</h2>
 
@@ -47,3 +39,7 @@ Technologies used in the project:
 -   Server actions
 -   i18next
 -   ShadCN
+-   Drizzle ORM
+-   Turso SQLite
+
+xxx Remco Stoeten. A star would be appreciated.

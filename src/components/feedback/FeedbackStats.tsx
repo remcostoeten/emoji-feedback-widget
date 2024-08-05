@@ -5,12 +5,13 @@ import HoverCard from '@/components/effects/hover-card'
 import NumberTicker from '@/components/effects/NumberTicker'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui'
 import { useFeedbackStore } from '@/core/stores/feedback-store'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export default function FeedbackStats() {
 	const { t } = useTranslation()
 	const feedbackData = useFeedbackStore((state) => state.feedbackData)
+	const [loading, setLoading] = useState(true)
 
 	const { totalFeedback, positiveFeedback, negativeFeedback } =
 		useMemo(() => {
@@ -28,16 +29,34 @@ export default function FeedbackStats() {
 			}
 		}, [feedbackData])
 
+	useEffect(() => {
+		if (feedbackData) {
+			setLoading(false)
+		}
+	}, [feedbackData])
+
 	return (
 		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8 w-full">
-			<StatCard title={t('totalFeedback')} value={totalFeedback} />
-			<StatCard title={t('positiveFeedback')} value={positiveFeedback} />
-			<StatCard title={t('negativeFeedback')} value={negativeFeedback} />
+			<StatCard
+				title={t('totalFeedback')}
+				value={totalFeedback}
+				loading={loading}
+			/>
+			<StatCard
+				title={t('positiveFeedback')}
+				value={positiveFeedback}
+				loading={loading}
+			/>
+			<StatCard
+				title={t('negativeFeedback')}
+				value={negativeFeedback}
+				loading={loading}
+			/>
 		</div>
 	)
 }
 
-function StatCard({ title, value }) {
+function StatCard({ title, value, loading }) {
 	return (
 		<HoverCard gradientOpacity={0.3}>
 			<Card className="w-full">
@@ -46,10 +65,18 @@ function StatCard({ title, value }) {
 				</CardHeader>
 				<CardContent>
 					<div className="text-4xl font-bold">
-						<NumberTicker value={value} />
+						{loading ? (
+							<LoadingIndicator />
+						) : (
+							<NumberTicker value={value} />
+						)}
 					</div>
 				</CardContent>
 			</Card>
 		</HoverCard>
 	)
+}
+
+function LoadingIndicator() {
+	return <div>Loading...</div>
 }

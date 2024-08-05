@@ -1,4 +1,5 @@
 'use client'
+
 import {
 	Badge,
 	Table,
@@ -10,8 +11,9 @@ import {
 } from '@/components/ui'
 import { opinionEmojis } from '@/core/config/config'
 import { useFeedbackStore } from '@/core/stores/feedback-store'
-import { useMemo } from 'react'
+import { Suspense, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import TableSkeleton from '../Loaders'
 
 export default function FeedbackTable() {
 	const { t } = useTranslation()
@@ -95,31 +97,24 @@ export default function FeedbackTable() {
 						<TableHead>{t('feedback')}</TableHead>
 						<TableHead>{t('timestamp')}</TableHead>
 						<TableHead>{t('city')}</TableHead>
-						<TableHead>{t('country')}</TableHead>{' '}
-						{/* New column for country */}
+						<TableHead>{t('country')}</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{loading ? (
-						<TableRow>
-							<TableCell colSpan={6} className="text-center py-8">
-								{t('loading')}
-							</TableCell>
-						</TableRow>
-					) : paginatedFeedback.length > 0 ? (
-						paginatedFeedback.map((feedback) => (
-							<FeedbackRow
-								key={feedback.id}
-								feedback={feedback}
-							/>
-						))
-					) : (
-						<TableRow>
-							<TableCell colSpan={6} className="text-center py-8">
-								{t('noFeedback')}
-							</TableCell>
-						</TableRow>
-					)}
+					<Suspense fallback={<TableSkeleton />}>
+						{loading ? (
+							<TableSkeleton />
+						) : paginatedFeedback.length > 0 ? (
+							paginatedFeedback.map((feedback) => (
+								<FeedbackRow
+									key={feedback.id}
+									feedback={feedback}
+								/>
+							))
+						) : (
+							<TableSkeleton />
+						)}
+					</Suspense>
 				</TableBody>
 			</Table>
 		</div>
@@ -163,10 +158,7 @@ function FeedbackRow({ feedback }) {
 				{new Date(feedback.timestamp).toLocaleString()}
 			</TableCell>
 			<TableCell>{feedback.city || t('unknownCity')}</TableCell>
-			<TableCell>
-				{feedback.country || t('unknownCountry')}
-			</TableCell>{' '}
-			{/* New cell for country */}
+			<TableCell>{feedback.country || t('unknownCountry')}</TableCell>
 		</TableRow>
 	)
 }

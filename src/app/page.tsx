@@ -1,7 +1,8 @@
 'use client'
 
+import TableSkeleton from '@/components/Loaders'
 import { useFeedbackStore } from '@/core/stores/feedback-store'
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import FeedbackControls from '../components/feedback/FeedbackControls'
 import FeedbackPagination from '../components/feedback/FeedbackPagination'
 import FeedbackStats from '../components/feedback/FeedbackStats'
@@ -17,10 +18,14 @@ export default function FeedbackPage() {
 	}, [fetchFeedbackData])
 
 	return (
-		<div className=" mx-auto py-8 bg-card-light ">
-			<FeedbackStats />
+		<div className="mx-auto py-8 bg-card-light">
+			<Suspense fallback={<TableSkeleton />}>
+				<FeedbackStats />
+			</Suspense>
 			<FeedbackControls />
-			<FeedbackTable />
+			<Suspense fallback={<TableSkeleton />}>
+				<FeedbackTable />
+			</Suspense>
 			<FeedbackPagination />
 		</div>
 	)

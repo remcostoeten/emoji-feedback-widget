@@ -3,13 +3,14 @@ import { Header } from '@/components/menus/Header'
 import { MobileMenu } from '@/components/menus/MobileMenu'
 import Providers from '@/components/providers'
 import FontWrapper from '@/components/shells/FontWrapper'
+import Component from '@/components/shells/Footer'
 import LanguageWrapper from '@/components/shells/LanguageWrapper'
 import { Metadata } from 'next'
 import '../styles/app.css'
 
 export const metadata: Metadata = {
-	title: 'Your Site Title',
-	description: 'Your site description goes here',
+	title: 'Emoji Feedback',
+	description: '- By Remco Stoetenm',
 	viewport: 'width=device-width, initial-scale=1',
 }
 
@@ -33,6 +34,7 @@ export default function RootLayout({
 							<main className="container mx-auto pt-[5%]">
 								{children}
 							</main>
+							<Component />
 							<Feedback />
 						</FontWrapper>
 					</LanguageWrapper>

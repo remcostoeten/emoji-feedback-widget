@@ -1,6 +1,6 @@
 const Skeleton = ({ className }) => (
 	<div aria-live="polite" aria-busy="true" className={className}>
-		<span className="inline-flex w-full animate-pulse select-none rounded-md bg-gray-300 leading-none">
+		<span className="inline-flex w-full animate-pulse select-none rounded-md bg-[#0a0a0a] leading-none">
 			‌
 		</span>
 		<br />
@@ -8,7 +8,7 @@ const Skeleton = ({ className }) => (
 )
 
 const SVGSkeleton = ({ className }) => (
-	<svg className={className + ' animate-pulse rounded bg-gray-300'} />
+	<svg className={className + ' animate-pulse rounded bg-[#666666]'} />
 )
 
-export { Skeleton, SVGSkeleton }
+export { SVGSkeleton, Skeleton }
