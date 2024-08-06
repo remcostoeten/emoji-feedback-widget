@@ -12,15 +12,39 @@
 
 <h2>🧐 Features</h2>
 
-The initial storing in json local version only is on the branch json-onl
+The initial storing in json local version only is on the branch `json-version`
+``` bash
+#cd root of the project
+git checkout json-version
+```
 
-Here're some of the project's best features:
+<small> check `config.ts` for stored location of `src/core/logs/feedback_data.json` and once submitted it should log in JSON. Check console to see if this appers:
+```bash
+Feedback saved: {
+  id: 1722976729403,
+  opinion: '😍',
+  feedback: 'hmmmmmmm',
+  timestamp: '2024-08-06T20:38:49.403Z'
+}
+Updated feedback data: {
+  feedbacks: [
+    {
+      id: 1722611293361,
+      opinion: '🔥',
+      feedback: 'heeeey',
+      timestamp: '2024-08-02T15:08:13.361Z'
+    },
+.........
+```
+.  The result / ui is quite a bit more outdated than the version on the `main` branch which has database storage.</small>
+
+Here're some of the project's features:
 
 -   🎭 Emoji-based quick feedback
 -   📝 Optional text feedback
 -   🎨 Animated UI using Framer Motion
 -   🌐 Internationalization support
--   💾 Local storage of feedback data
+-   💾 Local storage of feedback data or cloud database storage
 -   📊 Feedback data visualization page
 
 <h2>🛠️ Installation Steps:</h2>
