@@ -58,7 +58,6 @@ export function Feedback() {
     )
     const selectedEmoji = selectedEmojiObject ? selectedEmojiObject.emoji : ''
 
-    // New state for triggering a refresh
     const [refreshTrigger, setRefreshTrigger] = useState(0)
 
     useEffect(() => {
@@ -80,7 +79,7 @@ export function Feedback() {
 
         const handleClickOutside = (e: { target: any }) => {
             if (sectionRef.current && !sectionRef.current.contains(e.target)) {
-                handleClose()
+                animateOut()
             }
         }
 
@@ -157,12 +156,15 @@ export function Feedback() {
                 } catch (error) {
                     toast.error(t('submitError'))
                 } finally {
-                    // Trigger a refresh here as well
                     setRefreshTrigger((prev) => prev + 1)
                     if (router.refresh) {
-                        router.refresh()
+                        setTimeout(() => {
+                            router.refresh()
+                        }, 1500);
                     } else {
-                        router.push(currentPath)
+                        setTimeout(() => {
+                            router.push(currentPath)
+                        }, 1500);
                     }
                 }
             })
@@ -189,11 +191,47 @@ export function Feedback() {
 
     const handleDragEnd = (event: any, info: { offset: { y: number } }) => {
         if (info.offset.y > 100) {
-            setFeedbackHidden(true)
+            animateOut()
         }
         dragY.set(0)
     }
+    let lastScrollTop = 0;
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop) {
+                // Scrolling down
+                animateOut();
+            } else {
+                // Scrolling up
+                resetTransform();
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    function animateOut() {
+        if (sectionRef.current) {
+            sectionRef.current.style.transition = 'transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 1.5s cubic-bezier(0.775, 0.885, 0.32, 1.275)';
+            sectionRef.current.style.transform = 'translateY(55px) scale(0.8)';
+            sectionRef.current.style.opacity = '0.4';
+        }
+    }
+
+    function resetTransform() {
+        if (sectionRef.current) {
+            sectionRef.current.style.transition = 'transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            sectionRef.current.style.transform = 'translateY(0) scale(1)';
+            sectionRef.current.style.opacity = '1';
+        }
+    }
     if (feedbackHidden && !storedEmoji) {
         return null
     }
