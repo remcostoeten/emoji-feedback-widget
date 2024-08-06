@@ -37,7 +37,6 @@ export default function RootLayout({
 							</main>
 							<footer className="flex items-center  container justify-between">
 								<Footer />
-								<StarOnGithub />
 							</footer>
 							<Feedback />
 						</FontWrapper>

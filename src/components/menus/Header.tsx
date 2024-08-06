@@ -22,7 +22,7 @@ const SlideTabs = () => {
 
 	return (
 		<nav className="z--6">
-			<ul className="relative px-4 mx-auto mt-6 flex w-fit rounded-full border-2 border-section p-1 justify-center items-center content-center">
+			<ul className="relative footer-btn px-4 mx-auto mt-6 flex w-fit rounded-full border-2 border-section p-1 justify-center items-center content-center">
 				<Tab
 					href="/"
 					setPosition={setPosition}
@@ -90,7 +90,7 @@ const Cursor = ({ position }: { position: Position }) => {
 			animate={{
 				...position,
 			}}
-			className="absolute z-0 h-7 rounded-full bg-section border border-border md:h-12"
+			className="absolute z-0 h-7 rounded-full header-btn border border-border md:h-12"
 		/>
 	)
 }

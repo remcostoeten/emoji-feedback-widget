@@ -45,7 +45,10 @@ export default function HoverCard({
 		<div
 			onMouseMove={handleMouseMove}
 			onMouseLeave={handleMouseLeave}
-			className={cn('vercel-card relative w-1/2 sm:w-full', className)}
+			className={cn(
+				'vercel-card footer-btn relative w-1/2 sm:w-full',
+				className
+			)}
 		>
 			<div className="relative z-10">{children}</div>
 			<motion.div
