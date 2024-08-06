@@ -13,12 +13,14 @@
 <h2>🧐 Features</h2>
 
 The initial storing in json local version only is on the branch `json-version`
-``` bash
+
+```bash
 #cd root of the project
 git checkout json-version
 ```
 
 <small> check `config.ts` for stored location of `src/core/logs/feedback_data.json` and once submitted it should log in JSON. Check console to see if this appers:
+
 ```bash
 Feedback saved: {
   id: 1722976729403,
@@ -36,7 +38,8 @@ Updated feedback data: {
     },
 .........
 ```
-.  The result / ui is quite a bit more outdated than the version on the `main` branch which has database storage.</small>
+
+. The result / ui is quite a bit more outdated than the version on the `main` branch which has database storage.</small>
 
 Here're some of the project's features:
 

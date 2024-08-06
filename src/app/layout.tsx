@@ -23,9 +23,10 @@ export default function RootLayout({
 	return (
 		<html
 			lang="en"
-			className="bg-dash-body dark text-xl overflow-x-hidden "
+			color-theme="dark"
+			className=" dark text-xl overflow-x-hidden "
 		>
-			<body className="">
+			<body className="bg-section">
 				<Providers>
 					<LanguageWrapper>
 						<FontWrapper>
