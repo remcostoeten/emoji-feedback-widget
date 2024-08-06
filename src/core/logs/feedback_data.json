@@ -1,13 +1,26 @@
 {
-	"feedbacks": [
-		{
-			"id": 1722611293361,
-			"opinion": "🔥",
-			"feedback": "heeeey",
-			"timestamp": "2024-08-02T15:08:13.361Z"
-		}
-	],
-	"emojiCounts": {
-		"🔥": 1
-	}
+  "feedbacks": [
+    {
+      "id": 1722611293361,
+      "opinion": "🔥",
+      "feedback": "heeeey",
+      "timestamp": "2024-08-02T15:08:13.361Z"
+    },
+    {
+      "id": 1722976666335,
+      "opinion": "🔥",
+      "feedback": "A test",
+      "timestamp": "2024-08-06T20:37:46.335Z"
+    },
+    {
+      "id": 1722976729403,
+      "opinion": "😍",
+      "feedback": "hmmmmmmm",
+      "timestamp": "2024-08-06T20:38:49.403Z"
+    }
+  ],
+  "emojiCounts": {
+    "🔥": 2,
+    "😍": 1
+  }
 }
