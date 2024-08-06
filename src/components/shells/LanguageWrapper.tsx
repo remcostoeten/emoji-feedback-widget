@@ -243,7 +243,7 @@ const LanguageWrapper: React.FC<LanguageWrapperProps> = ({ children }) => {
 													<Skeleton className="w-[16px] max-w-full" />
 												</td>
 												<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
-													<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark:border-zinc-800 border-transparent shadow-xl shadow-green-400/10">
+													<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark:border-zinc-800 border-transparent shadow-xl ">
 														<Skeleton className="w-[64px] max-w-full" />
 													</div>
 												</td>
@@ -265,7 +265,7 @@ const LanguageWrapper: React.FC<LanguageWrapperProps> = ({ children }) => {
 													<Skeleton className="w-[16px] max-w-full" />
 												</td>
 												<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
-													<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark:border-zinc-800 border-transparent shadow-xl shadow-green-400/10">
+													<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark:border-zinc-800 border-transparent shadow-xl ">
 														<Skeleton className="w-[64px] max-w-full" />
 													</div>
 												</td>
@@ -287,7 +287,7 @@ const LanguageWrapper: React.FC<LanguageWrapperProps> = ({ children }) => {
 													<Skeleton className="w-[16px] max-w-full" />
 												</td>
 												<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
-													<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark:border-zinc-800 border-transparent shadow-xl shadow-green-400/10">
+													<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark:border-zinc-800 border-transparent shadow-xl ">
 														<Skeleton className="w-[64px] max-w-full" />
 													</div>
 												</td>
@@ -307,7 +307,7 @@ const LanguageWrapper: React.FC<LanguageWrapperProps> = ({ children }) => {
 													<Skeleton className="w-[16px] max-w-full" />
 												</td>
 												<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
-													<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark:border-zinc-800 border-transparent shadow-xl shadow-green-400/10">
+													<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark:border-zinc-800 border-transparent shadow-xl ">
 														<Skeleton className="w-[64px] max-w-full" />
 													</div>
 												</td>
@@ -329,7 +329,7 @@ const LanguageWrapper: React.FC<LanguageWrapperProps> = ({ children }) => {
 													<Skeleton className="w-[16px] max-w-full" />
 												</td>
 												<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
-													<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark:border-zinc-800 border-transparent shadow-xl shadow-green-400/10">
+													<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark:border-zinc-800 border-transparent ">
 														<Skeleton className="w-[64px] max-w-full" />
 													</div>
 												</td>
@@ -351,7 +351,7 @@ const LanguageWrapper: React.FC<LanguageWrapperProps> = ({ children }) => {
 													<Skeleton className="w-[16px] max-w-full" />
 												</td>
 												<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
-													<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark:border-zinc-800 border-transparent shadow-xl shadow-green-400/10">
+													<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark:border-zinc-800 border-transparent shadow-xl ">
 														<Skeleton className="w-[64px] max-w-full" />
 													</div>
 												</td>
@@ -395,7 +395,7 @@ const LanguageWrapper: React.FC<LanguageWrapperProps> = ({ children }) => {
 													<Skeleton className="w-[16px] max-w-full" />
 												</td>
 												<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
-													<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark:border-zinc-800 border-transparent shadow-xl shadow-green-400/10">
+													<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark:border-zinc-800 border-transparent shadow-xl ">
 														<Skeleton className="w-[64px] max-w-full" />
 													</div>
 												</td>

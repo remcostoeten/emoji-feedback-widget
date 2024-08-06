@@ -18,6 +18,7 @@ const config: Config = {
 		},
 		extend: {
 			colors: {
+				'dash-body': 'pink',
 				section: '#0A0A0A',
 				body: 'var(--body)',
 				input: 'var(--body)',

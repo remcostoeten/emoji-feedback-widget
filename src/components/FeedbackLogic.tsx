@@ -14,6 +14,7 @@ import {
 	useMotionValue,
 	useTransform,
 } from 'framer-motion'
+import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useRef, useState, useTransition } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -25,6 +26,8 @@ import { BorderBeam } from './shells/BorderEffects'
 
 export function Feedback() {
 	const { t } = useTranslation()
+	const router = useRouter()
+	const currentPath = usePathname()
 	const [feedbackHidden, setFeedbackHidden] = useLocalStorage(
 		'feedbackHidden',
 		false
@@ -55,6 +58,9 @@ export function Feedback() {
 	)
 	const selectedEmoji = selectedEmojiObject ? selectedEmojiObject.emoji : ''
 
+	// New state for triggering a refresh
+	const [refreshTrigger, setRefreshTrigger] = useState(0)
+
 	useEffect(() => {
 		if (!feedbackHidden && !storedEmoji) {
 			const timer = setTimeout(
@@ -66,13 +72,13 @@ export function Feedback() {
 	}, [feedbackHidden, storedEmoji, setFeedbackHidden])
 
 	useEffect(() => {
-		const handleKeyDown = (e) => {
+		const handleKeyDown = (e: { key: string }) => {
 			if (e.key === 'Escape') {
 				handleClose()
 			}
 		}
 
-		const handleClickOutside = (e) => {
+		const handleClickOutside = (e: { target: any }) => {
 			if (sectionRef.current && !sectionRef.current.contains(e.target)) {
 				handleClose()
 			}
@@ -87,7 +93,20 @@ export function Feedback() {
 		}
 	}, [])
 
-	function handleEmojiSelect(opinion) {
+	// New useEffect to handle refreshing data
+	useEffect(() => {
+		const refreshData = async () => {
+			// Implement your data fetching logic here
+			// For example:
+			// const newData = await fetchLatestData()
+			// updateComponentWithNewData(newData)
+			console.log('Refreshing data...')
+		}
+
+		refreshData()
+	}, [refreshTrigger])
+
+	function handleEmojiSelect(opinion: any) {
 		setSelectedOpinion(opinion)
 		setIsTextareaVisible(true)
 		setStoredEmoji(opinion)
@@ -111,6 +130,10 @@ export function Feedback() {
 				}
 			} catch (error) {
 				toast.error(t('submitError'))
+			} finally {
+				// Trigger a refresh
+				setRefreshTrigger((prev) => prev + 1)
+				router.refresh()
 			}
 		})
 	}
@@ -132,6 +155,14 @@ export function Feedback() {
 					}
 				} catch (error) {
 					toast.error(t('submitError'))
+				} finally {
+					// Trigger a refresh here as well
+					setRefreshTrigger((prev) => prev + 1)
+					if (router.refresh) {
+						router.refresh()
+					} else {
+						router.push(currentPath)
+					}
 				}
 			})
 		}
@@ -155,7 +186,7 @@ export function Feedback() {
 		}
 	}
 
-	const handleDragEnd = (event, info) => {
+	const handleDragEnd = (event: any, info: { offset: { y: number } }) => {
 		if (info.offset.y > 100) {
 			setFeedbackHidden(true)
 		}
@@ -165,7 +196,6 @@ export function Feedback() {
 	if (feedbackHidden && !storedEmoji) {
 		return null
 	}
-
 	return (
 		<AnimatePresence>
 			{(!feedbackHidden || storedEmoji) && (
@@ -305,13 +335,15 @@ export function Feedback() {
 															isNotEmpty={
 																isButtonEnabled
 															}
-															onClick={() =>
+															onClick={() => {
 																formRef.current?.requestSubmit()
-															}
+															}}
 															isLoading={
 																isPending
 															}
-														/>
+														>
+															Submit
+														</CoolButton>
 													</div>
 												</motion.form>
 											</motion.div>

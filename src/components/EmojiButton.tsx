@@ -1,8 +1,7 @@
 'use client'
 
-import React from 'react'
-import { cn } from '@/core/utils/helpers'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui'
+import { cn } from '@/core/utils/helpers'
 import { EmojiButtonProps } from '@/core/utils/types'
 
 export default function EmojiButton({
@@ -27,7 +26,10 @@ export default function EmojiButton({
 					{item.emoji}
 				</button>
 			</TooltipTrigger>
-			<TooltipContent>{item.text}</TooltipContent>
+			<TooltipContent>
+				{item.text}
+				beepboop
+			</TooltipContent>
 		</Tooltip>
 	)
 }

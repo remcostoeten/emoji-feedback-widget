@@ -2,6 +2,23 @@
 	position: relative;
 }
 
+.animate-pulse {
+	animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+	0%,
+	100% {
+		transform: scale(1);
+		opacity: 0.5;
+	}
+
+	50% {
+		transform: scale(1.1);
+		opacity: 1;
+	}
+}
+
 .overlay::after {
 	content: '';
 	position: absolute;
@@ -12,4 +29,18 @@
 	background: var(--overlay);
 	border-radius: 8px;
 	transition: opacity 0.2s;
+}
+
+@media screen and (max-width: 768px) {
+	.container {
+		max-width: 90% !important;
+		width: 90% !important;
+		margin-left: 0 !important;
+
+		overflow-x: hidden;
+	}
+
+	.table-styles {
+		width: 100% !important;
+	}
 }

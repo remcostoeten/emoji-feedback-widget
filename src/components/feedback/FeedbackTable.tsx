@@ -88,7 +88,7 @@ export default function FeedbackTable() {
 	)
 
 	return (
-		<div className="overflow-x-auto">
+		<div className="table-styles">
 			<Table>
 				<TableHeader>
 					<TableRow>
