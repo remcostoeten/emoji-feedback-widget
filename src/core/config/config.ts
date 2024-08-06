@@ -15,3 +15,7 @@ export const TIME_TO_SHOW_FEEDBACK_FORM = 5000 // 5s
 // The duration between being able to submit.
 export const RATE_LIMIT_INTERVAL = 24 * 60 * 60 * 1000 // 24 hours in milliseconds
 // Not fool proof since it's stored in localstorage.
+
+// The location where the json logs get stored
+export const FOLDER_TO_WRITE_LOGS = 'src/core/logs'
+export const LOG_FILENAME = 'feedback-log'

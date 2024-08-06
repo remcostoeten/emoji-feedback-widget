@@ -2,9 +2,9 @@
 
 import fs from 'fs/promises'
 import path from 'path'
-import { ENABLE_LOCAL_STORAGE } from '../config/config'
+import { ENABLE_LOCAL_STORAGE, FOLDER_TO_WRITE_LOGS, LOG_FILENAME } from '../config/config'
 import { Feedback, FeedbackData } from '../utils/types'
-import { opinionEmojis } from '../config/config' // Import the opinionEmojis array
+import { opinionEmojis } from '../config/config'
 
 // Function to get emoji from opinion text
 function getEmojiFromOpinion(opinionText: string): string {
@@ -34,11 +34,11 @@ export async function submitFeedbackAction(formData: FormData) {
 	}
 
 	try {
-		const filePath = path.join(
+	    const filePath = path.join(
 			process.cwd(),
-			'src/core/logs',
-			'feedback_data.json'
-		)
+			FOLDER_TO_WRITE_LOGS,
+			LOG_FILENAME + '.json'
+		);
 		let feedbackData: FeedbackData = { feedbacks: [], emojiCounts: {} }
 
 		try {
