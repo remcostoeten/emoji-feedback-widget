@@ -10,8 +10,8 @@ import { Metadata } from 'next'
 import '../styles/app.css'
 
 export const metadata: Metadata = {
-	title: 'Emoji Feedback',
-	description: '- By Remco Stoetenm',
+	title: 'Emoji Feedback 🚀',
+	description: 'By Remco Stoeten',
 	viewport: 'width=device-width, initial-scale=1',
 }
 
@@ -26,7 +26,7 @@ export default function RootLayout({
 			color-theme="dark"
 			className=" dark text-xl overflow-x-hidden "
 		>
-			<body className="bg-section">
+			<body className="bg-neutral-900">
 				<Providers>
 					<LanguageWrapper>
 						<FontWrapper>
