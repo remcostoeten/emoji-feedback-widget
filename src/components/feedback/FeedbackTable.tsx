@@ -146,8 +146,8 @@ function FeedbackRow({ feedback }) {
 						opinionType === 'neutral'
 							? 'secondary'
 							: opinionType === 'positive'
-								? 'secondary'
-								: 'outline'
+								? 'positive'
+								: 'negative'
 					}
 				>
 					{t(opinionType)}

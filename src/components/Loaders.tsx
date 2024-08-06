@@ -27,13 +27,13 @@ export default function TableSkeleton() {
 							</th>
 						</tr>
 					</thead>
-					<tbody className="[&amp;_tr:last-child]:border-0">
+					<tbody className="[&amp;_tr:last-child]:-0">
 						<tr className="  transition-colors">
 							<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
 								<Skeleton className="w-[16px] max-w-full" />
 							</td>
 							<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
-								<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark: border-[#454545] shadow-xl shadow-red-400/10">
+								<div className="inline-flex items-center  px-2.5 py-0.5 transition-colors dark: -[#454545]  shadow-red-400/10">
 									<Skeleton className="w-[64px] max-w-full" />
 								</div>
 							</td>
@@ -55,7 +55,7 @@ export default function TableSkeleton() {
 								<Skeleton className="w-[16px] max-w-full" />
 							</td>
 							<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
-								<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark: border-[#454545] shadow-xl shadow-red-400/10">
+								<div className="inline-flex items-center  px-2.5 py-0.5 transition-colors dark: -[#454545]  shadow-red-400/10">
 									<Skeleton className="w-[64px] max-w-full" />
 								</div>
 							</td>
@@ -77,7 +77,7 @@ export default function TableSkeleton() {
 								<Skeleton className="w-[16px] max-w-full" />
 							</td>
 							<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
-								<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark: border-transparent shadow-xl ">
+								<div className="inline-flex items-center  px-2.5 py-0.5 transition-colors dark: -transparent  ">
 									<Skeleton className="w-[64px] max-w-full" />
 								</div>
 							</td>
@@ -99,7 +99,7 @@ export default function TableSkeleton() {
 								<Skeleton className="w-[16px] max-w-full" />
 							</td>
 							<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
-								<div className="inline-flex items-center  px-2.5 py-0.5 transition-colors - border-transparent shadow-xl ">
+								<div className="inline-flex items-center  px-2.5 py-0.5 transition-colors - -transparent  ">
 									<Skeleton className="w-[64px] max-w-full" />
 								</div>
 							</td>
@@ -121,7 +121,7 @@ export default function TableSkeleton() {
 								<Skeleton className="w-[16px] max-w-full" />
 							</td>
 							<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
-								<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark: border-transparent shadow-xl ">
+								<div className="inline-flex items-center  px-2.5 py-0.5 transition-colors dark: -transparent  ">
 									<Skeleton className="w-[64px] max-w-full" />
 								</div>
 							</td>
@@ -141,7 +141,7 @@ export default function TableSkeleton() {
 								<Skeleton className="w-[16px] max-w-full" />
 							</td>
 							<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
-								<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark: border-transparent shadow-xl -400/10">
+								<div className="inline-flex items-center  px-2.5 py-0.5 transition-colors dark: -transparent  -400/10">
 									<Skeleton className="w-[64px] max-w-full" />
 								</div>
 							</td>
@@ -163,7 +163,7 @@ export default function TableSkeleton() {
 								<Skeleton className="w-[16px] max-w-full" />
 							</td>
 							<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
-								<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark: border-transparent shadow-xl ">
+								<div className="inline-flex items-center  px-2.5 py-0.5 transition-colors dark: -transparent  ">
 									<Skeleton className="w-[64px] max-w-full" />
 								</div>
 							</td>
@@ -185,7 +185,7 @@ export default function TableSkeleton() {
 								<Skeleton className="w-[16px] max-w-full" />
 							</td>
 							<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
-								<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark: border-transparent shadow-xl ">
+								<div className="inline-flex items-center  px-2.5 py-0.5 transition-colors dark: -transparent  ">
 									<Skeleton className="w-[64px] max-w-full" />
 								</div>
 							</td>
@@ -207,7 +207,7 @@ export default function TableSkeleton() {
 								<Skeleton className="w-[16px] max-w-full" />
 							</td>
 							<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
-								<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark: border-[#454545] shadow-xl shadow-red-400/10">
+								<div className="inline-flex items-center  px-2.5 py-0.5 transition-colors dark: -[#454545]  shadow-red-400/10">
 									<Skeleton className="w-[64px] max-w-full" />
 								</div>
 							</td>
@@ -229,7 +229,7 @@ export default function TableSkeleton() {
 								<Skeleton className="w-[16px] max-w-full" />
 							</td>
 							<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
-								<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark: border-transparent shadow-xl ">
+								<div className="inline-flex items-center  px-2.5 py-0.5 transition-colors dark: -transparent  ">
 									<Skeleton className="w-[64px] max-w-full" />
 								</div>
 							</td>
@@ -256,7 +256,7 @@ export default function TableSkeleton() {
 const FeedbackSkeleton = () => (
 	<>
 		<section className="max-w-full fixed">
-			<div className="relative min-w-[300px] md:min-w-[400px] h-auto w-fit border py-2 shadow-sm  gap-4 rounded-full">
+			<div className="relative min-w-[300px] md:min-w-[400px] h-auto w-fit  py-2 shadow-sm  gap-4 rounded-full">
 				<div className="flex flex-wrap items-center justify-between w-full px-7 translate-x-1.5 gap-x-6">
 					<h2>
 						<Skeleton className="w-[192px] max-w-full" />
@@ -306,13 +306,13 @@ function NoResultsYetSkeleton() {
 					</th>
 				</tr>
 			</thead>
-			<tbody className="[&amp;_tr:last-child]:border-0">
+			<tbody className="[&amp;_tr:last-child]:-0">
 				<tr className="  transition-colors">
 					<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
 						<Skeleton className="w-[16px] max-w-full" />
 					</td>
 					<td className="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;>[role=checkbox]]:translate-y-[2px]">
-						<div className="inline-flex items-center border px-2.5 py-0.5 transition-colors dark: border-transparent shadow-xl ">
+						<div className="inline-flex items-center  px-2.5 py-0.5 transition-colors dark: -transparent  ">
 							<Skeleton className="w-[64px] max-w-full" />
 						</div>
 					</td>
