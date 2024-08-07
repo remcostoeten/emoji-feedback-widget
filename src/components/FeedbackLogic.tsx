@@ -39,6 +39,7 @@ export function Feedback() {
     const [isTextareaVisible, setIsTextareaVisible] = useState(false)
     const [feedbackText, setFeedbackText] = useState('')
     const [isAnimatingOut, setIsAnimatingOut] = useState(false)
+    const [isHovered, setIsHovered] = useState(false)
     const formRef = useRef(null)
     const sectionRef = useRef(null)
     const [isPending, startTransition] = useTransition()
@@ -92,13 +93,8 @@ export function Feedback() {
         }
     }, [])
 
-    // New useEffect to handle refreshing data
     useEffect(() => {
         const refreshData = async () => {
-            // Implement your data fetching logic here
-            // For example:
-            // const newData = await fetchLatestData()
-            // updateComponentWithNewData(newData)
             console.log('Refreshing data...')
         }
 
@@ -139,7 +135,6 @@ export function Feedback() {
     }
 
     function handleClose() {
-        // Submit emoji-only feedback when closing without additional text
         if (selectedOpinion || storedEmoji) {
             const formData = new FormData()
             formData.append('opinion', selectedOpinion || storedEmoji)
@@ -190,11 +185,12 @@ export function Feedback() {
     }
 
     const handleDragEnd = (event: any, info: { offset: { y: number } }) => {
-        if (info.offset.y > 100) {
+        if (info.offset.y > 100 && !isHovered) {
             animateOut()
         }
         dragY.set(0)
     }
+
     let lastScrollTop = 0;
 
     useEffect(() => {
@@ -232,9 +228,11 @@ export function Feedback() {
             sectionRef.current.style.opacity = '1';
         }
     }
+
     if (feedbackHidden && !storedEmoji) {
         return null
     }
+
     return (
         <AnimatePresence>
             {(!feedbackHidden || storedEmoji) && (
@@ -250,6 +248,8 @@ export function Feedback() {
                     dragConstraints={{ top: 0, bottom: 0 }}
                     dragElastic={0.2}
                     onDragEnd={handleDragEnd}
+                    onHoverStart={() => setIsHovered(true)}
+                    onHoverEnd={() => setIsHovered(false)}
                     style={{ y: dragY, opacity }}
                 >
                     <motion.div
@@ -381,7 +381,6 @@ export function Feedback() {
                                                                 isPending
                                                             }
                                                         >
-                                                            Submit
                                                         </CoolButton>
                                                     </div>
                                                 </motion.form>

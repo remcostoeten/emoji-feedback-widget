@@ -8,7 +8,7 @@ export default function StarOnGithub() {
 		<div>
 			<Link
 				href="https://github.com/remcostoeten/Emoji-feedback-form"
-				className="footer-btn mb-10 z-50 hover:bg-section text-sm flex cursor-pointer hover:bg-inherit/40 hover:scale-105 items-center gap-2 rounded-md vercel-card !px-4 text-center justify-center !py-4 font-medium text-secondary-foreground transition-colors hover:bg-secondary/50 w-60"
+				className="footer-btn mb-10 z-50 hover:bg-section text-sm flex cursor-pointer hover:bg-inherit/40 hover:scale-105 items-center gap-2 rounded-md vercel-card !px-4 text-center justify-center !py-4 font-medium text-secondary-foreground transition-colors hover:bg-secondary/50 "
 				target="_blank"
 				rel="noopener noreferrer"
 			>
