@@ -39,6 +39,7 @@ export function Feedback() {
 	const [isTextareaVisible, setIsTextareaVisible] = useState(false)
 	const [feedbackText, setFeedbackText] = useState('')
 	const [isAnimatingOut, setIsAnimatingOut] = useState(false)
+	const [isHovered, setIsHovered] = useState(false)
 	const formRef = useRef(null)
 	const sectionRef = useRef(null)
 	const [isPending, startTransition] = useTransition()
@@ -58,7 +59,6 @@ export function Feedback() {
 	)
 	const selectedEmoji = selectedEmojiObject ? selectedEmojiObject.emoji : ''
 
-	// New state for triggering a refresh
 	const [refreshTrigger, setRefreshTrigger] = useState(0)
 
 	useEffect(() => {
@@ -80,7 +80,7 @@ export function Feedback() {
 
 		const handleClickOutside = (e: { target: any }) => {
 			if (sectionRef.current && !sectionRef.current.contains(e.target)) {
-				handleClose()
+				animateOut()
 			}
 		}
 
@@ -93,13 +93,8 @@ export function Feedback() {
 		}
 	}, [])
 
-	// New useEffect to handle refreshing data
 	useEffect(() => {
 		const refreshData = async () => {
-			// Implement your data fetching logic here
-			// For example:
-			// const newData = await fetchLatestData()
-			// updateComponentWithNewData(newData)
 			console.log('Refreshing data...')
 		}
 
@@ -131,15 +126,15 @@ export function Feedback() {
 			} catch (error) {
 				toast.error(t('submitError'))
 			} finally {
-				// Trigger a refresh
-				setRefreshTrigger((prev) => prev + 1)
-				router.refresh()
+				setTimeout(() => {
+					setRefreshTrigger((prev) => prev + 1)
+					router.refresh()
+				}, 20000)
 			}
 		})
 	}
 
 	function handleClose() {
-		// Submit emoji-only feedback when closing without additional text
 		if (selectedOpinion || storedEmoji) {
 			const formData = new FormData()
 			formData.append('opinion', selectedOpinion || storedEmoji)
@@ -156,12 +151,15 @@ export function Feedback() {
 				} catch (error) {
 					toast.error(t('submitError'))
 				} finally {
-					// Trigger a refresh here as well
 					setRefreshTrigger((prev) => prev + 1)
 					if (router.refresh) {
-						router.refresh()
+						setTimeout(() => {
+							router.refresh()
+						}, 1500)
 					} else {
-						router.push(currentPath)
+						setTimeout(() => {
+							router.push(currentPath)
+						}, 1500)
 					}
 				}
 			})
@@ -187,15 +185,57 @@ export function Feedback() {
 	}
 
 	const handleDragEnd = (event: any, info: { offset: { y: number } }) => {
-		if (info.offset.y > 100) {
-			setFeedbackHidden(true)
+		if (info.offset.y > 100 && !isHovered) {
+			animateOut()
 		}
 		dragY.set(0)
+	}
+
+	let lastScrollTop = 0
+
+	useEffect(() => {
+		const handleScroll = () => {
+			const scrollTop =
+				window.pageYOffset || document.documentElement.scrollTop
+			if (scrollTop > lastScrollTop) {
+				// Scrolling down
+				animateOut()
+			} else {
+				// Scrolling up
+				resetTransform()
+			}
+			lastScrollTop = scrollTop <= 0 ? 0 : scrollTop // For Mobile or negative scrolling
+		}
+
+		window.addEventListener('scroll', handleScroll)
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll)
+		}
+	}, [])
+
+	function animateOut() {
+		if (sectionRef.current) {
+			sectionRef.current.style.transition =
+				'transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 1.5s cubic-bezier(0.775, 0.885, 0.32, 1.275)'
+			sectionRef.current.style.transform = 'translateY(55px) scale(0.8)'
+			sectionRef.current.style.opacity = '0.4'
+		}
+	}
+
+	function resetTransform() {
+		if (sectionRef.current) {
+			sectionRef.current.style.transition =
+				'transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+			sectionRef.current.style.transform = 'translateY(0) scale(1)'
+			sectionRef.current.style.opacity = '1'
+		}
 	}
 
 	if (feedbackHidden && !storedEmoji) {
 		return null
 	}
+
 	return (
 		<AnimatePresence>
 			{(!feedbackHidden || storedEmoji) && (
@@ -211,6 +251,8 @@ export function Feedback() {
 					dragConstraints={{ top: 0, bottom: 0 }}
 					dragElastic={0.2}
 					onDragEnd={handleDragEnd}
+					onHoverStart={() => setIsHovered(true)}
+					onHoverEnd={() => setIsHovered(false)}
 					style={{ y: dragY, opacity }}
 				>
 					<motion.div
@@ -341,9 +383,7 @@ export function Feedback() {
 															isLoading={
 																isPending
 															}
-														>
-															Submit
-														</CoolButton>
+														></CoolButton>
 													</div>
 												</motion.form>
 											</motion.div>

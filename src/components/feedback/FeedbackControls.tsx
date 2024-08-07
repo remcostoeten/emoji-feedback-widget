@@ -104,8 +104,6 @@ function SortDropdown() {
 	const SORT_OPTIONS = {
 		NEWEST: 'newest',
 		OLDEST: 'oldest',
-		HIGHEST: 'highest',
-		LOWEST: 'lowest',
 	}
 
 	return (
