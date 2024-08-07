@@ -1,8 +1,10 @@
 import { CoolButtonProps } from '@/core/utils/types'
 import { ChevronRightIcon } from 'lucide-react'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AnimatedSubscribeButton } from './SubmitBtn'
+import { CoolMode } from './effects/CoolMode'
 
 export default function CoolButton({
 	onClick,
@@ -11,19 +13,26 @@ export default function CoolButton({
 	children,
 	isNotEmpty,
 }: CoolButtonProps) {
-	const buttonContent = (
-		<span
-			className={`group inline-flex my-2 gap-4 items-center ${!isNotEmpty || isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
-		>
-			{children}
-		</span>
-	)
-
 	const { t } = useTranslation()
+	const [isClicked, setIsClicked] = useState(false)
+
+	useEffect(() => {
+		if (isClicked) {
+			const timer = setTimeout(() => {
+				onClick()
+				setIsClicked(false)
+			}, 1500)
+			return () => clearTimeout(timer)
+		}
+	}, [isClicked, onClick])
+
+	const handleClick = () => {
+		setIsClicked(true)
+	}
 
 	return (
 		<>
-			<p>
+			<CoolMode>
 				<AnimatedSubscribeButton
 					buttonColor="#fff"
 					buttonTextColor="#000000"
@@ -50,14 +59,7 @@ export default function CoolButton({
 						</div>
 					}
 				/>
-			</p>
-			<button
-				onClick={onClick}
-				disabled={!isNotEmpty || isLoading}
-				className={`cool-button ${hasCoolMode ? 'cool-mode' : ''}`}
-			>
-				{buttonContent}
-			</button>
+			</CoolMode>
 		</>
 	)
 }
