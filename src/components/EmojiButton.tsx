@@ -26,10 +26,7 @@ export default function EmojiButton({
 					{item.emoji}
 				</button>
 			</TooltipTrigger>
-			<TooltipContent>
-				{item.text}
-				beepboop
-			</TooltipContent>
+			<TooltipContent>{item.text}</TooltipContent>
 		</Tooltip>
 	)
 }

@@ -9,11 +9,11 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui'
-import { opinionEmojis } from '@/core/config/config'
 import { useFeedbackStore } from '@/core/stores/feedback-store'
 import { Suspense, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import TableSkeleton from '../Loaders'
+import { opinionEmojis } from '@/core/config/config'
 
 export default function FeedbackTable() {
 	const { t } = useTranslation()
@@ -96,8 +96,8 @@ export default function FeedbackTable() {
 						<TableHead>{t('opinion')}</TableHead>
 						<TableHead>{t('feedback')}</TableHead>
 						<TableHead>{t('timestamp')}</TableHead>
-						<TableHead>{t('city')}</TableHead>
-						<TableHead>{t('country')}</TableHead>
+						{/* <TableHead>{t('city')}</TableHead> */}
+						{/* <TableHead>{t('country')}</TableHead> */}
 					</TableRow>
 				</TableHeader>
 				<TableBody>
@@ -157,8 +157,8 @@ function FeedbackRow({ feedback }) {
 			<TableCell>
 				{new Date(feedback.timestamp).toLocaleString()}
 			</TableCell>
-			<TableCell>{feedback.city || t('unknownCity')}</TableCell>
-			<TableCell>{feedback.country || t('unknownCountry')}</TableCell>
+			{/* <TableCell>{feedback.city || t('unknownCity')}</TableCell> */}
+			{/* <TableCell>{feedback.country || t('unknownCountry')}</TableCell> */}
 		</TableRow>
 	)
 }

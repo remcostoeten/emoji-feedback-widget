@@ -53,7 +53,10 @@ const LanguageDropdown: React.FC = () => {
 	}, [])
 
 	return (
-		<div className="relative inline-block text-left z-50" ref={dropdownRef}>
+		<div
+			className={`relative inline-block text-left ${isOpen ? 'z-[51]' : 'z-40'}`}
+			ref={dropdownRef}
+		>
 			<div>
 				<button
 					type="button"
@@ -73,7 +76,7 @@ const LanguageDropdown: React.FC = () => {
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: -10 }}
 						transition={{ duration: 0.2 }}
-						className="origin-top-right absolute right-0 mt-2 w-56  shadow-lg bg-section hover:bg-card-light duration-300 transition-all border border-border !text-text ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none overflow-hidden rounded-md"
+						className="origin-top-right z-[51] absolute right-0 mt-2 w-56  shadow-lg bg-section hover:bg-card-light duration-300 transition-all border border-border !text-text ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none overflow-hidden rounded-md"
 					>
 						<div className="py-">
 							{languages.map((lang) => (

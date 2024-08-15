@@ -6,11 +6,9 @@
 
 ![compressed_showcase](https://github.com/user-attachments/assets/dcdbf280-724c-4a1e-bbc6-a709f961adfe)
 
-
 [emoji-feedback.remcostoeten.com](emoji-feedback.remcostoeten.com)
 
 <h2>Project Screenshots:</h2>
-
 
 <h2>🧐 Features</h2>
 
@@ -21,12 +19,14 @@ The initial storing in json local version only is on the branch `json-version`
 git checkout json-version
 ```
 
-<small> check `config.ts` for the configuration of where the logs are stored. There are two variables which determine the location called 
+<small> check `config.ts` for the configuration of where the logs are stored. There are two variables which determine the location called
+
 ```bash
 export const FOLDER_TO_WRITE_LOGS = 'src/core/logs'
 export const LOG_FILENAME = 'feedback-log'
 ```
-resulting in `src/core/logs/feedback-log.json`. Once feedback is  submitted it should log in JSON. Check console to see if this appers:
+
+resulting in `src/core/logs/feedback-log.json`. Once feedback is submitted it should log in JSON. Check console to see if this appers:
 
 ```bash
 Feedback saved: {

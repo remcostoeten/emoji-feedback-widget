@@ -1,6 +1,11 @@
 'use client'
 
-import { opinionEmojis, TIME_TO_SHOW_FEEDBACK_FORM } from '@/core/config/config'
+import {
+	BAR_POSITION,
+	HIDE_AUTOMATICALLY,
+	opinionEmojis,
+	TIME_TO_SHOW_FEEDBACK_FORM,
+} from '@/core/config/config'
 import {
 	afterEmojiClick,
 	formAnimation,
@@ -95,7 +100,7 @@ export function Feedback() {
 
 	useEffect(() => {
 		const refreshData = async () => {
-			console.log('Refreshing data...')
+			// Implement data refresh logic here
 		}
 
 		refreshData()
@@ -184,41 +189,12 @@ export function Feedback() {
 		}
 	}
 
-	const handleDragEnd = (event: any, info: { offset: { y: number } }) => {
-		if (info.offset.y > 100 && !isHovered) {
-			animateOut()
-		}
-		dragY.set(0)
-	}
-
-	let lastScrollTop = 0
-
-	useEffect(() => {
-		const handleScroll = () => {
-			const scrollTop =
-				window.pageYOffset || document.documentElement.scrollTop
-			if (scrollTop > lastScrollTop) {
-				// Scrolling down
-				animateOut()
-			} else {
-				// Scrolling up
-				resetTransform()
-			}
-			lastScrollTop = scrollTop <= 0 ? 0 : scrollTop // For Mobile or negative scrolling
-		}
-
-		window.addEventListener('scroll', handleScroll)
-
-		return () => {
-			window.removeEventListener('scroll', handleScroll)
-		}
-	}, [])
-
 	function animateOut() {
 		if (sectionRef.current) {
+			const translateY = BAR_POSITION === 'top' ? '-65px' : '56px'
 			sectionRef.current.style.transition =
 				'transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 1.5s cubic-bezier(0.775, 0.885, 0.32, 1.275)'
-			sectionRef.current.style.transform = 'translateY(55px) scale(0.8)'
+			sectionRef.current.style.transform = `translateY(${translateY}) scale(0.8)`
 			sectionRef.current.style.opacity = '0.4'
 		}
 	}
@@ -232,8 +208,70 @@ export function Feedback() {
 		}
 	}
 
+	const handleDragEnd = (event: any, info: { offset: { y: number } }) => {
+		const threshold = BAR_POSITION === 'top' ? -100 : 100
+		if (
+			(BAR_POSITION === 'top'
+				? info.offset.y < threshold
+				: info.offset.y > threshold) &&
+			!isHovered
+		) {
+			animateOut()
+		}
+		dragY.set(0)
+	}
+
+	let lastScrollTop = 0
+
+	useEffect(() => {
+		if (HIDE_AUTOMATICALLY) {
+			const handleScroll = () => {
+				const scrollTop =
+					window.pageYOffset || document.documentElement.scrollTop
+				if (
+					BAR_POSITION === 'top'
+						? scrollTop > lastScrollTop
+						: scrollTop < lastScrollTop
+				) {
+					// Scrolling down for bottom bar or up for top bar
+					animateOut()
+				} else {
+					// Scrolling up for bottom bar or down for top bar
+					resetTransform()
+				}
+				lastScrollTop = scrollTop <= 0 ? 0 : scrollTop // For Mobile or negative scrolling
+			}
+
+			window.addEventListener('scroll', handleScroll)
+
+			return () => {
+				window.removeEventListener('scroll', handleScroll)
+			}
+		}
+	}, [])
+
 	if (feedbackHidden && !storedEmoji) {
 		return null
+	}
+
+	const barPositionClass =
+		BAR_POSITION === 'top' ? 'top-0 mt-10' : 'bottom-0 mb-10'
+
+	// Modify the showFeedbackMotionConfig to account for bar position
+	const positionAwareShowFeedbackMotionConfig = {
+		...showFeedbackMotionConfig,
+		initial: {
+			...showFeedbackMotionConfig.initial,
+			y: BAR_POSITION === 'top' ? -100 : 100,
+		},
+		animate: (isAnimatingOut: boolean) => ({
+			...showFeedbackMotionConfig.animate(isAnimatingOut),
+			y: isAnimatingOut ? (BAR_POSITION === 'top' ? -100 : 100) : 0,
+		}),
+		exit: {
+			...showFeedbackMotionConfig.exit,
+			y: BAR_POSITION === 'top' ? -100 : 100,
+		},
 	}
 
 	return (
@@ -242,11 +280,15 @@ export function Feedback() {
 				<motion.section
 					ref={sectionRef}
 					aria-label={t('feedbackSectionLabel')}
-					className="fixed w-fit bottom-0 left-0 right-0 mx-auto flex justify-center mb-10"
-					initial={showFeedbackMotionConfig.initial}
-					animate={showFeedbackMotionConfig.animate(isAnimatingOut)}
-					exit={showFeedbackMotionConfig.exit}
-					transition={showFeedbackMotionConfig.transition}
+					className={`fixed w-fit left-0 right-0 mx-auto flex justify-center z-50 ${barPositionClass}`}
+					initial={positionAwareShowFeedbackMotionConfig.initial}
+					animate={positionAwareShowFeedbackMotionConfig.animate(
+						isAnimatingOut
+					)}
+					exit={positionAwareShowFeedbackMotionConfig.exit}
+					transition={
+						positionAwareShowFeedbackMotionConfig.transition
+					}
 					drag="y"
 					dragConstraints={{ top: 0, bottom: 0 }}
 					dragElastic={0.2}
@@ -383,7 +425,7 @@ export function Feedback() {
 															isLoading={
 																isPending
 															}
-														></CoolButton>
+														/>
 													</div>
 												</motion.form>
 											</motion.div>
