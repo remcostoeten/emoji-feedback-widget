@@ -1,28 +1,26 @@
 'use client'
-
+import React, { useEffect, useRef, useState, useTransition } from 'react'
+import { useTranslation } from 'react-i18next'
+import {
+	motion,
+	AnimatePresence,
+	useMotionValue,
+	useTransform,
+} from 'framer-motion'
+import { usePathname, useRouter } from 'next/navigation'
+import { toast } from 'sonner'
+import useLocalStorage from '@/core/hooks/useLocalStorage'
+import { submitFeedbackAction } from '@/core/server/feedback'
 import {
 	BAR_POSITION,
 	HIDE_AUTOMATICALLY,
 	opinionEmojis,
 	TIME_TO_SHOW_FEEDBACK_FORM,
-} from '@/core/config/config'
-import {
+	BarPosition,
+	showFeedbackMotionConfig,
 	afterEmojiClick,
 	formAnimation,
-	showFeedbackMotionConfig,
-} from '@/core/config/motion-config'
-import useLocalStorage from '@/core/hooks/useLocalStorage'
-import { submitFeedbackAction } from '@/core/server/feedback'
-import {
-	AnimatePresence,
-	motion,
-	useMotionValue,
-	useTransform,
-} from 'framer-motion'
-import { usePathname, useRouter } from 'next/navigation'
-import { useEffect, useRef, useState, useTransition } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'sonner'
+} from '@/core/config/config'
 import CoolButton from './CoolButton'
 import SparklesText from './effects/SparkleText'
 import EmojiButton from './EmojiButton'
@@ -77,13 +75,13 @@ export function Feedback() {
 	}, [feedbackHidden, storedEmoji, setFeedbackHidden])
 
 	useEffect(() => {
-		const handleKeyDown = (e: { key: string }) => {
+		const handleKeyDown = (e) => {
 			if (e.key === 'Escape') {
 				handleClose()
 			}
 		}
 
-		const handleClickOutside = (e: { target: any }) => {
+		const handleClickOutside = (e) => {
 			if (sectionRef.current && !sectionRef.current.contains(e.target)) {
 				animateOut()
 			}
@@ -106,7 +104,7 @@ export function Feedback() {
 		refreshData()
 	}, [refreshTrigger])
 
-	function handleEmojiSelect(opinion: any) {
+	function handleEmojiSelect(opinion) {
 		setSelectedOpinion(opinion)
 		setIsTextareaVisible(true)
 		setStoredEmoji(opinion)
@@ -114,7 +112,7 @@ export function Feedback() {
 		toast(t('emojiReceived'))
 	}
 
-	async function handleSubmit(formData: FormData) {
+	async function handleSubmit(formData) {
 		startTransition(async () => {
 			try {
 				const result = await submitFeedbackAction(formData)
@@ -191,7 +189,7 @@ export function Feedback() {
 
 	function animateOut() {
 		if (sectionRef.current) {
-			const translateY = BAR_POSITION === 'top' ? '-65px' : '56px'
+			const translateY = BAR_POSITION === 'top' ? '-56px' : '56px'
 			sectionRef.current.style.transition =
 				'transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 1.5s cubic-bezier(0.775, 0.885, 0.32, 1.275)'
 			sectionRef.current.style.transform = `translateY(${translateY}) scale(0.8)`
@@ -208,7 +206,7 @@ export function Feedback() {
 		}
 	}
 
-	const handleDragEnd = (event: any, info: { offset: { y: number } }) => {
+	const handleDragEnd = (event, info) => {
 		const threshold = BAR_POSITION === 'top' ? -100 : 100
 		if (
 			(BAR_POSITION === 'top'
@@ -257,14 +255,13 @@ export function Feedback() {
 	const barPositionClass =
 		BAR_POSITION === 'top' ? 'top-0 mt-10' : 'bottom-0 mb-10'
 
-	// Modify the showFeedbackMotionConfig to account for bar position
 	const positionAwareShowFeedbackMotionConfig = {
 		...showFeedbackMotionConfig,
 		initial: {
 			...showFeedbackMotionConfig.initial,
 			y: BAR_POSITION === 'top' ? -100 : 100,
 		},
-		animate: (isAnimatingOut: boolean) => ({
+		animate: (isAnimatingOut) => ({
 			...showFeedbackMotionConfig.animate(isAnimatingOut),
 			y: isAnimatingOut ? (BAR_POSITION === 'top' ? -100 : 100) : 0,
 		}),
@@ -310,7 +307,7 @@ export function Feedback() {
 					>
 						<button
 							onClick={handleClose}
-							className="absolute -top-1 -left- text-disabled hover:text-text"
+							className="absolute -top-1 -left-1 text-disabled hover:text-text"
 							aria-label={t('closeFeedbackForm')}
 						>
 							<CloseIcon />
@@ -460,5 +457,3 @@ export function Feedback() {
 		</AnimatePresence>
 	)
 }
-
-export default Feedback
