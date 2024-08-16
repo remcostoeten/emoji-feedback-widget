@@ -13,7 +13,7 @@ export const opinionEmojis: OpinionEmoji[] = [
 ]
 // Emoji bar configuration
 export const HIDE_AUTOMATICALLY = true // If set to true, the bar will shift down and loweer opacityy automatically after a certain time to prevent annoyance.
-export const BAR_POSITION = 'top' // Set to 'top' to position the bar at the top.
+export const BAR_POSITION = 'bottom' // Set to 'top' to position the bar at the top.
 
 // Time to show the feedback form in milliseconds.
 export const TIME_TO_SHOW_FEEDBACK_FORM = 5000 // 5 seconds
