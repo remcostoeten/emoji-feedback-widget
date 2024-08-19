@@ -1,26 +1,25 @@
 'use client'
-import React, { useEffect, useRef, useState, useTransition } from 'react'
-import { useTranslation } from 'react-i18next'
 import {
-	motion,
+	afterEmojiClick,
+	BAR_POSITION,
+	formAnimation,
+	HIDE_AUTOMATICALLY,
+	opinionEmojis,
+	showFeedbackMotionConfig,
+	TIME_TO_SHOW_FEEDBACK_FORM,
+} from '@/core/config/config'
+import useLocalStorage from '@/core/hooks/useLocalStorage'
+import { submitFeedbackAction } from '@/core/server/feedback'
+import {
 	AnimatePresence,
+	motion,
 	useMotionValue,
 	useTransform,
 } from 'framer-motion'
 import { usePathname, useRouter } from 'next/navigation'
+import { useEffect, useRef, useState, useTransition } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
-import useLocalStorage from '@/core/hooks/useLocalStorage'
-import { submitFeedbackAction } from '@/core/server/feedback'
-import {
-	BAR_POSITION,
-	HIDE_AUTOMATICALLY,
-	opinionEmojis,
-	TIME_TO_SHOW_FEEDBACK_FORM,
-	BarPosition,
-	showFeedbackMotionConfig,
-	afterEmojiClick,
-	formAnimation,
-} from '@/core/config/config'
 import CoolButton from './CoolButton'
 import SparklesText from './effects/SparkleText'
 import EmojiButton from './EmojiButton'
@@ -313,12 +312,18 @@ export function Feedback() {
 							<CloseIcon />
 						</button>
 						{!isTextareaVisible && !storedEmoji ? (
-							<div className="flex flex-wrap items-center justify-between w-full px-7 translate-x-1.5 gap-x-6">
+							<div className="w-fit flex flex-wrap items-center justify-center sm:justify-between  sm:w-full px-7 translate-x-1.5 gap-x-6">
 								<h2
-									id="feedback-label"
-									className="text-sm text-disabled"
+									id=" feedback-label"
+									className="text-sm text-disabled hidden sm:block"
 								>
 									{t('feedbackLabel')}
+								</h2>
+								<h2
+									id="feedback-label"
+									className="text-sm block sm:hidden"
+								>
+									{t('feedbackLabelMobile')}
 								</h2>
 								<div
 									className="flex items-center text-text emojis"

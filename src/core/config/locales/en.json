@@ -1,6 +1,8 @@
 {
 	"feedbackSectionLabel": "All feedback",
+	"feedbackLabelMobile": "Thoughts?",
 	"feedbackLabel": "How's your experience?",
+
 	"closeFeedbackForm": "Close feedback form",
 	"search": "Search through the feedback",
 	"additionalFeedback": "Additional feedback",
