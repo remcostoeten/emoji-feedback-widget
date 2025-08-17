@@ -45,5 +45,7 @@
 	"opinion": "Opinion",
 	"feedback": "Feedback",
 	"timestamp": "Timestamp",
-	"city": "City"
+	"city": "City",
+	"country": "Country",
+	"unknownCountry": "Unknown"
 }

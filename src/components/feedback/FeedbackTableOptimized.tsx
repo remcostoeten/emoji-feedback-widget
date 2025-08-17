@@ -51,6 +51,7 @@ const FeedbackRow = memo(function FeedbackRow({ feedback }: { feedback: any }) {
 			<TableCell className="text-sm text-muted-foreground">
 				{new Date(feedback.timestamp).toLocaleString()}
 			</TableCell>
+			<TableCell>{feedback.country || t('unknownCountry')}</TableCell>
 		</TableRow>
 	)
 })
@@ -154,6 +155,7 @@ export default function FeedbackTableOptimized({ data }: TProps) {
 							<TableHead className="w-[120px]">{t('opinion')}</TableHead>
 							<TableHead>{t('feedback')}</TableHead>
 							<TableHead className="w-[180px]">{t('timestamp')}</TableHead>
+							<TableHead className="w-[120px]">{t('country')}</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
@@ -163,7 +165,7 @@ export default function FeedbackTableOptimized({ data }: TProps) {
 							))
 						) : (
 							<TableRow>
-								<TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
+								<TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
 									{t('noFeedbackFound')}
 								</TableCell>
 							</TableRow>

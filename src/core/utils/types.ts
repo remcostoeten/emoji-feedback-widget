@@ -156,6 +156,9 @@ export interface Feedback {
 	opinion: string | null
 	feedback: string | null
 	timestamp: string
+	city?: string
+	region?: string
+	country?: string
 }
 
 export interface EmojiCount {

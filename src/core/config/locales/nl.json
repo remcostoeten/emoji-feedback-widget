@@ -44,5 +44,7 @@
 	"feedback": "Feedback",
 	"timestamp": "Tijdstempel",
 	"city": "Stad",
+	"country": "Land",
+	"unknownCountry": "Onbekend",
 	"feedbackPlaceholder": "Nog meer te vertellen?"
 }

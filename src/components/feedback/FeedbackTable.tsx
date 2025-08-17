@@ -96,8 +96,7 @@ export default function FeedbackTable() {
 						<TableHead>{t('opinion')}</TableHead>
 						<TableHead>{t('feedback')}</TableHead>
 						<TableHead>{t('timestamp')}</TableHead>
-						{/* <TableHead>{t('city')}</TableHead> */}
-						{/* <TableHead>{t('country')}</TableHead> */}
+						<TableHead>{t('country')}</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
@@ -157,8 +156,7 @@ function FeedbackRow({ feedback }) {
 			<TableCell>
 				{new Date(feedback.timestamp).toLocaleString()}
 			</TableCell>
-			{/* <TableCell>{feedback.city || t('unknownCity')}</TableCell> */}
-			{/* <TableCell>{feedback.country || t('unknownCountry')}</TableCell> */}
+			<TableCell>{feedback.country || t('unknownCountry')}</TableCell>
 		</TableRow>
 	)
 }
