@@ -12,7 +12,7 @@ import {
 import { useFeedbackStore } from '@/core/stores/feedback-store'
 import { Suspense, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import TableSkeleton from '../Loaders'
+import TableSkeleton from '../LoadersOptimized'
 import { opinionEmojis } from '@/core/config/config'
 
 export default function FeedbackTable() {

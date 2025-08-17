@@ -1,5 +1,6 @@
 @import '../styles/animations.css';
 @import '../styles/misc.css';
+@import '../styles/skeleton.css';
 
 @tailwind base;
 @tailwind components;

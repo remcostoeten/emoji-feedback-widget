@@ -1,6 +1,6 @@
 'use client'
 
-import TableSkeleton from '@/components/Loaders'
+import TableSkeleton from '@/components/LoadersOptimized'
 import { useFeedbackStore } from '@/core/stores/feedback-store'
 import { Suspense, useEffect } from 'react'
 import FeedbackControls from '../components/feedback/FeedbackControls'

@@ -2,6 +2,9 @@
 
 import { TooltipProvider } from '@/components/ui'
 import i18n from '@/core/i18n'
+import { queryClient } from '@/core/lib/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import posthog from 'posthog-js'
 import { PostHogProvider } from 'posthog-js/react'
 import React from 'react'
@@ -25,13 +28,16 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 	}
 
 	return (
-		<PostHogProvider client={posthog}>
-			<I18nextProvider i18n={i18n}>
-				<TooltipProvider>
-					{children}
-					<Toaster position="top-right" />
-				</TooltipProvider>
-			</I18nextProvider>
-		</PostHogProvider>
+		<QueryClientProvider client={queryClient}>
+			<PostHogProvider client={posthog}>
+				<I18nextProvider i18n={i18n}>
+					<TooltipProvider>
+						{children}
+						<Toaster position="top-right" />
+					</TooltipProvider>
+				</I18nextProvider>
+			</PostHogProvider>
+			<ReactQueryDevtools initialIsOpen={false} />
+		</QueryClientProvider>
 	)
 }
